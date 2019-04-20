@@ -1,2 +1,4 @@
-^newdataValidator\.Rproj$
+^.*Rproj$
+^.*Rmd$
 ^\.Rproj\.user$
+^.*\.Rproj$
