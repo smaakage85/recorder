@@ -63,17 +63,24 @@ play.other <- function(x, rec) {
 
 }
 
-play.data.frame <- function(x, rec, verbose = TRUE) {
+play.data.frame <- function(x, rec) {
 
-  # check if there any new variables in new data set, that has not been
+  # check, if input belongs to correct class.
+  if (!inherits(rec, "recording")) {stop("'rec' must belong to 'recording' class.")}
+
+  # how many rows in new data.set (="duration")?
+  duration <- nrow(x)
+  if (duration == 0) {stop("New data set is empty - contains 0 rows.")}
+
+  # check if there any new variables in new data set, that have not been
   # observed before.
   new_variable <- names(x)[!names(x) %in% names(rec$classes)]
-  if (verbose && length(new_variable) > 0) {
-    message("New variables detected in new data set: ",
-            paste0(new_variable, collapse = ", "))
-  }
+  # if (verbose && length(new_variable) > 0) {
+  #   cat("New variables detected in new data set: ",
+  #           paste0(new_variable, collapse = ", "), "\n\n")
+  # }
 
-  # check if one or more variables are missing in new data set.
+  # check if one or more variables are missing from new data set.
   missing_variable <- names(rec$classes)[!names(rec$classes) %in% names(x)]
 
   # check if there are any class mismatches.
@@ -97,11 +104,23 @@ play.data.frame <- function(x, rec, verbose = TRUE) {
   # for which no specific 'play' method is defined.
   x <- lapply(x, set_other_class)
 
-  # perform checks.
+  # perform detailed checks.
   detailed_checks <- mapply(play, x, rec, SIMPLIFY = FALSE)
 
-  list(missing_variable = missing_variable,
-       mismatch_class = mismatch_class,
-       detailed_checks = detailed_checks)
+  # combine results into one list.
+  playback <- list(
+    misc = list(duration = duration,
+                new_variable = new_variable),
+    rough_checks = list(
+      missing_variable = missing_variable,
+      mismatch_class = mismatch_class
+    ),
+    detailed_checks = detailed_checks
+    )
 
-  }
+  # set class.
+  class(playback) <- append("playback", class(playback))
+
+  playback
+
+}

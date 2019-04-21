@@ -2,3 +2,4 @@
 ^.*Rmd$
 ^\.Rproj\.user$
 ^.*\.Rproj$
+^.*\.Rhistory$

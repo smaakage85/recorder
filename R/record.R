@@ -84,6 +84,6 @@ record.data.frame <- function(x) {
 
 any_NA <- function(x) {any(is.na(x))}
 set_other_class <- function(x) {
-  class(x) <- append(class(x), "other")
+  class(x) <- append("other", class(x))
   x
 }
