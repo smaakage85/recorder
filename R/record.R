@@ -51,7 +51,7 @@ record.character <- function(x) {
 
 }
 
-record.other <- function(x) {
+record.default <- function(x) {
 
   # record statistics.
   list(
@@ -65,25 +65,18 @@ record.data.frame <- function(x) {
   # record classes.
   classes <- lapply(x, class)
 
-  # set 'other' class to treat variables of classes, for which no
-  # specific 'play' method is defined.
-  x <- lapply(x, set_other_class)
-
   # record statistics for all variables.
   stats <- lapply(x, record)
 
-  # combine into one list - one 'recording'.
-  recording <- list(classes = classes, stats = stats)
+  # combine into one list, the structure of which defines the 'data.tape' 
+  # by convention.
+  data.tape <- list(classes = classes, stats = stats)
 
-  # set class accordingly.
-  class(recording) <- append(class(recording), "recording")
+  # set class.
+  class(data.tape) <- append(class(data.tape), "data.tape")
 
-  recording
+  data.tape
 
 }
 
 any_NA <- function(x) {any(is.na(x))}
-set_other_class <- function(x) {
-  class(x) <- append("other", class(x))
-  x
-}

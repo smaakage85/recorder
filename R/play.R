@@ -9,64 +9,64 @@ play <- function (x, ...) {
   UseMethod("play", x)
 }
 
-play.numeric <- function(x, rec) {
+play.numeric <- function(x, tape) {
 
   # compute checks.
   list(
     outside_range = which(!is.na(x) &
-                            x < rec$min |
-                            x > rec$max),
-    new_NA = which(!rec$any_NA & is.na(x))
+                            x < tape$min |
+                            x > tape$max),
+    new_NA = which(!tape$any_NA & is.na(x))
   )
 
 }
 
-play.character <- function(x, rec) {
+play.character <- function(x, tape) {
 
   # compute checks.
   list(
-    new_NA = which(!rec$any_NA & is.na(x)),
-    new_level = which(!is.na(x) & (!x %in% rec$levels))
+    new_NA = which(!tape$any_NA & is.na(x)),
+    new_level = which(!is.na(x) & (!x %in% tape$levels))
   )
 
 }
 
-play.factor <- function(x, rec) {
+play.factor <- function(x, tape) {
 
   # compute checks.
   list(
-    levels_mismatch = !identical(levels(x), rec$levels),
-    new_NA = which(!rec$any_NA & is.na(x)),
-    new_level = which(!is.na(x) & (!x %in% rec$levels))
+    levels_mismatch = !identical(levels(x), tape$levels),
+    new_NA = which(!tape$any_NA & is.na(x)),
+    new_level = which(!is.na(x) & (!x %in% tape$levels))
   )
 
 }
 
-play.integer <- function(x, rec) {
+play.integer <- function(x, tape) {
 
   # compute checks.
   list(
     outside_range = which(!is.na(x) &
-                            x < rec$min |
-                            x > rec$max),
-    new_NA = which(!rec$any_NA & is.na(x))
+                            x < tape$min |
+                            x > tape$max),
+    new_NA = which(!tape$any_NA & is.na(x))
   )
 
 }
 
-play.other <- function(x, rec) {
+play.other <- function(x, tape) {
 
   # compute checks.
   list(
-    new_NA = which(!rec$any_NA & is.na(x))
+    new_NA = which(!tape$any_NA & is.na(x))
   )
 
 }
 
-play.data.frame <- function(x, rec) {
+play.data.frame <- function(x, tape) {
 
   # check, if input belongs to correct class.
-  if (!inherits(rec, "recording")) {stop("'rec' must belong to 'recording' class.")}
+  if (!inherits(tape, "data.tape")) {stop("'tape' must belong to 'data.tape' class.")}
 
   # how many rows in new data.set (="duration")?
   duration <- nrow(x)
@@ -74,14 +74,14 @@ play.data.frame <- function(x, rec) {
 
   # check if there any new variables in new data set, that have not been
   # observed before.
-  new_variable <- names(x)[!names(x) %in% names(rec$classes)]
+  new_variable <- names(x)[!names(x) %in% names(tape$classes)]
   # if (verbose && length(new_variable) > 0) {
   #   cat("New variables detected in new data set: ",
   #           paste0(new_variable, collapse = ", "), "\n\n")
   # }
 
   # check if one or more variables are missing from new data set.
-  missing_variable <- names(rec$classes)[!names(rec$classes) %in% names(x)]
+  missing_variable <- names(tape$classes)[!names(tape$classes) %in% names(x)]
 
   # check if there are any class mismatches.
   variables_to_check <- names(x)[!names(x) %in% c(missing_variable, new_variable)]
@@ -91,23 +91,19 @@ play.data.frame <- function(x, rec) {
   # check for class mismatches.
   mismatch_class <- mapply(identical,
                            classes_newdata,
-                           rec$classes[variables_to_check],
+                           tape$classes[variables_to_check],
                            SIMPLIFY = TRUE)
   mismatch_class <- variables_to_check[!mismatch_class]
 
   # subset columns to check in details.
   variables_to_check <- variables_to_check[!variables_to_check %in% mismatch_class]
-  rec <- rec$stats[variables_to_check]
+  tape <- tape$stats[variables_to_check]
   x <- x[variables_to_check]
 
-  # before performing checks, set 'other' class to treat variables of classes,
-  # for which no specific 'play' method is defined.
-  x <- lapply(x, set_other_class)
-
   # perform detailed checks.
-  detailed_checks <- mapply(play, x, rec, SIMPLIFY = FALSE)
+  detailed_checks <- mapply(play, x, tape, SIMPLIFY = FALSE)
 
-  # combine results into one list.
+  # combine results into one list, the structure of which 
   playback <- list(
     misc = list(duration = duration,
                 new_variable = new_variable),
