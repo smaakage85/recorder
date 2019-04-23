@@ -54,7 +54,7 @@ play.integer <- function(x, tape) {
 
 }
 
-play.other <- function(x, tape) {
+play.default <- function(x, tape) {
 
   # compute checks.
   list(
@@ -67,7 +67,9 @@ play.data.frame <- function(x, tape) {
 
   # check, if input belongs to correct class.
   if (!inherits(tape, "data.tape")) {stop("'tape' must belong to 'data.tape' class.")}
-
+  
+  cat("▶ PLAY\n\n")
+  
   # how many rows in new data.set (="duration")?
   duration <- nrow(x)
   if (duration == 0) {stop("New data set is empty - contains 0 rows.")}
@@ -75,10 +77,6 @@ play.data.frame <- function(x, tape) {
   # check if there any new variables in new data set, that have not been
   # observed before.
   new_variable <- names(x)[!names(x) %in% names(tape$classes)]
-  # if (verbose && length(new_variable) > 0) {
-  #   cat("New variables detected in new data set: ",
-  #           paste0(new_variable, collapse = ", "), "\n\n")
-  # }
 
   # check if one or more variables are missing from new data set.
   missing_variable <- names(tape$classes)[!names(tape$classes) %in% names(x)]
@@ -107,7 +105,7 @@ play.data.frame <- function(x, tape) {
   playback <- list(
     misc = list(duration = duration,
                 new_variable = new_variable),
-    rough_checks = list(
+    aggregated_checks = list(
       missing_variable = missing_variable,
       mismatch_class = mismatch_class
     ),
@@ -117,6 +115,8 @@ play.data.frame <- function(x, tape) {
   # set class.
   class(playback) <- append("playback", class(playback))
 
+  cat("\n∎ STOP\n\n")
+  
   playback
 
 }

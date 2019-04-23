@@ -11,31 +11,51 @@
 #' @author Lars Kjeldgaard
 #' @export
 print.playback <- function(x, form_width = 30, ...) {
-  cat("-- recordr Playback --\n\n")
+  
+  cat("▶ PLAY\n\n")
 
   # misc. metadata:
   cat("Duration (number of rows in new data):", x$misc$duration, "\n\n")
 
   cat("Soft checks:\n")
-  cat("- 'new_variable': Variables in new data not previously observed:",
-      if (length(x$misc$new_variable) != 0) {
-        paste0(x$misc$new_variable, collapse = ", ")
-      } else {"None."},
-      "\n\n")
+  cat("- 'new_variable': Unexpected variables variables in new data:",
+      paste_vector(x$misc$new_variable))
+  cat("\n")
 
-  cat("Rough checks:\n")
-  cat("- 'missing_variable': Variables not found in new data:",
-      if (length(x$rough_checks$missing_variable) != 0) {
-        paste0(x$rough_checks$missing_variable, collapse = ", ")
-      } else {"None."},
-      "\n")
+  cat("Aggregated checks:\n")
+  cat("- 'missing_variable': Variables missing in new data:",
+      paste_vector(x$aggregated_checks$missing_variable))
   cat("- 'mismatch_class': class' mismatches:",
-      if (length(x$rough_checks$mismatch_class) != 0) {
-        paste0(x$rough_checks$mismatch_class, collapse = ", ")
-      } else {"None."},
-      "\n")
+      paste_vector(x$aggregated_checks$mismatch_class))
 
+  cat("\n∎ STOP\n\n")
+  
   invisible(x)
 }
+
+paste_vector <- function(x) {
+  paste0(
+    if (length(x) != 0) {
+      paste0(x, collapse = ", ")
+      } else {"None."},
+    "\n")
+}
+
+
+# dc <- playb$detailed_checks
+# checks <- lapply(dc, names)
+# checks <- do.call(c, checks)
+# checks <- unique(checks)
+# 
+# by_checks <- lapply(checks, function (x) {
+#   lapply(dc, '[[', x)
+# })
+# names(by_checks) <- checks
+# 
+# 
+# 
+# 
+# 
+# lapply(playb$detailed_checks, '[[', "new_NA")
 
 # https://github.com/tidymodels/recipes/blob/master/R/recipe.R
