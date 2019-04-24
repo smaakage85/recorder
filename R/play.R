@@ -35,7 +35,7 @@ play.factor <- function(x, tape) {
 
   # compute checks.
   list(
-    levels_mismatch = !identical(levels(x), tape$levels),
+    mismatch_levels = !identical(levels(x), tape$levels),
     new_NA = which(!tape$any_NA & is.na(x)),
     new_level = which(!is.na(x) & (!x %in% tape$levels))
   )
@@ -68,12 +68,14 @@ play.data.frame <- function(x, tape) {
   # check, if input belongs to correct class.
   if (!inherits(tape, "data.tape")) {stop("'tape' must belong to 'data.tape' class.")}
   
-  cat("▶ PLAY\n\n")
-  
-  # how many rows in new data.set (="duration")?
+    # how many rows in new data.set (="duration")?
   duration <- nrow(x)
   if (duration == 0) {stop("New data set is empty - contains 0 rows.")}
 
+  cat("▶ PLAY\n\n")
+  cat("... ♩ ♪ ♫ ♬\n\n")
+  cat("[playing data.tape on new data with", ncol(x), 
+      "columns and", nrow(x), "rows]\n\n")
   # check if there any new variables in new data set, that have not been
   # observed before.
   new_variable <- names(x)[!names(x) %in% names(tape$classes)]
@@ -100,6 +102,7 @@ play.data.frame <- function(x, tape) {
 
   # perform detailed checks.
   detailed_checks <- mapply(play, x, tape, SIMPLIFY = FALSE)
+  detailed_checks <- compress_detailed_checks(detailed_checks)
 
   # combine results into one list, the structure of which 
   playback <- list(
@@ -115,6 +118,7 @@ play.data.frame <- function(x, tape) {
   # set class.
   class(playback) <- append("playback", class(playback))
 
+  cat("♬ ♫ ♪ ♩ ...\n\n")
   cat("\n∎ STOP\n\n")
   
   playback

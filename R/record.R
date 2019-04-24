@@ -63,6 +63,9 @@ record.default <- function(x) {
 record.data.frame <- function(x) {
 
   cat("⚫ RECORD\n\n")
+  cat("... ♩ ♪ ♫ ♬\n\n")
+  cat("[recording metadata and statistics for", ncol(x), 
+      "columns and", nrow(x), "rows]\n\n")
   
   # record classes.
   classes <- lapply(x, class)
@@ -77,6 +80,7 @@ record.data.frame <- function(x) {
   # set class.
   class(data.tape) <- append(class(data.tape), "data.tape")
 
+  cat("♬ ♫ ♪ ♩ ...\n\n")
   cat("∎ STOP\n\n")
   
   # return data.tape.
