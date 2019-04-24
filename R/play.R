@@ -106,6 +106,7 @@ play.data.frame <- function(x, tape) {
 
   # combine results into one list, the structure of which 
   playback <- list(
+    tape = tape,
     misc = list(duration = duration,
                 new_variable = new_variable),
     aggregated_checks = list(
