@@ -16,12 +16,12 @@ get_rows <- function(x,
       return(NULL)
   }
   
-  # row-wise checks.
-  check_rows <- playback$detailed_checks[!names(playback$detailed_checks) %in% "mismatch_levels"]
-  # ignore certain checks.
-  check_cols <- check_cols[!names(check_cols) %in% ignore_checks]
-  violations <- do.call(c, check_cols)
-  # ignore certain columns
-  violations <- violations[!violations %in% ignore_cols]
+  # # row-wise checks.
+  # check_rows <- playback$detailed_checks[!names(playback$detailed_checks) %in% "mismatch_levels"]
+  # # ignore certain checks.
+  # check_rows <- check_rows[!names(check_rows) %in% ignore_checks]
+  # violations <- do.call(c, check_rows)
+  # # ignore certain columns
+  # violations <- violations[!violations %in% ignore_cols]
   
   }

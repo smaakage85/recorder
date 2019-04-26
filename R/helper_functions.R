@@ -29,15 +29,11 @@ compress_checks_col <- function(x) {
 }
 
 compress_checks_row <- function(x) {
-  x[vapply(x, has_pos_length, logical(1))]  
-}
-
-has_pos_length <- function(x) {
-  length(x) > 0
+  x[vapply(x, any, logical(1))]  
 }
 
 paste_vector <- function(x) {
-  if (length(x) != 0) {
+  if (length(x) > 0) {
     paste0(x, collapse = ", ")
   } else {"None."}
 }
@@ -55,6 +51,7 @@ paste_all_cols_with_rows <- function(x, first = 10) {
 }
 
 paste_col_with_rows <- function(name, x, first = 10) {
+  x <- which(x)
   exceed_length <- max(length(x) - first)
   paste0(name, "[rows: ", paste0(x[seq_len(min(first, length(x)))], 
                                  collapse = ", "), 

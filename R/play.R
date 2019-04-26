@@ -13,10 +13,8 @@ play.numeric <- function(x, tape) {
 
   # compute checks.
   list(
-    outside_range = which(!is.na(x) &
-                            x < tape$min |
-                            x > tape$max),
-    new_NA = which(!tape$any_NA & is.na(x))
+    outside_range = !is.na(x) & (x < tape$min | x > tape$max),
+    new_NA = !tape$any_NA & is.na(x)
   )
 
 }
@@ -25,8 +23,8 @@ play.character <- function(x, tape) {
 
   # compute checks.
   list(
-    new_NA = which(!tape$any_NA & is.na(x)),
-    new_level = which(!is.na(x) & (!x %in% tape$levels))
+    new_NA = !tape$any_NA & is.na(x),
+    new_level = !is.na(x) & (!x %in% tape$levels)
   )
 
 }
@@ -36,8 +34,8 @@ play.factor <- function(x, tape) {
   # compute checks.
   list(
     mismatch_levels = !identical(levels(x), tape$levels),
-    new_NA = which(!tape$any_NA & is.na(x)),
-    new_level = which(!is.na(x) & (!x %in% tape$levels))
+    new_NA = !tape$any_NA & is.na(x),
+    new_level = !is.na(x) & (!x %in% tape$levels)
   )
 
 }
@@ -46,10 +44,8 @@ play.integer <- function(x, tape) {
 
   # compute checks.
   list(
-    outside_range = which(!is.na(x) &
-                            x < tape$min |
-                            x > tape$max),
-    new_NA = which(!tape$any_NA & is.na(x))
+    outside_range = !is.na(x) & (x < tape$min | x > tape$max),
+    new_NA = !tape$any_NA & is.na(x)
   )
 
 }
@@ -58,7 +54,7 @@ play.default <- function(x, tape) {
 
   # compute checks.
   list(
-    new_NA = which(!tape$any_NA & is.na(x))
+    new_NA = !tape$any_NA & is.na(x)
   )
 
 }
@@ -72,10 +68,9 @@ play.data.frame <- function(x, tape) {
   duration <- nrow(x)
   if (duration == 0) {stop("New data set is empty - contains 0 rows.")}
 
-  cat("▶ PLAY\n\n")
-  cat("... ♩ ♪ ♫ ♬\n\n")
-  cat("[playing data.tape on new data with", ncol(x), 
-      "columns and", nrow(x), "rows]\n\n")
+  cat("[PLAY]\n\n")
+  cat("... playing data.tape on new data with", ncol(x), 
+      "columns and", nrow(x), "rows ...\n\n")
   # check if there any new variables in new data set, that have not been
   # observed before.
   new_variable <- names(x)[!names(x) %in% names(tape$classes)]
@@ -95,7 +90,7 @@ play.data.frame <- function(x, tape) {
                            SIMPLIFY = TRUE)
   mismatch_class <- variables_to_check[!mismatch_class]
 
-  # subset columns to check in details.
+  # subset columns for detailed checks.
   variables_to_check <- variables_to_check[!variables_to_check %in% mismatch_class]
   tape <- tape$stats[variables_to_check]
   x <- x[variables_to_check]
@@ -119,8 +114,7 @@ play.data.frame <- function(x, tape) {
   # set class.
   class(playback) <- append("playback", class(playback))
 
-  cat("♬ ♫ ♪ ♩ ...\n\n")
-  cat("\n∎ STOP\n\n")
+  cat("[STOP]")
   
   playback
 
