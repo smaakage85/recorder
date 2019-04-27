@@ -4,14 +4,25 @@
 
 # playb$detailed_checks$new_level
 
-record(df) -> tape
+# record(df) -> tape
+# 
+# play(newdata, tape) -> playback
 
-play(newdata, tape) -> playback
-
-dc <- playback$detailed_checks[c("outside_range", "new_level", "new_NA")]
-library(data.table)
+#' import data.table
 check_matrix <- function(x) {
-  dts <- lapply(dc, data.table::as.data.table)
-  m <- do.call(cbind, dts)
+  dts <- lapply(dc, as.data.table)
+  do.call(cbind, dts)
 }
-dd <- check_matrix(dc)
+
+write_violations <- function (violations) {
+  # create violation matrix with colnames as entries.
+  vm  <- matrix(data  = t(rep(    x = paste0(colnames(violations), ";"), 
+                                 times = nrow(violations))),
+               ncol  = ncol(violations),
+               byrow = TRUE)
+  # replace FALSE with empty string.
+  vm[violations == FALSE] <- ""
+  # concatenate warnings to one string pr. row.
+  do.call(what = paste0, args = data.frame(vm))
+}
+
