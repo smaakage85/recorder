@@ -5,18 +5,19 @@
 # playb$detailed_checks$new_level
 
 # record(df) -> tape
-# 
+#
 # play(newdata, tape) -> playback
 
 #' import data.table
 check_matrix <- function(x) {
-  dts <- lapply(dc, as.data.table)
+  # convert checks to data.tables and bind them.
+  dts <- lapply(x, as.data.table)
   do.call(cbind, dts)
 }
 
 write_violations <- function (violations) {
   # create violation matrix with colnames as entries.
-  vm  <- matrix(data  = t(rep(    x = paste0(colnames(violations), ";"), 
+  vm  <- matrix(data  = t(rep(    x = paste0(colnames(violations), ";"),
                                  times = nrow(violations))),
                ncol  = ncol(violations),
                byrow = TRUE)

@@ -63,35 +63,40 @@ play.data.frame <- function(x, tape) {
 
   # check, if input belongs to correct class.
   if (!inherits(tape, "data.tape")) {stop("'tape' must belong to 'data.tape' class.")}
-  
-    # how many rows in new data.set (="duration")?
+
+  # how many rows in new data.set (="duration")?
   duration <- nrow(x)
   if (duration == 0) {stop("New data set is empty - contains 0 rows.")}
 
   cat("[PLAY]\n\n")
-  cat("... playing data.tape on new data with", ncol(x), 
+  cat("... playing data.tape on new data with", ncol(x),
       "columns and", nrow(x), "rows ...\n\n")
+
   # check if there any new variables in new data set, that have not been
   # observed before.
-  new_variable <- names(x)[!names(x) %in% names(tape$classes)]
+  new_variable <- as.list(!names(x) %in% names(tape$classes))
+  names(new_variable) <- names(x)
 
   # check if one or more variables are missing from new data set.
-  missing_variable <- names(tape$classes)[!names(tape$classes) %in% names(x)]
+  missing_variable <- as.list(!names(tape$classes) %in% names(x))
+  names(missing_variable) <- names(tape$classes)
 
   # check if there are any class mismatches.
-  variables_to_check <- names(x)[!names(x) %in% c(missing_variable, new_variable)]
+  variables_to_check <- names(x)[!names(x) %in% c(names(missing_variable)[which(as.logical(missing_variable))],
+                                                  names(new_variable)[which(as.logical(new_variable))])]
   # compute classes of these variables in new dataset.
   classes_newdata <- lapply(x[variables_to_check], class)
 
   # check for class mismatches.
-  mismatch_class <- mapply(identical,
+  mismatch_class <- mapply(function(x,y) {!identical(x,y)},
                            classes_newdata,
                            tape$classes[variables_to_check],
-                           SIMPLIFY = TRUE)
-  mismatch_class <- variables_to_check[!mismatch_class]
+                           SIMPLIFY = FALSE)
+  mismatch_class_names <- variables_to_check[as.logical(mismatch_class)]
+  names(mismatch_class) <- variables_to_check
 
   # subset columns for detailed checks.
-  variables_to_check <- variables_to_check[!variables_to_check %in% mismatch_class]
+  variables_to_check <- variables_to_check[!variables_to_check %in% mismatch_class_names]
   tape <- tape$stats[variables_to_check]
   x <- x[variables_to_check]
 
@@ -99,23 +104,22 @@ play.data.frame <- function(x, tape) {
   detailed_checks <- mapply(play, x, tape, SIMPLIFY = FALSE)
   detailed_checks <- compress_detailed_checks(detailed_checks)
 
-  # combine results into one list, the structure of which 
+  # combine results into one list, the structure of which defines the
+  # 'playback' class.
   playback <- list(
     tape = tape,
-    misc = list(duration = duration,
-                new_variable = new_variable),
-    aggregated_checks = list(
-      missing_variable = missing_variable,
-      mismatch_class = mismatch_class
-    ),
-    detailed_checks = detailed_checks
-    )
+    duration = duration,
+    checks = append(detailed_checks,
+                    list(new_variable = compress_checks(new_variable),
+                         missing_variable = compress_checks(missing_variable),
+                         mismatch_class = compress_checks(mismatch_class)))
+  )
 
   # set class.
   class(playback) <- append("playback", class(playback))
 
   cat("[STOP]")
-  
+
   playback
 
 }
