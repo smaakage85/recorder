@@ -4,16 +4,12 @@
 \alias{print.playback}
 \title{Print a Playback}
 \usage{
-\method{print}{playback}(x, form_width = 30, ...)
+\method{print}{playback}(x, first = 10)
 }
 \arguments{
 \item{x}{A `playback` object}
 
-\item{form_width}{The number of characters used to print the variables or
-terms in a formula}
-
-\item{...}{further arguments passed to or from other methods (not currently
-used).}
+\item{first}{The number of row indices to print pr. check.}
 }
 \value{
 The original object (invisibly)

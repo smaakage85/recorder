@@ -1,5 +1,5 @@
 Package: recordr
-Title: Validate data before computing predictions.
+Title: Validate New Data
 Version: 0.8.0
 Authors@R: 
     person(given = "Lars",
@@ -7,7 +7,8 @@ Authors@R:
            role = c("aut", "cre"),
            email = "lars_kjeldgaard@hotmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: 
+Description: Functionality that enables the user to validate new data for 
+    based on statistics learned from the training data.
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
