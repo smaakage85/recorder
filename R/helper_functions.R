@@ -52,7 +52,7 @@ paste_col_with_rows <- function(name, x, first = 10) {
 }
 
 #' import data.table
-check_matrix <- function(x) {
+check_matrix <- function(x, duration) {
   # convert checks to data.tables and bind them.
   dts <- lapply(x, as.data.table)
   do.call(cbind, dts)
