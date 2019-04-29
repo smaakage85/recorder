@@ -109,6 +109,10 @@ play.data.frame <- function(x, tape) {
   playback <- list(
     tape = tape,
     duration = duration,
+    checks_collevel_names = c("missing_variable",
+                              "mismatch_class",
+                              "mismatch_levels",
+                              "new_variable"), 
     checks = append(detailed_checks,
                     list(new_variable = compress_checks(new_variable),
                          missing_variable = compress_checks(missing_variable),

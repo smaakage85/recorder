@@ -22,10 +22,38 @@ compress_checks <- function(x) {
   x[vapply(x, any, logical(1))]
 }
 
-paste_vector <- function(x) {
+paste_colnames <- function(x) {
   if (length(x) > 0) {
-    paste0(x, collapse = ", ")
+    paste0(names(x), collapse = ", ")
   } else {"None."}
+}
+
+print_checks_collevel <- function(x, name) {
+  
+  cat("> '", 
+      name,
+      "': ",
+      paste_colnames(x$checks[[name]]), 
+      "\n",
+      sep = "")
+  
+  # return invisibly.
+  invisible()
+  
+}
+
+print_checks_rowlevel <- function(x, name, first = 10) {
+  
+  cat("> '", 
+      name,
+      "': ",
+      paste_all_cols_with_rows(x$checks[[name]], first = first), 
+      "\n",
+      sep = "")
+  
+  # return invisibly.
+  invisible()
+  
 }
 
 paste_all_cols_with_rows <- function(x, first = 10) {
