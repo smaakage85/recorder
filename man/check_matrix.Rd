@@ -4,7 +4,7 @@
 \alias{check_matrix}
 \title{import data.table}
 \usage{
-check_matrix(x, duration)
+check_matrix(x)
 }
 \description{
 import data.table

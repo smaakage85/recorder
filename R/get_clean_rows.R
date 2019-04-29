@@ -1,27 +1,95 @@
-get_rows <- function(x, 
-                     ignore_checks = NULL,
-                     ignore_cols = NULL,
-                     ignore_combo = NULL) {
+#' Get Violations
+#'
+#' @param playback \code{playback} to generate violation matrix from.
+#' @inheritParams ignore
+#'
+#' @return \code{data.table} with logicals for all of the checks, that one or more
+#' rows failed to pass. A failed check for any given row is equivalent to a value
+#' of TRUE. If all checks passed, the function will simply return a matrix with
+#' one column, 'any_violations', that is always FALSE, to ensure that the output
+#' is stable and consistent.
+#' 
+#' @export
+get_violations <- function(playback,
+                           ignore_check_names = c("new_variable"),
+                           ignore_cols = NULL,
+                           ignore_combinations = list(mismatch_class = NULL)) {
   
-  # column-wise checks.
-  check_cols <- c(playback$aggregated_checks, 
-                  playback$detailed_checks["mismatch_levels"])
+  # validate input.
+  if (!inherits(playback, "playback")) {
+    stop("'playback' must belong to the 'playback' class.")
+  }
+  
   # ignore certain checks.
-  check_cols <- check_cols[!names(check_cols) %in% ignore_checks]
-  violations <- do.call(c, check_cols)
-  # ignore certain columns
-  violations <- violations[!violations %in% ignore_cols]
-  # any failure in one of these checks makes all rows invalid.
-  if (length(violations) > 0) {
-      return(NULL)
+  checks <- ignore(playback$checks,
+                   playback$tape,
+                   ignore_check_names = ignore_check_names,
+                   ignore_cols = ignore_cols,
+                   ignore_combinations = ignore_combinations)
+  
+  # compute violation matrix.
+  cm <- check_matrix(checks)
+  
+  # return any_violations = FALSE, if there are no violations.
+  if (nrow(cm) == 0) {
+    return(data.table(any_violations = rep(FALSE, playback$duration)))
+  } else {cm}
+  
+}
+
+#' Get Violations as a String
+#'
+#' @inheritParams get_violations
+#'
+#' @return \code{character} with one entry for each row in new data. Each
+#' entry concatenates information of the checks, that did NOT pass for the
+#' corresponding row in new data.
+#' 
+#' @details 
+#' - 'mismatch_levels': (only relevant for factors and characters).
+#' - 'missing_variable': the variable was recorded on training data but not 
+#' observed in new data.
+#' @export
+get_violations_string <- function(playback,
+                                  ignore_check_names = c("new_variable"),
+                                  ignore_cols = NULL,
+                                  ignore_combinations = list(mismatch_class = NULL))  {
+  
+  # get violation matrix.
+  cm <- get_violations(playback = playback,
+                       ignore_check_names = ignore_check_names,
+                       ignore_cols = ignore_cols,
+                       ignore_combinations = ignore_combinations)
+  
+  # handle case, where all rows passed all checks.
+  if (identical(names(cm), "any_violations")) {
+    return(rep("", playback$duration))
+  } else {
+    write_violations(cm)
   }
   
-  # # row-wise checks.
-  # check_rows <- playback$detailed_checks[!names(playback$detailed_checks) %in% "mismatch_levels"]
-  # # ignore certain checks.
-  # check_rows <- check_rows[!names(check_rows) %in% ignore_checks]
-  # violations <- do.call(c, check_rows)
-  # # ignore certain columns
-  # violations <- violations[!violations %in% ignore_cols]
+}
+
+#' Get Clean Rows
+#'
+#' @inheritParams get_violations
+#'
+#' @return \code{logical} with the same length as the number of rows in new 
+#' data. The value is TRUE, if the row passed all checks, otherwise FALSE.
+#' 
+#' @export
+get_clean_rows <- function(playback,
+                           ignore_check_names = c("new_variable"),
+                           ignore_cols = NULL,
+                           ignore_combinations = list(mismatch_class = NULL)) {
   
-  }
+  # get violation matrix.
+  cm <- get_violations(playback = playback,
+                       ignore_check_names = ignore_check_names,
+                       ignore_cols = ignore_cols,
+                       ignore_combinations = ignore_combinations)
+  
+  # row indices of clean rows.
+  rowSums(cm) == 0
+  
+}

@@ -1,3 +1,13 @@
+#' Ignore and remove certain checks
+#'
+#' @param checks \code{list} with computed checks.
+#' @param tape \code{data.tape} with recorded statistics.
+#' @param ignore_check_names \code{character} with names of checks to ignore. 
+#' @param ignore_cols \code{character} with names of columns/variables to ignore.
+#' @param ignore_combinations \code{list} with combinations of checks and
+#' columns to ignore.
+#'
+#' @return \code{list} with only the relevant checks.
 ignore <- function(checks,
                    tape,
                    ignore_check_names = c("new_variable"),
@@ -58,7 +68,7 @@ ignore_cols <- function(checks, col_names, tape) {
 
   # does any of these cols have any violations at all?
   if (!all(col_names %in% names(tape$classes))) {
-    message("The following columns do not exist, please check: ",
+    message("The following columns do not exist in training data, please check: ",
          paste0(col_names[!col_names %in% names(tape$classes)], collapse = ","),
          "\n")
   }
