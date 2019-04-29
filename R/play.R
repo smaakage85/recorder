@@ -107,13 +107,13 @@ play.data.frame <- function(x, tape) {
   # set relevant check metadata.
   checks_metadata <- list(
     missing_variable = list(compute_level = "col",
-                            description = "variable observed in training data but missing in new data"),
+                            description = "variable(s) observed in training data but missing in new data"),
     mismatch_class = list(compute_level = "col",
                           description = "'class' in new data does not match 'class' in training data"),
     mismatch_levels = list(compute_level = "col",
                            description = "'levels' in new data and training data are not identical"),
     new_variable = list(compute_level = "col",
-                        description = "variable observed in new data but not in training data"),
+                        description = "variable(s) observed in new data but not in training data"),
     outside_range = list(compute_level = "row",
                          description = "value(s) in new data without recorded range in training data"),
     new_level = list(compute_level = "row",
