@@ -89,7 +89,7 @@ get_clean_rows <- function(playback,
                        ignore_cols = ignore_cols,
                        ignore_combinations = ignore_combinations)
   
-  # row indices of clean rows.
+  # compute indicator, that tells whether a row is 'clean' or not. 
   rowSums(cm) == 0
   
 }
