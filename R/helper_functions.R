@@ -98,5 +98,20 @@ write_violations <- function (violations) {
   do.call(what = paste0, args = data.frame(vm))
 }
 
+print_test_description <- function(pb, name) {
+  
+  cat("'", 
+      name,
+      "': ",
+      pb$checks_metadata[[name]]$description, 
+      "\n",
+      sep = "")
+  
+  # return invisibly.
+  invisible()
+  
+}
+
+
 
 

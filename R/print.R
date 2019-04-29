@@ -13,29 +13,33 @@ print.playback <- function(x, ...) {
   cat("[PLAY]\n\n")
 
   # Number of rows:
-  cat("Number of rows in new data: ", x$duration, "\n\n", sep = "")
-
+  cat("# of rows in new data: ", x$duration, "\n", sep = "")
+  cat("# of rows passing all tests: ", 
+      sum(get_clean_rows(x)), "\n", sep = "")
+  cat("# of rows, that failed one or more tests: ", 
+      sum(!get_clean_rows(x)), "\n", sep = "")
+  cat("\n", "Tests failed:\n", sep = "")
   # print checks computed on column level.
-  lapply(x$checks_collevel_names,
-         function (g) {print_checks_collevel(x, g)})
+  # identify checks, that are computed on column level.
+  checks_compute_level <- vapply(x$checks_metadata, '[[', "compute_level", 
+                                 FUN.VALUE = character(1))
+  checks_col_level <- names(checks_compute_level)[checks_compute_level == "col"]
+  # print.
+  lapply(checks_col_level, function (g) {print_checks_collevel(x, g)})
   
   # print checks computed on row level.
-  checks_rowlevel_names <- names(playback$checks)[!names(playback$checks) %in% 
-                                                    x$checks_collevel_names]
-  lapply(checks_rowlevel_names,
+  # identify checks, that are computed on row level.
+  checks_row_level <- names(checks_compute_level)[checks_compute_level == "row"]
+  lapply(checks_row_level,
          function (g, ...) {print_checks_rowlevel(x, g, ...)})
-  cat("-----------------------")
-  cat("\n", "Number of rows, that passed all checks: ", 
-      sum(get_clean_rows(x)), "\n", sep = "")
-  cat("Number of rows, that failed one or more checks: ", 
-      sum(!get_clean_rows(x)), "\n", sep = "")
   
+  cat("\nTest descriptions:\n")
+  lapply(names(x$checks), function (g) {print_test_description(x, g)})
   
   cat("\n[STOP]")
   
   # return invisibly.
   invisible(x)
   
-  
-  
 }
+

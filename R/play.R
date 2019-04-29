@@ -103,16 +103,31 @@ play.data.frame <- function(x, tape) {
   # perform detailed checks.
   detailed_checks <- mapply(play, x, tape, SIMPLIFY = FALSE)
   detailed_checks <- compress_detailed_checks(detailed_checks)
+  
+  # set relevant check metadata.
+  checks_metadata <- list(
+    missing_variable = list(compute_level = "col",
+                            description = "variable observed in training data but missing in new data"),
+    mismatch_class = list(compute_level = "col",
+                          description = "'class' in new data does not match 'class' in training data"),
+    mismatch_levels = list(compute_level = "col",
+                           description = "'levels' in new data and training data are not identical"),
+    new_variable = list(compute_level = "col",
+                        description = "variable observed in new data but not in training data"),
+    outside_range = list(compute_level = "row",
+                         description = "value(s) in new data without recorded range in training data"),
+    new_level = list(compute_level = "row",
+                     description = "one or more new 'level'(s) in new data compared to training data"),
+    new_NA = list(compute_level = "row",
+                  description = "NA(s) observed in new data but not in training data")
+  )
 
   # combine results into one list, the structure of which defines the
   # 'playback' class.
   playback <- list(
     tape = tape,
     duration = duration,
-    checks_collevel_names = c("missing_variable",
-                              "mismatch_class",
-                              "mismatch_levels",
-                              "new_variable"), 
+    checks_metadata = checks_metadata,
     checks = append(detailed_checks,
                     list(new_variable = compress_checks(new_variable),
                          missing_variable = compress_checks(missing_variable),
