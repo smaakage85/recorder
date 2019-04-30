@@ -2,20 +2,20 @@
 % Please edit documentation in R/print.R
 \name{print.playback}
 \alias{print.playback}
-\title{Print a Playback}
+\title{Print Playback}
 \usage{
-\method{print}{playback}(x, first = 10)
+\method{print}{playback}(x, ...)
 }
 \arguments{
-\item{x}{A `playback` object}
+\item{x}{A `playback` object.}
 
-\item{first}{The number of row indices to print pr. check.}
+\item{first}{The number of row indices to print pr. failed check.}
 }
 \value{
 The original object (invisibly)
 }
 \description{
-Print a Playback
+Print Playback
 }
 \author{
 Lars Kjeldgaard

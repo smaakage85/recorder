@@ -1,14 +1,21 @@
 ---
 title: "README"
-author: "Lars Kjeldgaard"
-output:
+author: "lalalal"
+date: "8/1/2019"
+output: 
   md_document:
     variant: markdown_github
 ---
-
-```{r setup, include = FALSE}
+  
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(recordr)
 ```
 
-# recordr <img src="man/figures/logo_hex.png" align ="right", height="180">
+
+# sss <img src="man/figures/logo_hex.png" align ="right", height="180">
+
+`sss` bla bla bla.
+
+## Jon
+bla bla.
+

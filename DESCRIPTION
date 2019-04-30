@@ -1,15 +1,20 @@
 Package: recordr
-Title: Validate New Data
+Title: Tool to Validate New Data when Computing Predictions with a ML Model
 Version: 0.8.0
 Authors@R: 
     person(given = "Lars",
            family = "Kjeldgaard",
            role = c("aut", "cre"),
-           email = "lars_kjeldgaard@hotmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Functionality that enables the user to validate new data for 
-    based on statistics learned from the training data.
-License: What license it uses
+           email = "lars_kjeldgaard@hotmail.com")
+Description: A lightweight toolkit to check and validate new observations 
+    before computing their predictions with a machine learning model. The
+    validation process consists of two steps: (1) estimate/record relevant 
+    parameters and metadata from the training data set for a machine learning 
+    model and (2) run a number of basic tests on a new set of observations 
+    using the recorded parameters.
+URL: https://github.com/smaakage85/recordr
+Depends: R (>= 3.4.0)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
