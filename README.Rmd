@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# recordr <img src="man/figures/logo_hex.png" align="right", height="180" />
+# recordr <img src="man/figures/logo_hex.png" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/smaakage85/customsteps.svg?branch=master)](https://travis-ci.org/smaakage85/recordr)
 

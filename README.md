@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-recordr <img src="man/figures/logo_hex.png" align="right", height="180" />
-==========================================================================
+recordr <img src="man/figures/logo_hex.png" align="right" />
+============================================================
 
 [![Travis-CI Build Status](https://travis-ci.org/smaakage85/customsteps.svg?branch=master)](https://travis-ci.org/smaakage85/recordr)
 
