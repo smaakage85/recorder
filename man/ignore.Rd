@@ -4,14 +4,13 @@
 \alias{ignore}
 \title{Ignore and remove certain checks}
 \usage{
-ignore(checks, tape, ignore_check_names = c("new_variable"),
-  ignore_cols = NULL, ignore_combinations = list(mismatch_class =
-  NULL))
+ignore(checks, variables_newdata, ignore_check_names = NULL,
+  ignore_cols = NULL, ignore_combinations = NULL)
 }
 \arguments{
 \item{checks}{\code{list} with computed checks.}
 
-\item{tape}{\code{data.tape} with recorded statistics.}
+\item{variables_newdata}{\code{character} names of variables in new data.}
 
 \item{ignore_check_names}{\code{character} with names of checks to ignore.}
 

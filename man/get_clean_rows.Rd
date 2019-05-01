@@ -4,9 +4,8 @@
 \alias{get_clean_rows}
 \title{Get Clean Rows}
 \usage{
-get_clean_rows(playback, ignore_check_names = c("new_variable"),
-  ignore_cols = NULL, ignore_combinations = list(mismatch_class =
-  NULL))
+get_clean_rows(playback, ignore_check_names = NULL, ignore_cols = NULL,
+  ignore_combinations = NULL)
 }
 \arguments{
 \item{playback}{\code{playback} to generate violation matrix from.}

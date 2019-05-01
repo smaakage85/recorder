@@ -1,7 +1,7 @@
 #' Ignore and remove certain checks
 #'
 #' @param checks \code{list} with computed checks.
-#' @param tape \code{data.tape} with recorded statistics.
+#' @param variables_newdata \code{character} names of variables in new data.
 #' @param ignore_check_names \code{character} with names of checks to ignore. 
 #' @param ignore_cols \code{character} with names of columns/variables to ignore.
 #' @param ignore_combinations \code{list} with combinations of checks and
@@ -9,10 +9,10 @@
 #'
 #' @return \code{list} with only the relevant checks.
 ignore <- function(checks,
-                   tape,
-                   ignore_check_names = c("new_variable"),
+                   variables_newdata,
+                   ignore_check_names = NULL,
                    ignore_cols = NULL,
-                   ignore_combinations = list(mismatch_class = NULL)) {
+                   ignore_combinations = NULL) {
 
   # ignore _certain checks_.
   checks <- ignore_checks(checks = checks,
@@ -21,12 +21,12 @@ ignore <- function(checks,
   # ignore checks of _certain columns_.
   checks <- ignore_cols(checks = checks,
                         col_names = ignore_cols,
-                        tape = tape)
+                        variables_newdata = variables_newdata)
 
   # ignore _certain combinations of checks and colums_.
   checks <- ignore_combinations(checks = checks,
                                 combinations = ignore_combinations,
-                                tape = tape)
+                                variables_newdata = variables_newdata)
 
   # return checks after removing certain checks.
   checks
@@ -56,7 +56,7 @@ ignore_checks <- function(checks, check_names = c("new_variable")) {
 
 }
 
-ignore_cols <- function(checks, col_names, tape) {
+ignore_cols <- function(checks, col_names, variables_newdata) {
 
   # if NULL, do nothing - just return 'as is'.
   if (is.null(col_names)) return(checks)
@@ -67,7 +67,7 @@ ignore_cols <- function(checks, col_names, tape) {
   }
 
   # does any of these cols have any violations at all?
-  if (!all(col_names %in% names(tape$classes))) {
+  if (!all(col_names %in% variables_newdata)) {
     message("The following columns do not exist in training data, please check: ",
          paste0(col_names[!col_names %in% names(tape$classes)], collapse = ","),
          "\n")
@@ -80,7 +80,7 @@ ignore_cols <- function(checks, col_names, tape) {
 
 }
 
-ignore_combinations <- function(checks, combinations, tape) {
+ignore_combinations <- function(checks, combinations, variables_newdata) {
 
   # if NULL, do nothing - just return 'as is'.
   if (is.null(combinations)) return(checks)
@@ -91,8 +91,25 @@ ignore_combinations <- function(checks, combinations, tape) {
     stop("'combinations' must be a named list with positive length.")
   }
 
+  
   if (length(names(combinations)) > length(unique(names(combinations)))) {
-    stop("Names of combinations list must be unique.")
+    stop("Names of 'combinations' list must be unique.")
+  }
+  
+  # are there any incomplete combinations, where no columns have been selected?
+  incomplete_combinations <- vapply(combinations, 
+                                    length, 
+                                    FUN.VALUE = integer(1)) == 0
+  if (any(incomplete_combinations)) {
+    stop("The following combinations were not complete (no columns selected): ",
+         names(combinations)[which(incomplete_combinations)])
+  }
+
+  # 
+  if (!all(col_names %in% names(variables_newdata))) {
+    stop("The following columns do not exist in new data, please check: ",
+         paste0(col_names[!col_names %in% variables_newdata], collapse = ","),
+         "\n")
   }
 
   # subset only relevant combinations of checks and columns, that are not to be ignored.

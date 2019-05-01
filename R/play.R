@@ -67,6 +67,9 @@ play.data.frame <- function(x, tape) {
   # how many rows in new data.set (="duration")?
   duration <- nrow(x)
   if (duration == 0) {stop("New data set is empty - contains 0 rows.")}
+  
+  # save variable names of variables in new data set.
+  variables <- names(x)
 
   cat("[PLAY]\n\n")
   cat("... playing data.tape on new data with", ncol(x),
@@ -127,6 +130,7 @@ play.data.frame <- function(x, tape) {
   playback <- list(
     tape = tape,
     duration = duration,
+    variables = variables,
     checks_metadata = checks_metadata,
     checks = append(detailed_checks,
                     list(new_variable = compress_checks(new_variable),

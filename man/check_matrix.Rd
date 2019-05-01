@@ -2,10 +2,16 @@
 % Please edit documentation in R/helper_functions.R
 \name{check_matrix}
 \alias{check_matrix}
-\title{import data.table}
+\title{Create Check Matrix}
 \usage{
 check_matrix(x)
 }
+\arguments{
+\item{x}{\code{list} results of tests.}
+}
+\value{
+\code{data.table} with test results as columns.
+}
 \description{
-import data.table
+Create Check Matrix
 }

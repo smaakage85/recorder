@@ -11,9 +11,9 @@
 #' 
 #' @export
 get_violations <- function(playback,
-                           ignore_check_names = c("new_variable"),
+                           ignore_check_names = NULL,
                            ignore_cols = NULL,
-                           ignore_combinations = list(mismatch_class = NULL)) {
+                           ignore_combinations = NULL) {
   
   # validate input.
   if (!inherits(playback, "playback")) {
@@ -22,7 +22,7 @@ get_violations <- function(playback,
   
   # ignore certain checks.
   checks <- ignore(playback$checks,
-                   playback$tape,
+                   playback$variables,
                    ignore_check_names = ignore_check_names,
                    ignore_cols = ignore_cols,
                    ignore_combinations = ignore_combinations)
@@ -79,9 +79,9 @@ get_violations_string <- function(playback,
 #' 
 #' @export
 get_clean_rows <- function(playback,
-                           ignore_check_names = c("new_variable"),
+                           ignore_check_names = NULL,
                            ignore_cols = NULL,
-                           ignore_combinations = list(mismatch_class = NULL)) {
+                           ignore_combinations = NULL) {
   
   # get violation matrix.
   cm <- get_violations(playback = playback,

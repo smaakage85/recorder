@@ -79,7 +79,13 @@ paste_col_with_rows <- function(name, x, first = 10) {
          "]")
 }
 
-#' import data.table
+#' Create Check Matrix
+#' 
+#' @param x \code{list} results of tests.
+#' 
+#' @import data.table
+#' 
+#' @return \code{data.table} with test results as columns.
 check_matrix <- function(x) {
   # convert checks to data.tables and bind them.
   dts <- lapply(x, as.data.table)
