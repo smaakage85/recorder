@@ -69,7 +69,7 @@ ignore_cols <- function(checks, col_names, variables_newdata) {
   # does any of these cols have any violations at all?
   if (!all(col_names %in% variables_newdata)) {
     message("The following columns do not exist in training data, please check: ",
-         paste0(col_names[!col_names %in% names(tape$classes)], collapse = ","),
+         paste0(col_names[!col_names %in% names(tape$class_variables)], collapse = ","),
          "\n")
   }
 

@@ -1,15 +1,28 @@
-#' Play Data Recording on a New Data Set
+#' Validate New Data by Playing a Data Tape on Them
+#' 
+#' Runs a set of validation tests on new data for an existing machine learning 
+#' model. These tests are based on parameters recorded (with 
+#' \code{\link{record}}) from the training data.
+#' 
+#' @param x new data as a whole or just a single variable.
+#' @param ... further arguments passed to or from other methods.
 #'
-#' @param x \code{data.frame} data set to validate.
-#' @param ... all other arguments.
-#'
-#' @return \code{list} relevant statistics used for checking a new data set.
+#' @return \code{list} results from validations tests. The list will inherit
+#' from the \code{data.playback} class when the function is invoked with a 
+#' \code{data.frame} with the new data.
+#' 
 #' @export
-play <- function (x, ...) {
+#' 
+#' @examples
+#' # record data.tape from `iris`.
+#' tape <- record(iris)
+#' # play the tape on newdata.
+#' play(simulate_newdata_iris(), tape)
+play <- function (x, tape, ...) {
   UseMethod("play", x)
 }
 
-play.numeric <- function(x, tape) {
+play.numeric <- function(x, tape, ...) {
 
   # compute checks.
   list(
@@ -19,7 +32,7 @@ play.numeric <- function(x, tape) {
 
 }
 
-play.character <- function(x, tape) {
+play.character <- function(x, tape, ...) {
 
   # compute checks.
   list(
@@ -29,7 +42,7 @@ play.character <- function(x, tape) {
 
 }
 
-play.factor <- function(x, tape) {
+play.factor <- function(x, tape, ...) {
 
   # compute checks.
   list(
@@ -40,7 +53,7 @@ play.factor <- function(x, tape) {
 
 }
 
-play.integer <- function(x, tape) {
+play.integer <- function(x, tape, ...) {
 
   # compute checks.
   list(
@@ -59,7 +72,7 @@ play.default <- function(x, tape) {
 
 }
 
-play.data.frame <- function(x, tape) {
+play.data.frame <- function(x, tape, ...) {
 
   # check, if input belongs to correct class.
   if (!inherits(tape, "data.tape")) {stop("'tape' must belong to 'data.tape' class.")}
@@ -77,23 +90,24 @@ play.data.frame <- function(x, tape) {
 
   # check if there any new variables in new data set, that have not been
   # observed before.
-  new_variable <- as.list(!names(x) %in% names(tape$classes))
+  new_variable <- as.list(!names(x) %in% names(tape$class_variables))
   names(new_variable) <- names(x)
 
   # check if one or more variables are missing from new data set.
-  missing_variable <- as.list(!names(tape$classes) %in% names(x))
-  names(missing_variable) <- names(tape$classes)
+  missing_variable <- as.list(!names(tape$class_variables) %in% names(x))
+  names(missing_variable) <- names(tape$class_variables)
 
   # check if there are any class mismatches.
   variables_to_check <- names(x)[!names(x) %in% c(names(missing_variable)[which(as.logical(missing_variable))],
                                                   names(new_variable)[which(as.logical(new_variable))])]
+  
   # compute classes of these variables in new dataset.
-  classes_newdata <- lapply(x[variables_to_check], class)
+  class_variables_newdata <- lapply(x[variables_to_check], class)
 
   # check for class mismatches.
   mismatch_class <- mapply(function(x,y) {!identical(x,y)},
-                           classes_newdata,
-                           tape$classes[variables_to_check],
+                           class_variables_newdata,
+                           tape$class_variables[variables_to_check],
                            SIMPLIFY = FALSE)
   mismatch_class_names <- variables_to_check[as.logical(mismatch_class)]
   names(mismatch_class) <- variables_to_check
@@ -126,7 +140,7 @@ play.data.frame <- function(x, tape) {
   )
 
   # combine results into one list, the structure of which defines the
-  # 'playback' class.
+  # 'data.playback' class.
   playback <- list(
     tape = tape,
     duration = duration,
@@ -139,7 +153,7 @@ play.data.frame <- function(x, tape) {
   )
 
   # set class.
-  class(playback) <- append("playback", class(playback))
+  class(playback) <- append("data.playback", class(playback))
 
   cat("[STOP]")
 

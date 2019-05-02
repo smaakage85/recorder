@@ -1,6 +1,6 @@
 #' Get Violations
 #'
-#' @param playback \code{playback} to generate violation matrix from.
+#' @param playback \code{data.playback} to generate violation matrix from.
 #' @inheritParams ignore
 #'
 #' @return \code{data.table} with logicals for all of the checks, that one or more
@@ -16,8 +16,8 @@ get_violations <- function(playback,
                            ignore_combinations = NULL) {
   
   # validate input.
-  if (!inherits(playback, "playback")) {
-    stop("'playback' must belong to the 'playback' class.")
+  if (!inherits(playback, "data.playback")) {
+    stop("'playback' must belong to the 'data.playback' class.")
   }
   
   # ignore certain checks.

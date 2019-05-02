@@ -1,14 +1,13 @@
-#' Print Playback
+#' Print Data Playback
 #'
-#' @aliases print.playback
-#' @param x A `playback` object.
+#' @aliases print.data.playback
+#' @param x A `data.playback` object.
 #' @param first The number of row indices to print pr. failed check.
 #'
 #' @return The original object (invisibly)
 #'
-#' @author Lars Kjeldgaard
 #' @export
-print.playback <- function(x, ...) {
+print.data.playback <- function(x, ...) {
 
   cat("[PLAY]\n\n")
 

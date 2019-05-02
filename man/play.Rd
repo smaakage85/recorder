@@ -2,18 +2,28 @@
 % Please edit documentation in R/play.R
 \name{play}
 \alias{play}
-\title{Play Data Recording on a New Data Set}
+\title{Validate New Data by Playing a Data Tape on Them}
 \usage{
-play(x, ...)
+play(x, tape, ...)
 }
 \arguments{
-\item{x}{\code{data.frame} data set to validate.}
+\item{x}{new data as a whole or just a single variable.}
 
-\item{...}{all other arguments.}
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
-\code{list} relevant statistics used for checking a new data set.
+\code{list} results from validations tests. The list will inherit
+from the \code{data.playback} class when the function is invoked with a 
+\code{data.frame} with the new data.
 }
 \description{
-Play Data Recording on a New Data Set
+Runs a set of validation tests on new data for an existing machine learning 
+model. These tests are based on parameters recorded (with 
+\code{\link{record}}) from the training data.
+}
+\examples{
+# record data.tape from `iris`.
+tape <- record(iris)
+# play the tape on newdata.
+play(simulate_newdata_iris(), tape)
 }
