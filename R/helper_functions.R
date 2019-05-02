@@ -25,7 +25,7 @@ compress_checks <- function(x) {
 paste_colnames <- function(x) {
   if (length(x) > 0) {
     paste0(names(x), collapse = ", ")
-  } else {"None."}
+  } else {"None"}
 }
 
 print_checks_collevel <- function(x, name) {
@@ -59,7 +59,7 @@ print_checks_rowlevel <- function(x, name, first = 10) {
 paste_all_cols_with_rows <- function(x, first = 10) {
 
   if (length(x) == 0) {
-    return("None.")
+    return("None")
   }
 
   single_cols <- mapply(paste_col_with_rows, names(x), x, first = first, SIMPLIFY = FALSE)
@@ -112,7 +112,7 @@ print_test_description <- function(pb, name) {
   cat("'", 
       name,
       "': ",
-      pb$checks_metadata[[name]]$description, 
+      pb$checks_meta_data[[name]]$description, 
       "\n",
       sep = "")
   

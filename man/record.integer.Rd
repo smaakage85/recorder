@@ -15,7 +15,7 @@
 \code{list} recorded parameters and meta data.
 }
 \description{
-Records parameters and meta data from vector with integers.
+Records parameters and meta data from \code{integer}.
 }
 \examples{
 record(c(1:10, NA_integer_))

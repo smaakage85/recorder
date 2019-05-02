@@ -9,7 +9,7 @@ get_violations_string(playback, ignore_check_names = c("new_variable"),
   NULL))
 }
 \arguments{
-\item{playback}{\code{playback} to generate violation matrix from.}
+\item{playback}{\code{data.playback} to generate violation matrix from.}
 
 \item{ignore_check_names}{\code{character} with names of checks to ignore.}
 

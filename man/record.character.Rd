@@ -16,7 +16,7 @@
 of the vector are recorded as `levels`.
 }
 \description{
-Records parameters and meta data from character.
+Records parameters and meta data from \code{character}.
 }
 \examples{
 record(letters)

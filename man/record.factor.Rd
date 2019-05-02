@@ -15,7 +15,7 @@
 \code{list} recorded parameters and meta data.
 }
 \description{
-Records parameters and meta data from factor.
+Records parameters and meta data from \code{factor}.
 }
 \examples{
 record(iris$Species)

@@ -22,7 +22,7 @@ record <- function (x, ...) {
 
 #' Record Parameters and Meta Data from Numeric
 #'
-#' Records parameters and meta data from numeric vector.
+#' Records parameters and meta data from \code{numeric}.
 #' 
 #' @param x \code{numeric}
 #' @param ... all further arguments.
@@ -48,7 +48,7 @@ record.numeric <- function(x, ...) {
 
 #' Record Parameters and Meta Data from Integer
 #'
-#' Records parameters and meta data from vector with integers.
+#' Records parameters and meta data from \code{integer}.
 #' 
 #' @param x \code{integer}
 #' @param ... all further arguments.
@@ -74,7 +74,7 @@ record.integer <- function(x, ...) {
 
 #' Record Parameters and Meta Data from Factor
 #'
-#' Records parameters and meta data from factor.
+#' Records parameters and meta data from \code{factor}.
 #' 
 #' @param x \code{factor}
 #' @param ... all further arguments.
@@ -99,7 +99,7 @@ record.factor <- function(x, ...) {
 
 #' Record Parameters and Meta Data from Character
 #'
-#' Records parameters and meta data from character.
+#' Records parameters and meta data from \code{character}.
 #' 
 #' @param x \code{character}
 #' @param ... all further arguments.
@@ -168,7 +168,7 @@ record.default <- function(x, ...) {
 record.data.frame <- function(x, verbose = TRUE, ...) {
 
   if (verbose) {
-    cat("[RECORD]\n\n")
+    cat("\n[RECORD]\n\n")
     cat("... recording metadata and statistics for", ncol(x), 
         "columns and", nrow(x), "rows... \n\n")
   }

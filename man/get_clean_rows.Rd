@@ -8,7 +8,7 @@ get_clean_rows(playback, ignore_check_names = NULL, ignore_cols = NULL,
   ignore_combinations = NULL)
 }
 \arguments{
-\item{playback}{\code{playback} to generate violation matrix from.}
+\item{playback}{\code{data.playback} to generate violation matrix from.}
 
 \item{ignore_check_names}{\code{character} with names of checks to ignore.}
 

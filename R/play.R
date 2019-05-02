@@ -4,27 +4,45 @@
 #' model. These tests are based on parameters recorded (with 
 #' \code{\link{record}}) from the training data.
 #' 
-#' @param x new data as a whole or just a single variable.
+#' @param x \code{data.frame} new data.
 #' @param ... further arguments passed to or from other methods.
+#' @param tape \code{data.tape} parameters and meta data recorded from 
+#' training data. 
 #'
-#' @return \code{list} results from validations tests. The list will inherit
-#' from the \code{data.playback} class when the function is invoked with a 
-#' \code{data.frame} with the new data.
+#' @return \code{data.playback} results from validations tests. The list will 
+#' inherit from the \code{data.playback} class.
 #' 
 #' @export
 #' 
 #' @examples
-#' # record data.tape from `iris`.
+#' # record tape from `iris`.
 #' tape <- record(iris)
-#' # play the tape on newdata.
-#' play(simulate_newdata_iris(), tape)
+#' # simulate new data.
+#' newdata <- simulate_newdata_iris()
+#' # validate new data by playing new tape on it.
+#' play(newdata, tape)
 play <- function (x, tape, ...) {
   UseMethod("play", x)
 }
 
+#' Validate Numeric
+#'
+#' Runs a set of validation tests on a \code{numeric} in new data. These tests
+#' are based on parameters recorded (with \code{\link{record}}) from the 
+#' training data.
+#' 
+#' @param x \code{numeric} from new data.
+#' @param ... all further arguments.
+#' @param tape \code{list} parameters and meta data recorded from training data. 
+#'
+#' @method play numeric
+#' 
+#' @export
+#' 
+#' @return \code{list} results from validations tests.
 play.numeric <- function(x, tape, ...) {
 
-  # compute checks.
+  # run tests.
   list(
     outside_range = !is.na(x) & (x < tape$min | x > tape$max),
     new_NA = !tape$any_NA & is.na(x)
@@ -32,9 +50,24 @@ play.numeric <- function(x, tape, ...) {
 
 }
 
+#' Validate Character
+#'
+#' Runs a set of validation tests on a \code{character} in new data. These tests
+#' are based on parameters recorded (with \code{\link{record}}) from the 
+#' training data.
+#' 
+#' @param x \code{character} from new data.
+#' @param ... all further arguments.
+#' @param tape \code{list} parameters and meta data recorded from training data. 
+#'
+#' @method play character
+#' 
+#' @export
+#' 
+#' @return \code{list} results from validations tests.
 play.character <- function(x, tape, ...) {
 
-  # compute checks.
+  # run tests.
   list(
     new_NA = !tape$any_NA & is.na(x),
     new_level = !is.na(x) & (!x %in% tape$levels)
@@ -42,9 +75,24 @@ play.character <- function(x, tape, ...) {
 
 }
 
+#' Validate Factor
+#'
+#' Runs a set of validation tests on a \code{factor} in new data. These tests
+#' are based on parameters recorded (with \code{\link{record}}) from the 
+#' training data.
+#' 
+#' @param x \code{factor} from new data.
+#' @param ... all further arguments.
+#' @param tape \code{list} parameters and meta data recorded from training data. 
+#'
+#' @method play factor
+#' 
+#' @export
+#' 
+#' @return \code{list} results from validations tests.
 play.factor <- function(x, tape, ...) {
 
-  # compute checks.
+  # run tests.
   list(
     mismatch_levels = !identical(levels(x), tape$levels),
     new_NA = !tape$any_NA & is.na(x),
@@ -53,9 +101,22 @@ play.factor <- function(x, tape, ...) {
 
 }
 
+#' Validate Integer
+#'
+#' Runs a set of validation tests on a \code{integer} in new data. These tests
+#' are based on parameters recorded (with \code{\link{record}}) from the 
+#' training data.
+#' 
+#' @param x \code{integer} from new data.
+#' @param ... all further arguments.
+#' @param tape \code{list} parameters and meta data recorded from training data. 
+#' 
+#' @export
+#' 
+#' @return \code{list} results from validations tests.
 play.integer <- function(x, tape, ...) {
 
-  # compute checks.
+  # run tests.
   list(
     outside_range = !is.na(x) & (x < tape$min | x > tape$max),
     new_NA = !tape$any_NA & is.na(x)
@@ -63,19 +124,54 @@ play.integer <- function(x, tape, ...) {
 
 }
 
-play.default <- function(x, tape) {
+#' Validate Variable
+#'
+#' Runs a set of validation tests on variable in new data. These tests
+#' are based on parameters recorded (with \code{\link{record}}) from the 
+#' training data.
+#' 
+#' @param x anything.
+#' @param ... all further arguments.
+#' @param tape \code{list} parameters and meta data recorded from training data. 
+#'
+#' @method play default
+#' 
+#' @export
+#' 
+#' @return \code{list} results from validations tests.
+play.default <- function(x, tape, ...) {
 
-  # compute checks.
+  # run tests.
   list(
     new_NA = !tape$any_NA & is.na(x)
   )
 
 }
 
-play.data.frame <- function(x, tape, ...) {
+#' Validate New Data by Playing a Data Tape on Them
+#' 
+#' Runs a set of validation tests on new data for an existing machine learning 
+#' model. These tests are based on parameters recorded (with 
+#' \code{\link{record}}) from the training data.
+#' 
+#' @param x \code{data.frame} new data.
+#' @param ... further arguments passed to or from other methods.
+#' @param tape \code{data.tape} parameters and meta data recorded from 
+#' training data. 
+#' @param verbose \code{logical} should messages be printed?
+#'
+#' @method play data.frame
+#' 
+#' @export
+#' 
+#' @return \code{data.playback} results from validations tests. The list will 
+#' inherit from the \code{data.playback}.
+play.data.frame <- function(x, tape, verbose = TRUE, ...) {
 
   # check, if input belongs to correct class.
-  if (!inherits(tape, "data.tape")) {stop("'tape' must belong to 'data.tape' class.")}
+  if (!inherits(tape, "data.tape")) {
+    stop("'tape' must belong to 'data.tape' class.")
+    }
 
   # how many rows in new data.set (="duration")?
   duration <- nrow(x)
@@ -84,9 +180,11 @@ play.data.frame <- function(x, tape, ...) {
   # save variable names of variables in new data set.
   variables <- names(x)
 
-  cat("[PLAY]\n\n")
-  cat("... playing data.tape on new data with", ncol(x),
+  if (verbose) {
+    cat("\n[PLAY]\n\n")
+    cat("... playing data.tape on new data with", ncol(x),
       "columns and", nrow(x), "rows ...\n\n")
+  }
 
   # check if there any new variables in new data set, that have not been
   # observed before.
@@ -121,8 +219,8 @@ play.data.frame <- function(x, tape, ...) {
   detailed_checks <- mapply(play, x, tape, SIMPLIFY = FALSE)
   detailed_checks <- compress_detailed_checks(detailed_checks)
   
-  # set relevant check metadata.
-  checks_metadata <- list(
+  # set meta data for all checks.
+  checks_meta_data <- list(
     missing_variable = list(compute_level = "col",
                             description = "variable(s) observed in training data but missing in new data"),
     mismatch_class = list(compute_level = "col",
@@ -134,7 +232,7 @@ play.data.frame <- function(x, tape, ...) {
     outside_range = list(compute_level = "row",
                          description = "value(s) in new data without recorded range in training data"),
     new_level = list(compute_level = "row",
-                     description = "one or more new 'level'(s) in new data compared to training data"),
+                     description = "one or more new 'level'(s) in new data compared to training data. Characters treated as factors."),
     new_NA = list(compute_level = "row",
                   description = "NA(s) observed in new data but not in training data")
   )
@@ -145,7 +243,7 @@ play.data.frame <- function(x, tape, ...) {
     tape = tape,
     duration = duration,
     variables = variables,
-    checks_metadata = checks_metadata,
+    checks_meta_data = checks_meta_data,
     checks = append(detailed_checks,
                     list(new_variable = compress_checks(new_variable),
                          missing_variable = compress_checks(missing_variable),
@@ -155,7 +253,9 @@ play.data.frame <- function(x, tape, ...) {
   # set class.
   class(playback) <- append("data.playback", class(playback))
 
-  cat("[STOP]")
+  if (verbose) {
+    cat("[STOP]\n")
+  }
 
   playback
 

@@ -15,7 +15,7 @@
 \code{list} recorded parameters and meta data.
 }
 \description{
-Records parameters and meta data from numeric vector.
+Records parameters and meta data from \code{numeric}.
 }
 \examples{
 record(iris$Sepal.Length)
