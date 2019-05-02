@@ -9,7 +9,7 @@
 #' @author Lars Kjeldgaard
 #' @export
 print.playback <- function(x, ...) {
- 
+
   cat("[PLAY]\n\n")
 
   # Number of rows:

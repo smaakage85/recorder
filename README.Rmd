@@ -16,14 +16,14 @@ knitr::opts_chunk$set(
 
 [![Travis-CI Build Status](https://travis-ci.org/smaakage85/customsteps.svg?branch=master)](https://travis-ci.org/smaakage85/recordr)
 
-`recordr` is a lightweight toolkit to check and validate new observations 
-before computing their predictions with a machine learning model. The
-validation process consists of two steps: 
+`recordr` is a lightweight toolkit to test and validate new observations
+when predicting them with a Machine Learning model. The validation process 
+consists of two steps: 
 
-1. estimate/record relevant parameters and metadata from the training data set for a machine learning 
-model
-2. run a number of basic tests on a new set of observations 
-using the recorded parameters. 
+1. estimate/record relevant parameters and metadata from the training data set 
+for a machine learning model
+2. run a number of basic tests on the new set of observations using the recorded 
+parameters 
 
 ## Installation
 

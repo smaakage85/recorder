@@ -82,7 +82,7 @@ get_clean_rows <- function(playback,
                            ignore_check_names = NULL,
                            ignore_cols = NULL,
                            ignore_combinations = NULL) {
-  
+
   # get violation matrix.
   cm <- get_violations(playback = playback,
                        ignore_check_names = ignore_check_names,

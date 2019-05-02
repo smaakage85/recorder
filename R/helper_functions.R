@@ -89,6 +89,9 @@ paste_col_with_rows <- function(name, x, first = 10) {
 check_matrix <- function(x) {
   # convert checks to data.tables and bind them.
   dts <- lapply(x, as.data.table)
+  # subset elements with # rows > 0.
+  dts <- dts[vapply(dts, function(x) {length(x) > 0}, FUN.VALUE = logical(1))]
+  # bind columns of all data.tables to just one data.table.
   do.call(cbind, dts)
 }
 

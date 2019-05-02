@@ -2,18 +2,26 @@
 % Please edit documentation in R/record.R
 \name{record}
 \alias{record}
-\title{Record Data Statistics}
+\title{Record Parameters and Meta Data from Training Data}
 \usage{
-record(x, ...)
+record(x)
 }
 \arguments{
-\item{x}{what variable or dataset to record/learn statistics from.}
-
-\item{...}{all other arguments.}
+\item{x}{data set or variable to record parameters and other relevant 
+metadata from.}
 }
 \value{
-\code{list} relevant statistics used for validating a new data set.
+\code{list} recorded statistics and metadata. The list will inherit
+from the \code{data.tape} class when `record` is invoked with a 
+\code{data.frame}.
 }
 \description{
-Record Data Statistics
+Records relevant meta data and parameters from training data for a machine 
+learning model. The recorded data can then be used to compute a set of 
+validation tests on new data with the `play()` function.
+}
+\examples{
+record(iris)
+record(iris$Sepal.Width)
+record(iris$Species)
 }

@@ -1,17 +1,31 @@
-#' Record Data Statistics
+#' Record Parameters and Meta Data from Training Data
+#' 
+#' Records relevant meta data and parameters from training data for a machine 
+#' learning model. The recorded data can then be used to compute a set of 
+#' validation tests on new data with the `play()` function.
 #'
-#' @param x what variable or dataset to record/learn statistics from.
-#' @param ... all other arguments.
+#' @param x data set or variable to record parameters and other relevant 
+#' metadata from.
 #'
-#' @return \code{list} relevant statistics used for validating a new data set.
+#' @return \code{list} recorded statistics and metadata. The list will inherit
+#' from the \code{data.tape} class when `record` is invoked with a 
+#' \code{data.frame}.
+#' 
 #' @export
-record <- function (x, ...) {
+#' @examples
+#' # The typical use case for this function is applications on data.frames.
+#' record(iris)
+#' 
+#' # But you can also use it 
+#' record(iris$Sepal.Width)
+#' record(iris$Species)
+record <- function (x) {
   UseMethod("record", x)
 }
 
 record.numeric <- function(x) {
 
-  # record statistics.
+  # record parameters.
   list(
     min = min(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
