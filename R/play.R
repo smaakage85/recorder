@@ -100,7 +100,7 @@ play.data.frame <- function(x, tape) {
 
   # subset columns for detailed checks.
   variables_to_check <- variables_to_check[!variables_to_check %in% mismatch_class_names]
-  tape <- tape$stats[variables_to_check]
+  tape <- tape$parameters[variables_to_check]
   x <- x[variables_to_check]
 
   # perform detailed checks.

@@ -4,24 +4,24 @@
 \alias{record}
 \title{Record Parameters and Meta Data from Training Data}
 \usage{
-record(x)
+record(x, ...)
 }
 \arguments{
-\item{x}{data set or variable to record parameters and other relevant 
-metadata from.}
+\item{x}{training data or just a single variable to record parameters and 
+other relevant metadata from.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
-\code{list} recorded statistics and metadata. The list will inherit
-from the \code{data.tape} class when `record` is invoked with a 
+\code{list} recorded parameters and metadata. The list will inherit
+from the \code{data.tape} class when the function is invoked with a 
 \code{data.frame}.
 }
 \description{
 Records relevant meta data and parameters from training data for a machine 
 learning model. The recorded data can then be used to compute a set of 
-validation tests on new data with the `play()` function.
+validation tests on new data with \code{\link{play}}.
 }
 \examples{
 record(iris)
-record(iris$Sepal.Width)
-record(iris$Species)
 }
