@@ -2,26 +2,26 @@
 % Please edit documentation in R/play.R
 \name{play}
 \alias{play}
-\title{Validate New Data by Playing a Data Tape on Them}
+\title{Validate New Data by Playing a Data Tape on It}
 \usage{
-play(x, tape, ...)
+play(tape, newdata, verbose = TRUE)
 }
 \arguments{
-\item{x}{\code{data.frame} new data.}
-
 \item{tape}{\code{data.tape} parameters and meta data recorded from 
 training data.}
 
-\item{...}{further arguments passed to or from other methods.}
+\item{newdata}{\code{data.frame} new data to be predicted with an existing 
+machine learning model.}
+
+\item{verbose}{\code{logical} should messages be printed?}
 }
 \value{
-\code{data.playback} results from validations tests. The list will 
-inherit from the \code{data.playback} class.
+\code{data.playback} results from validations tests.
 }
 \description{
-Runs a set of validation tests on new data for an existing machine learning 
-model. These tests are based on parameters recorded (with 
-\code{\link{record}}) from the training data.
+Runs a set of validation tests on new data to be predicted with an existing 
+machine learning model. These tests are based on parameters recorded (with 
+\code{\link{record}}) from training data.
 }
 \examples{
 # record tape from `iris`.
@@ -29,5 +29,5 @@ tape <- record(iris)
 # simulate new data.
 newdata <- simulate_newdata_iris()
 # validate new data by playing new tape on it.
-play(newdata, tape)
+play(tape, newdata)
 }
