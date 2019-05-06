@@ -23,3 +23,7 @@ Runs a set of validation tests on a variable in new data. These tests are
 based on parameters recorded (with \code{\link{record}}) from the training 
 data.
 }
+\details{
+Look up the descriptions of the validation tests with 
+\code{\link{get_test_descriptions}}.
+}

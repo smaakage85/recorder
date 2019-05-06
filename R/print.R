@@ -7,27 +7,38 @@
 #' @return The original object (invisibly)
 #'
 #' @export
+#' 
+#' @examples
+#' # record tape from `iris`.
+#' tape <- record(iris)
+#' # load data.
+#' data(iris_newdata)
+#' # validate new data by playing new tape on it.
+#' playback <- play(tape, iris_newdata)
+#' # print it.
+#' print(playback)
 print.data.playback <- function(x, ...) {
 
   cat("\n[PLAY]\n\n")
 
-  # Number of rows:
+  # Short summary:
   cat("# of rows in new data: ", x$nrow_newdata, "\n", sep = "")
   cat("# of rows passing all tests: ", 
       sum(get_clean_rows(x)), "\n", sep = "")
   cat("# of rows failing one or more tests: ", 
       sum(!get_clean_rows(x)), "\n", sep = "")
   cat("\n", "Tests (failed):\n", sep = "")
-  # print tests computed on column level.
-  # identify tests, that are computed on column level.
+  
+  # print tests evaluated on column level.
+  # first, identify tests, that are evaluated on column level.
   tests_evaluate_level <- vapply(get("tests_meta_data"), '[[', "evaluate_level", 
                                  FUN.VALUE = character(1))
   tests_col_level <- names(tests_evaluate_level)[tests_evaluate_level == "col"]
-  # print.
+  # print test results.
   lapply(tests_col_level, function (g) {print_tests_collevel(x, g)})
   
-  # print tests computed on row level.
-  # identify tests, that are computed on row level.
+  # print tests evaluated on row level.
+  # first, identify tests, that are evaluated on row level.
   tests_row_level <- names(tests_evaluate_level)[tests_evaluate_level == "row"]
   lapply(tests_row_level,
          function (g, ...) {print_tests_rowlevel(x, g, ...)})

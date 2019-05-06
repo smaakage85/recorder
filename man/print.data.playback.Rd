@@ -17,3 +17,13 @@ The original object (invisibly)
 \description{
 Print Data Playback
 }
+\examples{
+# record tape from `iris`.
+tape <- record(iris)
+# load data.
+data(iris_newdata)
+# validate new data by playing new tape on it.
+playback <- play(tape, iris_newdata)
+# print it.
+print(playback)
+}

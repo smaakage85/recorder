@@ -160,3 +160,19 @@ print_test_description <- function(pb, name) {
   invisible()
   
 }
+
+#### get_test_descriptions ####
+
+#' Get Descriptions of Validation Tests
+#'
+#' @return \code{data.frame} test descriptions.
+#' @export
+#'
+#' @examples
+#' get_test_descriptions()
+get_test_descriptions <- function() {
+  descriptions <- lapply(tests_meta_data, '[[', "description")
+  descriptions_df <- as.data.frame(as.matrix(descriptions))
+  names(descriptions_df) <- "Description"
+  descriptions_df
+}

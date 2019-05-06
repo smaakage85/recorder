@@ -52,11 +52,17 @@ get_failed_tests <- function(playback,
 
 #' Get Failed Tests as a String
 #'
+#' Concatenates information of the tests, that did NOT pass into one single
+#' character vector.
+#' 
 #' @inheritParams get_failed_tests
 #'
 #' @return \code{character} with one entry for each row in new data. Each
 #' entry concatenates information of the tests, that did NOT pass for the
 #' corresponding row in new data.
+#' 
+#' @details Look up the descriptions of the validation tests with 
+#' \code{\link{get_test_descriptions}}.
 #' 
 #' @export
 #' 
@@ -96,6 +102,9 @@ get_failed_tests_string <- function(playback,
 #'
 #' @inheritParams get_failed_tests
 #'
+#' @details Look up the descriptions of the validation tests with 
+#' \code{\link{get_test_descriptions}}.
+#' 
 #' @return \code{logical} with the same length as the number of rows in new 
 #' data. The value is TRUE, if the row passed all tests, otherwise FALSE.
 #' 

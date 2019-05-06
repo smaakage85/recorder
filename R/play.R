@@ -4,6 +4,9 @@
 #' based on parameters recorded (with \code{\link{record}}) from the training 
 #' data.
 #' 
+#' @details Look up the descriptions of the validation tests with 
+#' \code{\link{get_test_descriptions}}.
+#' 
 #' @param x variable in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
@@ -157,6 +160,9 @@ run_validation_tests.default <- function(x, parameters, ...) {
 #' Runs a set of validation tests on new data to be predicted with an existing 
 #' machine learning model. These tests are based on parameters recorded (with 
 #' \code{\link{record}}) from training data.
+#' 
+#' @details Look up the descriptions of the validation tests with 
+#' \code{\link{get_test_descriptions}}.
 #' 
 #' @param tape \code{data.tape} parameters and meta data recorded from 
 #' training data. 

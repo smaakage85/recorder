@@ -6,6 +6,9 @@
 #' @param ignore_cols \code{character} with names of columns/variables to ignore.
 #' @param ignore_combinations \code{list} with combinations of tests and
 #' columns to ignore.
+#' 
+#' @details Look up the descriptions of the validation tests with 
+#' \code{\link{get_test_descriptions}}.
 #'
 #' @return \code{list} with only the relevant tests.
 ignore <- function(tests,
