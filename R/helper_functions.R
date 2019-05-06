@@ -93,7 +93,7 @@ compress_tests <- function(x) {
 paste_colnames <- function(x) {
   if (length(x) > 0) {
     paste0(names(x), collapse = ", ")
-  } else {"all columns and rows passing"}
+  } else {"no failures"}
 }
 
 print_tests_collevel <- function(x, name) {
@@ -127,7 +127,7 @@ print_tests_rowlevel <- function(x, name, first = 10) {
 paste_all_cols_with_rows <- function(x, first = 10) {
 
   if (length(x) == 0) {
-    return("all columns and rows passing")
+    return("no failures")
   }
 
   single_cols <- mapply(paste_col_with_rows, names(x), x, first = first, SIMPLIFY = FALSE)

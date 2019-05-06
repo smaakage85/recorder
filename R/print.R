@@ -44,7 +44,8 @@ print.data.playback <- function(x, ...) {
          function (g, ...) {print_tests_rowlevel(x, g, ...)})
   
   cat("\nTest descriptions:\n")
-  lapply(names(x$tests), function (g) {print_test_description(x, g)})
+  lapply(names(get("tests_meta_data")), 
+         function (g) {print_test_description(x, g)})
   
   cat("\n[STOP]")
   
