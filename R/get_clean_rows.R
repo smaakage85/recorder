@@ -43,7 +43,7 @@ get_failed_tests <- function(playback,
   # create data.frame with test results.
   test_results_df <- create_test_results_df(tests)
   
-  # return any_failures = FALSE, if there are no violations.
+  # return any_failures = FALSE, if there are no test failures.
   if (nrow(test_results_df) == 0) {
     return(data.table(any_failures = rep(FALSE, playback$nrow_newdata)))
   } else {test_results_df}

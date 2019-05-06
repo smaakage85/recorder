@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{create_test_results_df}
 \alias{create_test_results_df}
-\title{Create Data Frame Test Results}
+\title{Create Data Frame with Test Results}
 \usage{
 create_test_results_df(x)
 }
@@ -13,5 +13,5 @@ create_test_results_df(x)
 \code{data.table} with test results as columns.
 }
 \description{
-Create Data Frame Test Results
+Create Data Frame with Test Results
 }
