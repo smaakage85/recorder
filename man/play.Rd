@@ -26,8 +26,8 @@ machine learning model. These tests are based on parameters recorded (with
 \examples{
 # record tape from `iris`.
 tape <- record(iris)
-# simulate new data.
-newdata <- simulate_newdata_iris()
+# load data.
+data(iris_newdata)
 # validate new data by playing new tape on it.
-play(tape, newdata)
+play(tape, iris_newdata)
 }

@@ -1,39 +1,39 @@
-compress_detailed_checks <- function(dc) {
+compress_detailed_tests <- function(dc) {
 
-  # order list by checks (in stead of columns).
-  dc <- order_by_checks(dc)
+  # order list by test names (in stead of columns).
+  dc <- order_by_tests(dc)
 
-  # compress checks.
-  lapply(dc, compress_checks)
+  # compress tests.
+  lapply(dc, compress_tests)
 
 }
 
-order_by_checks <- function(dc) {
-  # extract unique check names.
-  checks <- unique(do.call(c, lapply(dc, names)))
-  # extract checks.
-  by_checks <- lapply(checks, function (x) {lapply(dc, '[[', x)})
+order_by_tests <- function(dc) {
+  # extract unique test names.
+  tests <- unique(do.call(c, lapply(dc, names)))
+  # extract tests.
+  by_tests <- lapply(tests, function (x) {lapply(dc, '[[', x)})
   # set names.
-  names(by_checks) <- checks
-  by_checks
+  names(by_tests) <- tests
+  by_tests
 }
 
-compress_checks <- function(x) {
+compress_tests <- function(x) {
   x[vapply(x, any, logical(1))]
 }
 
 paste_colnames <- function(x) {
   if (length(x) > 0) {
     paste0(names(x), collapse = ", ")
-  } else {"None"}
+  } else {"all columns and rows passing"}
 }
 
-print_checks_collevel <- function(x, name) {
+print_tests_collevel <- function(x, name) {
   
   cat("> '", 
       name,
       "': ",
-      paste_colnames(x$checks[[name]]), 
+      paste_colnames(x$tests[[name]]), 
       "\n",
       sep = "")
   
@@ -42,12 +42,12 @@ print_checks_collevel <- function(x, name) {
   
 }
 
-print_checks_rowlevel <- function(x, name, first = 10) {
+print_tests_rowlevel <- function(x, name, first = 10) {
   
   cat("> '", 
       name,
       "': ",
-      paste_all_cols_with_rows(x$checks[[name]], first = first), 
+      paste_all_cols_with_rows(x$tests[[name]], first = first), 
       "\n",
       sep = "")
   
@@ -59,7 +59,7 @@ print_checks_rowlevel <- function(x, name, first = 10) {
 paste_all_cols_with_rows <- function(x, first = 10) {
 
   if (length(x) == 0) {
-    return("None")
+    return("all columns and rows passing")
   }
 
   single_cols <- mapply(paste_col_with_rows, names(x), x, first = first, SIMPLIFY = FALSE)
@@ -79,15 +79,15 @@ paste_col_with_rows <- function(name, x, first = 10) {
          "]")
 }
 
-#' Create Check Matrix
+#' Create Data Frame Test Results
 #' 
 #' @param x \code{list} results of tests.
 #' 
 #' @import data.table
 #' 
 #' @return \code{data.table} with test results as columns.
-check_matrix <- function(x) {
-  # convert checks to data.tables and bind them.
+create_test_results_df <- function(x) {
+  # convert tests to data.tables and bind them.
   dts <- lapply(x, as.data.table)
   # subset elements with # rows > 0.
   dts <- dts[vapply(dts, function(x) {length(x) > 0}, FUN.VALUE = logical(1))]
@@ -95,16 +95,16 @@ check_matrix <- function(x) {
   do.call(cbind, dts)
 }
 
-write_violations <- function (violations) {
-  # create violation matrix with colnames as entries.
-  vm  <- matrix(data  = t(rep(    x = paste0(colnames(violations), ";"),
-                                  times = nrow(violations))),
-                ncol  = ncol(violations),
+concatenate_test_failures <- function(test_failures) {
+  # create test failures matrix with colnames as entries.
+  tf  <- matrix(data  = t(rep(    x = paste0(colnames(test_failures), ";"),
+                                  times = nrow(test_failures))),
+                ncol  = ncol(test_failures),
                 byrow = TRUE)
   # replace FALSE with empty string.
-  vm[violations == FALSE] <- ""
-  # concatenate warnings to one string pr. row.
-  do.call(what = paste0, args = data.frame(vm))
+  tf[test_failures == FALSE] <- ""
+  # concatenate failures to one string pr. row.
+  do.call(what = paste0, args = data.frame(tf))
 }
 
 print_test_description <- function(pb, name) {
@@ -112,7 +112,7 @@ print_test_description <- function(pb, name) {
   cat("'", 
       name,
       "': ",
-      pb$checks_meta_data[[name]]$description, 
+      get("tests_meta_data")[[name]]$description, 
       "\n",
       sep = "")
   

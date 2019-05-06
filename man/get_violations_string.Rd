@@ -4,23 +4,13 @@
 \alias{get_violations_string}
 \title{Get Violations as a String}
 \usage{
-get_violations_string(playback, ignore_check_names = c("new_variable"),
+get_violations_string(playback, ignore_test_names = c("new_variable"),
   ignore_cols = NULL, ignore_combinations = list(mismatch_class =
   NULL))
 }
-\arguments{
-\item{playback}{\code{data.playback} to generate violation matrix from.}
-
-\item{ignore_check_names}{\code{character} with names of checks to ignore.}
-
-\item{ignore_cols}{\code{character} with names of columns/variables to ignore.}
-
-\item{ignore_combinations}{\code{list} with combinations of checks and
-columns to ignore.}
-}
 \value{
 \code{character} with one entry for each row in new data. Each
-entry concatenates information of the checks, that did NOT pass for the
+entry concatenates information of the tests, that did NOT pass for the
 corresponding row in new data.
 }
 \description{

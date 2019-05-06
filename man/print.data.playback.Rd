@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A `data.playback` object.}
 
-\item{first}{The number of row indices to print pr. failed check.}
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 The original object (invisibly)

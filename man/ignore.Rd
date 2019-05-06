@@ -2,26 +2,26 @@
 % Please edit documentation in R/ignore.R
 \name{ignore}
 \alias{ignore}
-\title{Ignore and remove certain checks}
+\title{Ignore and remove certain tests}
 \usage{
-ignore(checks, variables_newdata, ignore_check_names = NULL,
+ignore(tests, variables_newdata, ignore_tests = NULL,
   ignore_cols = NULL, ignore_combinations = NULL)
 }
 \arguments{
-\item{checks}{\code{list} with computed checks.}
+\item{tests}{\code{list} with computed tests.}
 
 \item{variables_newdata}{\code{character} names of variables in new data.}
 
-\item{ignore_check_names}{\code{character} with names of checks to ignore.}
+\item{ignore_tests}{\code{character} with names of tests to ignore.}
 
 \item{ignore_cols}{\code{character} with names of columns/variables to ignore.}
 
-\item{ignore_combinations}{\code{list} with combinations of checks and
+\item{ignore_combinations}{\code{list} with combinations of tests and
 columns to ignore.}
 }
 \value{
-\code{list} with only the relevant checks.
+\code{list} with only the relevant tests.
 }
 \description{
-Ignore and remove certain checks
+Ignore and remove certain tests
 }

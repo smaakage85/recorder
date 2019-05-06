@@ -4,7 +4,7 @@
 \alias{run_validation_tests.numeric}
 \title{Run Validation Tests on Numeric}
 \usage{
-\method{run_validations_tests}{numeric}(x, parameters, ...)
+\method{run_validation_tests}{numeric}(x, parameters, ...)
 }
 \arguments{
 \item{x}{\code{numeric} in new data.}

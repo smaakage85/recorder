@@ -1,95 +1,130 @@
-#' Get Violations
+#' Get Failed Tests
 #'
-#' @param playback \code{data.playback} to generate violation matrix from.
+#' @param playback \code{data.playback} to extract failed tests from.
 #' @inheritParams ignore
 #'
-#' @return \code{data.table} with logicals for all of the checks, that one or more
-#' rows failed to pass. A failed check for any given row is equivalent to a value
-#' of TRUE. If all checks passed, the function will simply return a matrix with
-#' one column, 'any_violations', that is always FALSE, to ensure that the output
-#' is stable and consistent.
+#' @return \code{data.table} with test results as logicals for all of the tests
+#' with at least one failure. A failed test for any given row is 
+#' equivalent to a value of TRUE. If all tests passed, the function will simply 
+#' return a data.table with one column, 'any_failures', that is always FALSE, 
+#' to ensure that the output is (type) stable and consistent.
 #' 
 #' @export
-get_violations <- function(playback,
-                           ignore_check_names = NULL,
-                           ignore_cols = NULL,
-                           ignore_combinations = NULL) {
+#' 
+#' @examples
+#' #' # record tape from `iris`.
+#' tape <- record(iris)
+#' # load data.
+#' data(iris_newdata)
+#' # validate new data by playing new tape on it.
+#' playback <- play(tape, iris_newdata)
+#' 
+#' get_failed_tests(playback)
+#' get_failed_tests(playback, ignore_tests = "outside_range")
+#' get_failed_tests(playback, ignore_cols = "junk")
+#' get_failed_tests(playback, ignore_combinations = list(outside_range = "Sepal.Width"))
+get_failed_tests <- function(playback,
+                             ignore_tests = NULL,
+                             ignore_cols = NULL,
+                             ignore_combinations = NULL) {
   
   # validate input.
   if (!inherits(playback, "data.playback")) {
     stop("'playback' must belong to the 'data.playback' class.")
   }
   
-  # ignore certain checks.
-  checks <- ignore(playback$checks,
-                   playback$variables,
-                   ignore_check_names = ignore_check_names,
-                   ignore_cols = ignore_cols,
-                   ignore_combinations = ignore_combinations)
+  # ignore certain tests.
+  tests <- ignore(playback$tests,
+                  playback$variables,
+                  ignore_tests = ignore_tests,
+                  ignore_cols = ignore_cols,
+                  ignore_combinations = ignore_combinations)
   
-  # compute violation matrix.
-  cm <- check_matrix(checks)
+  # create data.frame with test results.
+  test_results_df <- create_test_results_df(tests)
   
-  # return any_violations = FALSE, if there are no violations.
-  if (nrow(cm) == 0) {
-    return(data.table(any_violations = rep(FALSE, playback$duration)))
-  } else {cm}
+  # return any_failures = FALSE, if there are no violations.
+  if (nrow(test_results_df) == 0) {
+    return(data.table(any_failures = rep(FALSE, playback$nrow_newdata)))
+  } else {test_results_df}
   
 }
 
-#' Get Violations as a String
+#' Get Failed Tests as a String
 #'
-#' @inheritParams get_violations
+#' @inheritParams get_failed_tests
 #'
 #' @return \code{character} with one entry for each row in new data. Each
-#' entry concatenates information of the checks, that did NOT pass for the
+#' entry concatenates information of the tests, that did NOT pass for the
 #' corresponding row in new data.
 #' 
-#' @details 
-#' - 'mismatch_levels': (only relevant for factors and characters).
-#' - 'missing_variable': the variable was recorded on training data but not 
-#' observed in new data.
 #' @export
-get_violations_string <- function(playback,
-                                  ignore_check_names = c("new_variable"),
-                                  ignore_cols = NULL,
-                                  ignore_combinations = list(mismatch_class = NULL))  {
+#' 
+#' @examples
+#' #' # record tape from `iris`.
+#' tape <- record(iris)
+#' # load data.
+#' data(iris_newdata)
+#' # validate new data by playing new tape on it.
+#' playback <- play(tape, iris_newdata)
+#' 
+#' get_failed_tests_string(playback)
+#' get_failed_tests_string(playback, ignore_tests = "outside_range")
+#' get_failed_tests_string(playback, ignore_cols = "junk")
+#' get_failed_tests_string(playback, ignore_combinations = list(outside_range = "Sepal.Width"))
+get_failed_tests_string <- function(playback,
+                                    ignore_tests = NULL,
+                                    ignore_cols = NULL,
+                                    ignore_combinations = NULL)  {
   
-  # get violation matrix.
-  cm <- get_violations(playback = playback,
-                       ignore_check_names = ignore_check_names,
-                       ignore_cols = ignore_cols,
-                       ignore_combinations = ignore_combinations)
+  # create data.frame with failed tests.
+  df_ft <- get_failed_tests(playback = playback,
+                            ignore_tests = ignore_tests,
+                            ignore_cols = ignore_cols,
+                            ignore_combinations = ignore_combinations)
   
-  # handle case, where all rows passed all checks.
-  if (identical(names(cm), "any_violations")) {
-    return(rep("", playback$duration))
+  # handle (special) case, where all rows passed all tests.
+  if (identical(names(df_ft), "any_failures")) {
+    return(rep("", playback$nrow_newdata))
   } else {
-    write_violations(cm)
+    concatenate_test_failures(df_ft)
   }
   
 }
 
 #' Get Clean Rows
 #'
-#' @inheritParams get_violations
+#' @inheritParams get_failed_tests
 #'
 #' @return \code{logical} with the same length as the number of rows in new 
-#' data. The value is TRUE, if the row passed all checks, otherwise FALSE.
+#' data. The value is TRUE, if the row passed all tests, otherwise FALSE.
 #' 
 #' @export
+#' 
+#' @examples
+#' # record tape from `iris`.
+#' tape <- record(iris)
+#' # load data.
+#' data(iris_newdata)
+#' # validate new data by playing new tape on it.
+#' playback <- play(tape, iris_newdata)
+#' 
+#' get_clean_rows(playback)
+#' get_clean_rows(playback, ignore_tests = "outside_range")
+#' get_clean_rows(playback, ignore_cols = "junk")
+#' get_clean_rows(playback, ignore_combinations = list(outside_range = "Sepal.Width"))
 get_clean_rows <- function(playback,
-                           ignore_check_names = NULL,
+                           ignore_tests = NULL,
                            ignore_cols = NULL,
                            ignore_combinations = NULL) {
 
-  # get violation matrix.
-  cm <- get_violations(playback = playback,
-                       ignore_check_names = ignore_check_names,
-                       ignore_cols = ignore_cols,
-                       ignore_combinations = ignore_combinations)
+  # get failed tests.
+  df_ft <- get_failed_tests(playback = playback,
+                            ignore_tests = ignore_tests,
+                            ignore_cols = ignore_cols,
+                            ignore_combinations = ignore_combinations)
   
   # compute indicator, that tells whether a row is 'clean' or not. 
-  rowSums(cm) == 0
+  rowSums(df_ft) == 0
   
 }

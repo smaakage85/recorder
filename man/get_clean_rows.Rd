@@ -4,23 +4,36 @@
 \alias{get_clean_rows}
 \title{Get Clean Rows}
 \usage{
-get_clean_rows(playback, ignore_check_names = NULL, ignore_cols = NULL,
+get_clean_rows(playback, ignore_tests = NULL, ignore_cols = NULL,
   ignore_combinations = NULL)
 }
 \arguments{
-\item{playback}{\code{data.playback} to generate violation matrix from.}
+\item{playback}{\code{data.playback} to extract failed tests from.}
 
-\item{ignore_check_names}{\code{character} with names of checks to ignore.}
+\item{ignore_tests}{\code{character} with names of tests to ignore.}
 
 \item{ignore_cols}{\code{character} with names of columns/variables to ignore.}
 
-\item{ignore_combinations}{\code{list} with combinations of checks and
+\item{ignore_combinations}{\code{list} with combinations of tests and
 columns to ignore.}
 }
 \value{
 \code{logical} with the same length as the number of rows in new 
-data. The value is TRUE, if the row passed all checks, otherwise FALSE.
+data. The value is TRUE, if the row passed all tests, otherwise FALSE.
 }
 \description{
 Get Clean Rows
+}
+\examples{
+# record tape from `iris`.
+tape <- record(iris)
+# load data.
+data(iris_newdata)
+# validate new data by playing new tape on it.
+playback <- play(tape, iris_newdata)
+
+get_clean_rows(playback)
+get_clean_rows(playback, ignore_tests = "outside_range")
+get_clean_rows(playback, ignore_cols = "junk")
+get_clean_rows(playback, ignore_combinations = list(outside_range = "Sepal.Width"))
 }
