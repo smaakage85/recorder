@@ -23,6 +23,10 @@ Runs a set of validation tests on new data to be predicted with an existing
 machine learning model. These tests are based on parameters recorded (with 
 \code{\link{record}}) from training data.
 }
+\details{
+Look up the descriptions of the validation tests with 
+\code{\link{get_test_descriptions}}.
+}
 \examples{
 # record tape from `iris`.
 tape <- record(iris)

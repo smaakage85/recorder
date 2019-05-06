@@ -10,11 +10,11 @@ get_clean_rows(playback, ignore_tests = NULL, ignore_cols = NULL,
 \arguments{
 \item{playback}{\code{data.playback} to extract failed tests from.}
 
-\item{ignore_tests}{\code{character} with names of tests to ignore.}
+\item{ignore_tests}{\code{character} names of tests to ignore.}
 
-\item{ignore_cols}{\code{character} with names of columns/variables to ignore.}
+\item{ignore_cols}{\code{character} names of columns/variables to ignore.}
 
-\item{ignore_combinations}{\code{list} with combinations of tests and
+\item{ignore_combinations}{\code{list} combinations of tests and
 columns to ignore.}
 }
 \value{
@@ -23,6 +23,10 @@ data. The value is TRUE, if the row passed all tests, otherwise FALSE.
 }
 \description{
 Get Clean Rows
+}
+\details{
+Look up the descriptions of the validation tests with 
+\code{\link{get_test_descriptions}}.
 }
 \examples{
 # record tape from `iris`.

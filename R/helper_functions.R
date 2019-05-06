@@ -171,7 +171,7 @@ print_test_description <- function(pb, name) {
 #' @examples
 #' get_test_descriptions()
 get_test_descriptions <- function() {
-  descriptions <- lapply(tests_meta_data, '[[', "description")
+  descriptions <- lapply(get("tests_meta_data"), '[[', "description")
   descriptions_df <- as.data.frame(as.matrix(descriptions))
   names(descriptions_df) <- "Description"
   descriptions_df

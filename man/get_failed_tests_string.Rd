@@ -10,11 +10,11 @@ get_failed_tests_string(playback, ignore_tests = NULL,
 \arguments{
 \item{playback}{\code{data.playback} to extract failed tests from.}
 
-\item{ignore_tests}{\code{character} with names of tests to ignore.}
+\item{ignore_tests}{\code{character} names of tests to ignore.}
 
-\item{ignore_cols}{\code{character} with names of columns/variables to ignore.}
+\item{ignore_cols}{\code{character} names of columns/variables to ignore.}
 
-\item{ignore_combinations}{\code{list} with combinations of tests and
+\item{ignore_combinations}{\code{list} combinations of tests and
 columns to ignore.}
 }
 \value{
@@ -23,7 +23,12 @@ entry concatenates information of the tests, that did NOT pass for the
 corresponding row in new data.
 }
 \description{
-Get Failed Tests as a String
+Concatenates information of the tests, that did NOT pass into one single
+character vector.
+}
+\details{
+Look up the descriptions of the validation tests with 
+\code{\link{get_test_descriptions}}.
 }
 \examples{
 #' # record tape from `iris`.

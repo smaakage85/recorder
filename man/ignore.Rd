@@ -2,26 +2,30 @@
 % Please edit documentation in R/ignore.R
 \name{ignore}
 \alias{ignore}
-\title{Ignore and remove certain tests}
+\title{Ignore and Remove Certain Test Results}
 \usage{
 ignore(tests, variables_newdata, ignore_tests = NULL,
   ignore_cols = NULL, ignore_combinations = NULL)
 }
 \arguments{
-\item{tests}{\code{list} with computed tests.}
+\item{tests}{\code{list} test results.}
 
 \item{variables_newdata}{\code{character} names of variables in new data.}
 
-\item{ignore_tests}{\code{character} with names of tests to ignore.}
+\item{ignore_tests}{\code{character} names of tests to ignore.}
 
-\item{ignore_cols}{\code{character} with names of columns/variables to ignore.}
+\item{ignore_cols}{\code{character} names of columns/variables to ignore.}
 
-\item{ignore_combinations}{\code{list} with combinations of tests and
+\item{ignore_combinations}{\code{list} combinations of tests and
 columns to ignore.}
 }
 \value{
-\code{list} with only the relevant tests.
+\code{list} only the relevant test results.
 }
 \description{
-Ignore and remove certain tests
+Ignores and removes certain test results in accordance with user inputs.
+}
+\details{
+Look up the descriptions of the validation tests with 
+\code{\link{get_test_descriptions}}.
 }

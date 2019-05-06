@@ -1,42 +1,50 @@
-#' Ignore and remove certain tests
+#' Ignore and Remove Certain Test Results
+#' 
+#' Ignores and removes certain test results in accordance with user inputs.
 #'
-#' @param tests \code{list} with computed tests.
+#' @param tests \code{list} test results.
 #' @param variables_newdata \code{character} names of variables in new data.
-#' @param ignore_tests \code{character} with names of tests to ignore. 
-#' @param ignore_cols \code{character} with names of columns/variables to ignore.
-#' @param ignore_combinations \code{list} with combinations of tests and
+#' @param ignore_tests \code{character} names of tests to ignore. 
+#' @param ignore_cols \code{character} names of columns/variables to ignore.
+#' @param ignore_combinations \code{list} combinations of tests and
 #' columns to ignore.
 #' 
 #' @details Look up the descriptions of the validation tests with 
 #' \code{\link{get_test_descriptions}}.
 #'
-#' @return \code{list} with only the relevant tests.
+#' @return \code{list} only the relevant test results.
 ignore <- function(tests,
                    variables_newdata,
                    ignore_tests = NULL,
                    ignore_cols = NULL,
                    ignore_combinations = NULL) {
 
-  # ignore _certain tests_.
+  # ignore/remove _certain tests_.
   tests <- ignore_tests(tests = tests,
-                          test_names = ignore_tests)
+                        test_names = ignore_tests)
 
-  # ignore tests of _certain columns_.
+  # ignore/remove tests of _certain columns_.
   tests <- ignore_cols(tests = tests,
-                        col_names = ignore_cols,
-                        variables_newdata = variables_newdata)
+                       col_names = ignore_cols,
+                       variables_newdata = variables_newdata)
 
-  # ignore _certain combinations of tests and columns_.
+  # ignore/remove _certain combinations of tests and columns_.
   tests <- ignore_combinations(tests = tests,
-                                combinations = ignore_combinations,
-                                variables_newdata = variables_newdata)
+                               combinations = ignore_combinations,
+                               variables_newdata = variables_newdata)
 
-  # return tests after removing certain tests.
+  # return tests after removals.
   tests
 
 }
 
-ignore_tests <- function(tests, test_names = c("new_variable")) {
+#' Ignore Results from Specific Tests
+#'
+#' @param tests \code{list} test results.
+#' @param test_names \code{character} names of tests to be ignored/removed.
+#'
+#' @return \code{list} results after removing specific tests.
+ignore_tests <- function(tests, test_names = NULL) {
 
   # if NULL, do nothing - just return 'as is'.
   if (is.null(test_names)) return(tests)
@@ -48,17 +56,25 @@ ignore_tests <- function(tests, test_names = c("new_variable")) {
 
   # do test names exist?
   if (!all(test_names %in% names(tests))) {
-    stop("The following test names do not exist, please check:",
+    stop("The following tests do not exist, please check:",
          paste0(test_names[!test_names %in% names(tests)], collapse = ","),
          "\n")
   }
 
   # subset only tests, that are not to be ignored.
-  subset_cols <- names(tests)[!names(tests) %in% test_names]
-  tests[subset_cols]
+  subset_tests <- names(tests)[!names(tests) %in% test_names]
+  tests[subset_tests]
 
 }
 
+#' Ignore Test Results for Specific Columns
+#'
+#' @param tests \code{list} test results.
+#' @param col_names \code{character} names of columns for which test results
+#' should be ignored.
+#' @param variables_newdata \code{character} names of variables in new data.
+#'
+#' @return \code{list} results after removing tests.
 ignore_cols <- function(tests, col_names, variables_newdata) {
 
   # if NULL, do nothing - just return 'as is'.
@@ -69,9 +85,9 @@ ignore_cols <- function(tests, col_names, variables_newdata) {
     stop("'col_names' must be a character vector with positive length (or NULL).")
   }
 
-  # does any of these cols have any violations at all?
+  # do the variables exist in new data?
   if (!all(col_names %in% variables_newdata)) {
-    message("The following columns do not exist in training data, please check: ",
+    message("The following columns do not exist in new data, please check: ",
          paste0(col_names[!col_names %in% names(variables_newdata)], collapse = ","),
          "\n")
   }
@@ -83,6 +99,14 @@ ignore_cols <- function(tests, col_names, variables_newdata) {
 
 }
 
+#' Ignore Test Results of Specific Combinations of Tests and Columns
+#'
+#' @param tests \code{list} test results.
+#' @param combinations \code{list} combinations of tests and columns from which
+#' test results should be ignored.
+#' @param variables_newdata \code{character} names of variables in new data.
+#'
+#' @return \code{list} test results after removals.
 ignore_combinations <- function(tests, combinations, variables_newdata) {
 
   # if NULL, do nothing - just return 'as is'.
@@ -93,7 +117,6 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
                                  is.null(names(combinations)))) {
     stop("'combinations' must be a named list with positive length.")
   }
-
   
   if (length(names(combinations)) > length(unique(names(combinations)))) {
     stop("Names of 'combinations' list must be unique.")
@@ -108,7 +131,7 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
          names(combinations)[which(incomplete_combinations)])
   }
 
-  # do columns exist in new data?
+  # do selected columns exist in new data?
   col_names <- unique(do.call(c, lapply(combinations, names)))
   if (length(col_names) > 0 && !all(col_names %in% names(variables_newdata))) {
     stop("The following columns do not exist in new data, please check: ",
@@ -116,7 +139,8 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
          "\n")
   }
 
-  # subset only relevant combinations of tests and columns, that are not to be ignored.
+  # subset only relevant combinations of tests and columns, that should not 
+  # be ignored.
   tests[names(combinations)] <-
     mapply(FUN = function(tests, col_names) {
       tests[col_names] <- NULL
