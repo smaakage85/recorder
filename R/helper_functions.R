@@ -8,12 +8,16 @@
 #' 
 #' @return \code{data.table} with test results as columns.
 create_test_results_df <- function(x) {
+  
   # convert tests to data.tables and bind them.
   dts <- lapply(x, as.data.table)
+  
   # subset elements with # rows > 0.
   dts <- dts[vapply(dts, function(x) {length(x) > 0}, FUN.VALUE = logical(1))]
+  
   # bind columns of all data.tables to just one data.table.
   do.call(cbind, dts)
+  
 }
 
 #' Concatenate Validation Test Failure Descriptions
@@ -26,15 +30,19 @@ create_test_results_df <- function(x) {
 #' @return \code{character} concatenated descriptions of test failures with
 #' one string pr. row.
 concatenate_test_failures <- function(test_failures) {
+  
   # create test failures matrix with colnames as entries.
   tfm  <- matrix(data  = t(rep(x = paste0(colnames(test_failures), ";"),
                                times = nrow(test_failures))),
                  ncol  = ncol(test_failures),
                  byrow = TRUE)
+  
   # replace FALSE with empty string.
   tfm[test_failures == FALSE] <- ""
+  
   # concatenate failures to one string pr. row.
   do.call(what = paste0, args = data.frame(tfm))
+  
 }
 
 #### play() ####
@@ -71,6 +79,7 @@ order_by_tests <- function(dt) {
   
   # set names.
   names(by_tests) <- tests
+  
   by_tests
 
   }
