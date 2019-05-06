@@ -173,9 +173,11 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
         "columns and", nrow(x), "rows... \n\n")
   }
   
-  # record class of data.frame/training data as a whole.
-  class_training_data <- class(x)
-    
+  # validate input.
+  if (nrow(x) == 0) {
+    stop("Number of rows must be greather than zero.")
+  }
+  
   # record classes of indvidual variables.
   class_variables <- lapply(x, class)
 
@@ -184,8 +186,7 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
 
   # combine results into one list, the structure of which defines the 
   # 'data.tape' class by convention.
-  data.tape <- list(class_training_data = class_training_data,
-                    class_variables = class_variables, 
+  data.tape <- list(class_variables = class_variables, 
                     parameters = parameters)
 
   # set class.
