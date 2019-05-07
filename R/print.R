@@ -5,6 +5,8 @@
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @return The original object (invisibly)
+#' 
+#' @importFrom crayon red blue green bgMagenta
 #'
 #' @export
 #' 
@@ -19,14 +21,14 @@
 #' print(playback)
 print.data.playback <- function(x, ...) {
 
-  cat("\n[PLAY]\n\n")
+  cat(bgMagenta("\n[PLAY]\n\n"))
 
   # Short summary:
-  cat("# of rows in new data: ", x$nrow_newdata, "\n", sep = "")
+  cat("# of rows in new data: ", blue(x$nrow_newdata), "\n", sep = "")
   cat("# of rows passing all tests: ", 
-      sum(get_clean_rows(x)), "\n", sep = "")
+      green(sum(get_clean_rows(x))), "\n", sep = "")
   cat("# of rows failing one or more tests: ", 
-      sum(!get_clean_rows(x)), "\n", sep = "")
+      red(sum(!get_clean_rows(x))), "\n", sep = "")
   cat("\n", "Test results (failures):\n", sep = "")
   
   # print tests evaluated on column level.
@@ -47,7 +49,7 @@ print.data.playback <- function(x, ...) {
   lapply(names(get("tests_meta_data")), 
          function (g) {print_test_description(x, g)})
   
-  cat("\n[STOP]")
+  cat(bgMagenta("\n[STOP]\n"))
   
   # return invisibly.
   invisible(x)

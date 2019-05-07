@@ -98,10 +98,17 @@ paste_colnames <- function(x) {
 
 print_tests_collevel <- function(x, name) {
   
+  results <- paste_colnames(x$tests[[name]])
+  if (results == "no failures") {
+    results <- green(results)
+  } else {
+    results <- red(results)
+  }
+  
   cat("> '", 
       name,
       "': ",
-      paste_colnames(x$tests[[name]]), 
+      results, 
       "\n",
       sep = "")
   
@@ -112,10 +119,17 @@ print_tests_collevel <- function(x, name) {
 
 print_tests_rowlevel <- function(x, name, first = 10) {
   
+  results <- paste_all_cols_with_rows(x$tests[[name]], first = first)
+  if (results == "no failures") {
+    results <- green(results)
+  } else {
+    results <- red(results)
+  }
+  
   cat("> '", 
       name,
       "': ",
-      paste_all_cols_with_rows(x$tests[[name]], first = first), 
+      results,
       "\n",
       sep = "")
   

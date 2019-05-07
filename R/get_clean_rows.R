@@ -33,6 +33,12 @@ get_failed_tests <- function(playback,
     stop("'playback' must belong to the 'data.playback' class.")
   }
   
+  # if there are no failed tests, there are no failures to ignore, return 
+  # simple output.
+  if (all(vapply(playback$tests, length, FUN.VALUE = integer(1)) == 0)) {
+    return(data.table(any_failures = rep(FALSE, playback$nrow_newdata))) 
+  }
+  
   # ignore certain tests.
   tests <- ignore(playback$tests,
                   playback$variables,
@@ -132,7 +138,7 @@ get_clean_rows <- function(playback,
                            ignore_tests = NULL,
                            ignore_cols = NULL,
                            ignore_combinations = NULL) {
-
+  
   # get failed tests.
   df_ft <- get_failed_tests(playback = playback,
                             ignore_tests = ignore_tests,

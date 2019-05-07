@@ -168,7 +168,7 @@ record.default <- function(x, ...) {
 record.data.frame <- function(x, verbose = TRUE, ...) {
 
   if (verbose) {
-    cat("\n[RECORD]\n\n")
+    cat(bgMagenta("\n[RECORD]\n\n"))
     cat("... recording metadata and statistics for", ncol(x), 
         "columns and", nrow(x), "rows... \n\n")
   }
@@ -202,7 +202,7 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
   class(data.tape) <- append(class(data.tape), "data.tape")
   
   if (verbose) {
-    cat("[STOP]\n\n")
+    cat(bgMagenta("[STOP]\n"))
   }
   
   # return data.tape.

@@ -201,7 +201,7 @@ play <- function(tape, newdata, verbose = TRUE) {
   variables <- names(newdata)
 
   if (verbose) {
-    cat("\n[PLAY]\n\n")
+    cat(bgMagenta("\n[PLAY]\n\n"))
     cat("... playing data.tape on new data with", ncol(newdata),
       "columns and", nrow(newdata), "rows ...\n\n")
   }
@@ -255,7 +255,7 @@ play <- function(tape, newdata, verbose = TRUE) {
   class(playback) <- append("data.playback", class(playback))
 
   if (verbose) {
-    cat("[STOP]\n")
+    cat(bgMagenta("[STOP]\n"))
   }
 
   playback
