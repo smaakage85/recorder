@@ -31,7 +31,7 @@ Look up the descriptions of the validation tests with
 \code{\link{get_test_descriptions}}.
 }
 \examples{
-#' # record tape from `iris`.
+# record tape from `iris`.
 tape <- record(iris)
 # load data.
 data(iris_newdata)

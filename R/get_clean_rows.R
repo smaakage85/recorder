@@ -12,7 +12,7 @@
 #' @export
 #' 
 #' @examples
-#' #' # record tape from `iris`.
+#' # record tape from `iris`.
 #' tape <- record(iris)
 #' # load data.
 #' data(iris_newdata)
@@ -79,7 +79,7 @@ get_failed_tests <- function(playback,
 #' @export
 #' 
 #' @examples
-#' #' # record tape from `iris`.
+#' # record tape from `iris`.
 #' tape <- record(iris)
 #' # load data.
 #' data(iris_newdata)

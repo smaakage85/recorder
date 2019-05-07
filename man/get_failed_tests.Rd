@@ -28,7 +28,7 @@ to ensure that the output is (type) stable and consistent.
 Get Failed Tests
 }
 \examples{
-#' # record tape from `iris`.
+# record tape from `iris`.
 tape <- record(iris)
 # load data.
 data(iris_newdata)
