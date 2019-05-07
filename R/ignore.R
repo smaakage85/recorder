@@ -56,7 +56,7 @@ ignore_tests <- function(tests, test_names = NULL) {
 
   # do test names exist?
   if (!all(test_names %in% names(tests))) {
-    stop("The following tests do not exist, please check:",
+    warning("The following tests do not exist: ",
          paste0(test_names[!test_names %in% names(tests)], collapse = ","),
          "\n")
   }
@@ -84,11 +84,11 @@ ignore_cols <- function(tests, col_names, variables_newdata) {
   if (!is.character(col_names) && length(col_names) == 0) {
     stop("'col_names' must be a character vector with positive length (or NULL).")
   }
-
+  
   # do the variables exist in new data?
   if (!all(col_names %in% variables_newdata)) {
-    message("The following columns do not exist in new data, please check: ",
-         paste0(col_names[!col_names %in% names(variables_newdata)], collapse = ","),
+    warning("The following columns do not exist in new data: ",
+         paste0(col_names[!col_names %in% variables_newdata], collapse = ", "),
          "\n")
   }
 
@@ -122,6 +122,18 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
     stop("Names of 'combinations' list must be unique.")
   }
   
+  if (!all(vapply(combinations, is.character, FUN.VALUE = logical(1)) == TRUE)) {
+    "Please supply column names must as characters."
+  }
+  
+  # do test names exist?
+  if (!all(names(combinations) %in% names(tests))) {
+    warning("The following tests do not exist: ",
+            paste0(names(combinations)[!names(combinations) %in% names(tests)], 
+                   collapse = ","),
+            "\n")
+  }
+  
   # are there any incomplete combinations, where no columns have been selected?
   incomplete_combinations <- vapply(combinations, 
                                     length, 
@@ -132,10 +144,10 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
   }
 
   # do selected columns exist in new data?
-  col_names <- unique(do.call(c, lapply(combinations, names)))
-  if (length(col_names) > 0 && !all(col_names %in% names(variables_newdata))) {
+  col_names <- unique(do.call(c, combinations))
+  if (length(col_names) > 0 && !all(col_names %in% variables_newdata)) {
     stop("The following columns do not exist in new data, please check: ",
-         paste0(col_names[!col_names %in% variables_newdata], collapse = ","),
+         paste0(col_names[!col_names %in% variables_newdata], collapse = ", "),
          "\n")
   }
 

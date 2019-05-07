@@ -1,5 +1,4 @@
 context("play()")
-data("iris_newdata")
 
 # record iris data set.
 tape <- record(iris, verbose = FALSE)
