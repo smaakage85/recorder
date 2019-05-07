@@ -20,9 +20,9 @@ create_test_results_df <- function(x) {
   
 }
 
-#' Concatenate Validation Test Failure Descriptions
+#' Concatenate Validation Test Failures Descriptions
 #'
-#' Concatenates validation test failure descriptions to a single character 
+#' Concatenates validation test failures descriptions to a single character 
 #' vector.
 #' 
 #' @param test_failures \code{data.frame} with test results as columns.

@@ -178,6 +178,15 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
     stop("Number of rows must be greather than zero.")
   }
   
+  # check, if there are any variables, that only consist of NA's => warning.
+  only_na <- vapply(x, function(x) {all(is.na(x))}, FUN.VALUE = logical(1))
+  only_na <- names(only_na)[only_na]
+  if (length(only_na) > 0) {
+    warning("The following variables consist solely of NA's. Are you sure, ",
+            "you want them in your data set? Variables: ", 
+            paste0(only_na, collapse = ", "))
+  }
+  
   # record classes of indvidual variables.
   class_variables <- lapply(x, class)
 

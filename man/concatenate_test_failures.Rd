@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{concatenate_test_failures}
 \alias{concatenate_test_failures}
-\title{Concatenate Validation Test Failure Descriptions}
+\title{Concatenate Validation Test Failures Descriptions}
 \usage{
 concatenate_test_failures(test_failures)
 }
@@ -14,6 +14,6 @@ concatenate_test_failures(test_failures)
 one string pr. row.
 }
 \description{
-Concatenates validation test failure descriptions to a single character 
+Concatenates validation test failures descriptions to a single character 
 vector.
 }

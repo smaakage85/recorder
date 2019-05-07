@@ -27,7 +27,7 @@ print.data.playback <- function(x, ...) {
       sum(get_clean_rows(x)), "\n", sep = "")
   cat("# of rows failing one or more tests: ", 
       sum(!get_clean_rows(x)), "\n", sep = "")
-  cat("\n", "Tests (failed):\n", sep = "")
+  cat("\n", "Test results (failures):\n", sep = "")
   
   # print tests evaluated on column level.
   # first, identify tests, that are evaluated on column level.

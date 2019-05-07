@@ -1,4 +1,4 @@
-context("get_clean_rows()")
+context("play()")
 data("iris_newdata")
 
 # record iris data set.
@@ -18,3 +18,24 @@ expect_true(all(vapply(playback$tests, length, FUN.VALUE = integer(1)) == 0))
 
 # error, when invoking with empty data set.
 expect_error(play(tape, iris[0,], verbose = FALSE))
+
+# does the function handle data.frame with solely new variables reasonably?
+iris_copy <- iris
+names(iris_copy) <- letters[1:5]
+playback <- play(tape, iris_copy, verbose = FALSE)
+expect_is(playback, "data.playback")
+expect_equal(names(playback$tests$new_variable), names(iris_copy))
+expect_true(all(as.logical(playback$tests$new_variable)))
+expect_equal(names(playback$tests$missing_variable), names(iris))
+expect_true(all(as.logical(playback$tests$missing_variable)))
+
+# are only col level tests computed?
+col_level_tests <- vapply(tests_meta_data, '[[', "evaluate_level", FUN.VALUE = character(1)) == "col"
+col_level_tests <- names(col_level_tests)[col_level_tests]
+expect_true(all(names(playback$tests) %in% col_level_tests))
+
+
+
+
+
+

@@ -26,3 +26,11 @@ expect_identical(
 class(iris_newdata$junk) <- "crap"
 tester <- record(iris_newdata$junk, verbose = FALSE)
 expect_true("any_NA" %in% names(tester))
+
+# test 'record' on data.frame with one or more only NA columns.
+data("iris_newdata")
+iris_newdata[] <- NA
+expect_warning({tape <- record(iris_newdata, verbose = FALSE)})
+expect_is(tape, "data.tape")
+expect_equal(tape$parameters$Sepal.Length$any_NA, TRUE)
+
