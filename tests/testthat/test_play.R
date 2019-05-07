@@ -33,8 +33,11 @@ col_level_tests <- vapply(tests_meta_data, '[[', "evaluate_level", FUN.VALUE = c
 col_level_tests <- names(col_level_tests)[col_level_tests]
 expect_true(all(names(playback$tests) %in% col_level_tests))
 
-
-
-
-
-
+# only NA's for computing statistics. Correct handling.
+data(iris)
+iris$Sepal.Width <- NA_real_
+expect_warning(tape <- record(iris, verbose = FALSE))
+data(iris)
+playback <- play(tape, iris, verbose = FALSE)
+expect_length(length(playback$tests$outside_range), 1)
+expect_true(all(playback$tests$outside_range$Sepal.Width))
