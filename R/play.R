@@ -1,8 +1,8 @@
 #' Run Validation Tests on Variable in New Data
 #' 
 #' Runs a set of validation tests on a variable in new data. These tests are 
-#' based on parameters recorded (with \code{\link{record}}) from the training 
-#' data.
+#' based on statistics and meta data of the same variable recorded 
+#' (with \code{\link{record}}) from the training data.
 #' 
 #' @details Look up the descriptions of the validation tests with 
 #' \code{\link{get_test_descriptions}}.
@@ -10,33 +10,33 @@
 #' @param x variable in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
-#' @param parameters \code{list} parameters and meta data of the same variable
+#' @param parameters \code{list} statistics and meta data of the same variable
 #' recorded from training data (with \code{\link{record}}). 
 #'
-#' @return \code{list} results from validations tests. 
+#' @return \code{list} results from validation tests. 
 #' 
 #' @export
 run_validation_tests <- function (x, parameters, ...) {
   UseMethod("run_validation_tests", x)
 }
 
-#' Run Validation Tests on Numeric
+#' Run Validation Tests on a Numeric
 #'
 #' Runs a set of validation tests on a \code{numeric} in new data. These tests
-#' are based on parameters recorded (with \code{\link{record}}) from the 
-#' training data.
+#' are based on statistics and meta data of the same variable recorded 
+#' (with \code{\link{record}}) from the training data.
 #' 
 #' @param x \code{numeric} in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
-#' @param parameters \code{list} parameters and meta data of the same variable
+#' @param parameters \code{list} statistics and meta data of the same variable
 #' recorded from training data (with \code{\link{record}}).  
 #'
 #' @method run_validation_tests numeric
 #' 
 #' @export
 #' 
-#' @return \code{list} results from validations tests.
+#' @return \code{list} results from validation tests.
 run_validation_tests.numeric <- function(x, parameters, ...) {
 
   # run tests.
@@ -50,20 +50,20 @@ run_validation_tests.numeric <- function(x, parameters, ...) {
 #' Run Validation Tests on Character
 #'
 #' Runs a set of validation tests on a \code{character} in new data. These tests
-#' are based on parameters recorded (with \code{\link{record}}) from the 
-#' training data.
+#' are based on statistics and meta data of the same variable recorded 
+#' (with \code{\link{record}}) from the training data.
 #' 
 #' @param x \code{character} in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
-#' @param parameters \code{list} parameters and meta data of the same variable
+#' @param parameters \code{list} statistics and meta data of the same variable
 #' recorded from training data (with \code{\link{record}}).  
 #'
 #' @method run_validation_tests character
 #' 
 #' @export
 #' 
-#' @return \code{list} results from validations tests.
+#' @return \code{list} results from validation tests.
 run_validation_tests.character <- function(x, parameters, ...) {
 
   # run tests.
@@ -77,20 +77,20 @@ run_validation_tests.character <- function(x, parameters, ...) {
 #' Run Validation Tests on Factor
 #'
 #' Runs a set of validation tests on a \code{factor} in new data. These tests
-#' are based on parameters recorded (with \code{\link{record}}) from the 
-#' training data.
+#' are based on statistics and meta data of the same variable recorded 
+#' (with \code{\link{record}}) from the training data.
 #' 
 #' @param x \code{factor} in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
-#' @param parameters \code{list} parameters and meta data of the same variable
+#' @param parameters \code{list} statistics and meta data of the same variable
 #' recorded from training data (with \code{\link{record}}).  
 #'
 #' @method run_validation_tests factor
 #' 
 #' @export
 #' 
-#' @return \code{list} results from validations tests.
+#' @return \code{list} results from validation tests.
 run_validation_tests.factor <- function(x, parameters, ...) {
 
   # run tests.
@@ -105,20 +105,20 @@ run_validation_tests.factor <- function(x, parameters, ...) {
 #' Run Validation Tests on Integer
 #'
 #' Runs a set of validation tests on a \code{integer} in new data. These tests
-#' are based on parameters recorded (with \code{\link{record}}) from the 
-#' training data.
+#' are based on statistics and meta data of the same variable recorded 
+#' (with \code{\link{record}}) from the training data.
 #' 
 #' @param x \code{integer} in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
-#' @param parameters \code{list} parameters and meta data of the same variable
+#' @param parameters \code{list} statistics and meta data of the same variable
 #' recorded from training data (with \code{\link{record}}).    
 #' 
 #' @method run_validation_tests integer
 #' 
 #' @export
 #' 
-#' @return \code{list} results from validations tests.
+#' @return \code{list} results from validation tests.
 run_validation_tests.integer <- function(x, parameters, ...) {
 
   # run tests.
@@ -132,20 +132,20 @@ run_validation_tests.integer <- function(x, parameters, ...) {
 #' Run Validation Tests on Variable
 #'
 #' Runs a set of validation tests on variable in new data. These tests
-#' are based on parameters recorded (with \code{\link{record}}) from the 
-#' training data.
+#' are based on statistics and meta data of the same variable recorded 
+#' (with \code{\link{record}}) from the training data.
 #' 
 #' @param x anything.
 #' @param ... further arguments passed to or from other methods. Not used at
 #' the moment.
-#' @param parameters \code{list} parameters and meta data of the same variable
+#' @param parameters \code{list} statistics and meta data of the same variable
 #' recorded from training data (with \code{\link{record}}).  
 #'
 #' @method run_validation_tests default
 #' 
 #' @export
 #' 
-#' @return \code{list} results from validations tests.
+#' @return \code{list} results from validation tests.
 run_validation_tests.default <- function(x, parameters, ...) {
 
   # run tests.
@@ -158,13 +158,13 @@ run_validation_tests.default <- function(x, parameters, ...) {
 #' Validate New Data by Playing a Data Tape on It
 #' 
 #' Runs a set of validation tests on new data to be predicted with an existing 
-#' machine learning model. These tests are based on parameters recorded (with 
-#' \code{\link{record}}) from training data.
+#' machine learning model. These tests are based on statistics and meta data of
+#' the variables in the training data - recorded with \code{\link{record}}.
 #' 
 #' @details Look up the descriptions of the validation tests with 
 #' \code{\link{get_test_descriptions}}.
 #' 
-#' @param tape \code{data.tape} parameters and meta data recorded from 
+#' @param tape \code{data.tape} statistics and meta data recorded from 
 #' training data. 
 #' @param verbose \code{logical} should messages be printed?
 #' @param newdata \code{data.frame} new data to be predicted with an existing 
@@ -172,7 +172,7 @@ run_validation_tests.default <- function(x, parameters, ...) {
 #'
 #' @export
 #' 
-#' @return \code{data.playback} results from validations tests.
+#' @return \code{data.playback} results from validation tests.
 #' 
 #' @examples
 #' # record tape from `iris`.

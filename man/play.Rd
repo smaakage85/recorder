@@ -7,7 +7,7 @@
 play(tape, newdata, verbose = TRUE)
 }
 \arguments{
-\item{tape}{\code{data.tape} parameters and meta data recorded from 
+\item{tape}{\code{data.tape} statistics and meta data recorded from 
 training data.}
 
 \item{newdata}{\code{data.frame} new data to be predicted with an existing 
@@ -16,12 +16,12 @@ machine learning model.}
 \item{verbose}{\code{logical} should messages be printed?}
 }
 \value{
-\code{data.playback} results from validations tests.
+\code{data.playback} results from validation tests.
 }
 \description{
 Runs a set of validation tests on new data to be predicted with an existing 
-machine learning model. These tests are based on parameters recorded (with 
-\code{\link{record}}) from training data.
+machine learning model. These tests are based on statistics and meta data of
+the variables in the training data - recorded with \code{\link{record}}.
 }
 \details{
 Look up the descriptions of the validation tests with 
