@@ -23,7 +23,7 @@ entry concatenates information of the tests, that did NOT pass for the
 corresponding row in new data.
 }
 \description{
-Concatenates information of the tests, that did NOT pass into one single
+Concatenates information of the tests that failed into one single
 character vector.
 }
 \details{

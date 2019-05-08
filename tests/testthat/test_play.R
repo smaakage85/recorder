@@ -41,3 +41,13 @@ data(iris)
 playback <- play(tape, iris, verbose = FALSE)
 expect_length(length(playback$tests$outside_range), 1)
 expect_true(all(playback$tests$outside_range$Sepal.Width))
+
+# test 'play.character'.
+df <- data.frame(a = letters[1:10], stringsAsFactors = FALSE)
+tape <- record(df, verbose = FALSE)
+results <- play(tape, df, verbose = FALSE)
+expect_length(results$tests$new_level, 0)
+newdata <- data.frame(a = letters[2:11], stringsAsFactors = FALSE)
+results <- play(tape, newdata, verbose = FALSE)
+expect_true(all(c("levels","any_NA") %in% names(tape$parameters$a)))
+expect_true(any(results$tests$new_level$a))

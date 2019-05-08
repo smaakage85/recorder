@@ -15,6 +15,7 @@ expect_true(all(vapply(results, is.logical, FUN.VALUE = logical(1)) == TRUE))
 # ignore functionality.
 results <- get_failed_tests(playback, ignore_tests = "outside_range")
 expect_true(!any(grepl("^outside_range", names(results))))
+expect_warning(get_failed_tests(playback, ignore_combinations = list(missing_variable = "Petal.Length")))
 
 results <- get_failed_tests(playback, ignore_cols = "junk")
 expect_true(!any(grepl("junk$", names(results))))

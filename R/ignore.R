@@ -55,10 +55,11 @@ ignore_tests <- function(tests, test_names = NULL) {
   }
 
   # do test names exist?
-  if (!all(test_names %in% names(tests))) {
+  data("tests_meta_data")
+  if (!all(test_names %in% names(tests_meta_data))) {
     warning("The following tests do not exist: ",
-         paste0(test_names[!test_names %in% names(tests)], collapse = ","),
-         "\n")
+         paste0(test_names[!test_names %in% names(tests_meta_data)], 
+                collapse = ","), "\n")
   }
 
   # subset only tests, that are not to be ignored.
@@ -127,9 +128,10 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
   }
   
   # do test names exist?
-  if (!all(names(combinations) %in% names(tests))) {
+  tests_meta_data <- get("tests_meta_data")
+  if (!all(names(combinations) %in% names(tests_meta_data))) {
     warning("The following tests do not exist: ",
-            paste0(names(combinations)[!names(combinations) %in% names(tests)], 
+            paste0(names(combinations)[!names(combinations) %in% names(tests_meta_data)], 
                    collapse = ","),
             "\n")
   }
@@ -146,9 +148,9 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
   # do selected columns exist in new data?
   col_names <- unique(do.call(c, combinations))
   if (length(col_names) > 0 && !all(col_names %in% variables_newdata)) {
-    stop("The following columns do not exist in new data, please check: ",
-         paste0(col_names[!col_names %in% variables_newdata], collapse = ", "),
-         "\n")
+    warning("The following columns do not exist in new data: ",
+            paste0(col_names[!col_names %in% variables_newdata], collapse = ", "),
+            "\n")
   }
 
   # subset only relevant combinations of tests and columns, that should not 

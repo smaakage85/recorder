@@ -94,10 +94,10 @@ test_that("ignore_combinations()", {
   expect_true(!("junk" %in% names(results$new_variable)))
    
   # handling of invalid inputs.
-  expect_error(ignore_combinations(playback$tests, 
+  expect_warning(ignore_combinations(playback$tests, 
                                    list(new_level = "TeStEr"),
                                    playback$variables))
-  expect_error(ignore_combinations(playback$tests, 
+  expect_warning(ignore_combinations(playback$tests, 
                                    list(new_level = 2),
                                    playback$variables))
   expect_warning(ignore_combinations(playback$tests, 
