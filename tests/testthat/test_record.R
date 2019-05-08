@@ -34,3 +34,9 @@ expect_warning({tape <- record(iris_newdata, verbose = FALSE)})
 expect_is(tape, "data.tape")
 expect_equal(tape$parameters$Sepal.Length$any_NA, TRUE)
 
+# test 'record.character'.
+df <- data.frame(a = letters[1:10], stringsAsFactors = FALSE)
+tape <- record(df)
+expect_true(all(c("levels","any_NA") %in% tape$parameters$a))
+
+

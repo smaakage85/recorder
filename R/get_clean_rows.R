@@ -64,7 +64,7 @@ get_failed_tests <- function(playback,
 
 #' Get Failed Tests as a String
 #'
-#' Concatenates information of the tests, that did NOT pass into one single
+#' Concatenates information of the tests that failed into one single
 #' character vector.
 #' 
 #' @inheritParams get_failed_tests

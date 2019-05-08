@@ -85,7 +85,7 @@ ignore_cols <- function(tests, col_names, variables_newdata) {
     stop("'col_names' must be a character vector with positive length (or NULL).")
   }
   
-  # do the variables exist in new data?
+  # do the variables/columns exist in new data?
   if (!all(col_names %in% variables_newdata)) {
     warning("The following columns do not exist in new data: ",
          paste0(col_names[!col_names %in% variables_newdata], collapse = ", "),
