@@ -1,14 +1,14 @@
-#' Record Parameters and Meta Data from Training Data
+#' Record Statistics and Meta Data of Variables from Training Data
 #' 
-#' Records relevant meta data and parameters from training data for a machine 
-#' learning model. The recorded data can then be used to compute a set of 
-#' validation tests on new data with \code{\link{play}}.
+#' Records statistics and meta data of variables from the training data for a 
+#' machine learning model. The recorded data can then be used to compute a set 
+#' of validation tests on new data with \code{\link{play}}.
 #'
-#' @param x training data or just a single variable to record parameters and 
-#' other relevant metadata from.
+#' @param x training data (or just a single variable from the training data) to 
+#' record the statistics and other relevant meta data of.
 #' @param ... further arguments passed to or from other methods.
 #'
-#' @return \code{list} recorded parameters and metadata. The list will inherit
+#' @return \code{list} recorded statistics and meta data. The list will inherit
 #' from the \code{data.tape} class when the function is invoked with a 
 #' \code{data.frame}.
 #' 
@@ -20,16 +20,16 @@ record <- function (x, ...) {
   UseMethod("record", x)
 }
 
-#' Record Parameters and Meta Data from Numeric
+#' Record Statistics and Meta Data of a Numeric
 #'
-#' Records parameters and meta data from \code{numeric}.
+#' Records statistics and meta data of a \code{numeric}.
 #' 
 #' @param x \code{numeric}
 #' @param ... all further arguments.
 #'
 #' @method record numeric
 #' 
-#' @return \code{list} recorded parameters and meta data.
+#' @return \code{list} recorded statistics and meta data.
 #'
 #' @export
 #' 
@@ -37,7 +37,7 @@ record <- function (x, ...) {
 #' record(iris$Sepal.Length)
 record.numeric <- function(x, ...) {
 
-  # record parameters and meta data.
+  # record statistics and meta data.
   list(
     min = min(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
@@ -46,16 +46,16 @@ record.numeric <- function(x, ...) {
 
 }
 
-#' Record Parameters and Meta Data from Integer
+#' Record Statistics and Meta Data of an Integer
 #'
-#' Records parameters and meta data from \code{integer}.
+#' Records statistics and meta data of an \code{integer}.
 #' 
 #' @param x \code{integer}
 #' @param ... all further arguments.
 #'
 #' @method record integer
 #' 
-#' @return \code{list} recorded parameters and meta data.
+#' @return \code{list} recorded statistics and meta data.
 #'
 #' @export
 #' 
@@ -63,7 +63,7 @@ record.numeric <- function(x, ...) {
 #' record(c(1:10, NA_integer_))
 record.integer <- function(x, ...) {
 
-  # record parameters and meta data.
+  # record statistics and meta data.
   list(
     min = min(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
@@ -72,16 +72,16 @@ record.integer <- function(x, ...) {
 
 }
 
-#' Record Parameters and Meta Data from Factor
+#' Record Statistics and Meta Data of a Factor
 #'
-#' Records parameters and meta data from \code{factor}.
+#' Records statistics and meta data of a \code{factor}.
 #' 
 #' @param x \code{factor}
 #' @param ... all further arguments.
 #'
 #' @method record factor
 #' 
-#' @return \code{list} recorded parameters and meta data.
+#' @return \code{list} recorded statistics and meta data.
 #'
 #' @export
 #' 
@@ -89,7 +89,7 @@ record.integer <- function(x, ...) {
 #' record(iris$Species)
 record.factor <- function(x, ...) {
 
-  # record parameters and meta data.
+  # record statistics and meta data.
   list(
     levels = levels(x),
     any_NA = any_NA(x)
@@ -97,16 +97,16 @@ record.factor <- function(x, ...) {
 
 }
 
-#' Record Parameters and Meta Data from Character
+#' Record Statistics and Meta Data of a Character
 #'
-#' Records parameters and meta data from \code{character}.
+#' Records statistics and meta data of a \code{character}.
 #' 
 #' @param x \code{character}
 #' @param ... all further arguments.
 #'
 #' @method record character
 #' 
-#' @return \code{list} recorded parameters and meta data. The unique values
+#' @return \code{list} recorded statistics and meta data. The unique values
 #' of the vector are recorded as `levels`.
 #'
 #' @export
@@ -115,7 +115,7 @@ record.factor <- function(x, ...) {
 #' record(letters)
 record.character <- function(x, ...) {
 
-  # record parameters and meta data.
+  # record statistics and meta data.
   list(
     levels = unique(x),
     any_NA = any_NA(x)
@@ -123,16 +123,16 @@ record.character <- function(x, ...) {
 
 }
 
-#' Record Parameters and Meta Data 
+#' Record Statistics and Meta Data 
 #'
-#' Records parameters and meta data.
+#' Records statistics and meta data.
 #' 
 #' @param x anything.
 #' @param ... all further arguments.
 #'
 #' @method record default
 #' 
-#' @return \code{list} recorded parameters and meta data.
+#' @return \code{list} recorded statistics and meta data.
 #'
 #' @export
 #' 
@@ -142,16 +142,16 @@ record.character <- function(x, ...) {
 #' record(some_junk_letters)
 record.default <- function(x, ...) {
 
-  # record parameters and meta data.
+  # record statistics and meta data.
   list(
     any_NA = any_NA(x)
   )
 
 }
 
-#' Record Parameters and Meta Data from Data Frame
+#' Record Statistics and Meta Data of a Data Frame
 #'
-#' Records parameters and meta data from a data.frame.
+#' Records Statistics and meta data of a data.frame.
 #' 
 #' @param x \code{data.frame} training data for machine learning model.
 #' @param verbose \code{logical} should messages be printed?
@@ -159,7 +159,7 @@ record.default <- function(x, ...) {
 #'
 #' @method record data.frame
 #' 
-#' @return \code{list} recorded parameters and meta data. 
+#' @return \code{list} recorded statistics and meta data. 
 #'
 #' @export
 #' 
@@ -169,7 +169,7 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
 
   if (verbose) {
     cat(bgMagenta("\n[RECORD]\n\n"))
-    cat("... recording metadata and statistics for", ncol(x), 
+    cat("... recording meta data and statistics of", ncol(x), 
         "columns and", nrow(x), "rows... \n\n")
   }
   
@@ -190,7 +190,7 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
   # record classes of indvidual variables.
   class_variables <- lapply(x, class)
 
-  # record parameters for all variables.
+  # record statistics and meta data of all variables.
   parameters <- lapply(x, record)
 
   # combine results into one list, the structure of which defines the 

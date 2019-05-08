@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record.character}
 \alias{record.character}
-\title{Record Parameters and Meta Data from Character}
+\title{Record Statistics and Meta Data of a Character}
 \usage{
 \method{record}{character}(x, ...)
 }
@@ -12,11 +12,11 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded parameters and meta data. The unique values
+\code{list} recorded statistics and meta data. The unique values
 of the vector are recorded as `levels`.
 }
 \description{
-Records parameters and meta data from \code{character}.
+Records statistics and meta data of a \code{character}.
 }
 \examples{
 record(letters)

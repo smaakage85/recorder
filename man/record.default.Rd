@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record.default}
 \alias{record.default}
-\title{Record Parameters and Meta Data}
+\title{Record Statistics and Meta Data}
 \usage{
 \method{record}{default}(x, ...)
 }
@@ -12,10 +12,10 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded parameters and meta data.
+\code{list} recorded statistics and meta data.
 }
 \description{
-Records parameters and meta data.
+Records statistics and meta data.
 }
 \examples{
 some_junk_letters <- letters[1:10]

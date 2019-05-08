@@ -8,9 +8,10 @@ Authors@R:
            email = "lars_kjeldgaard@hotmail.com")
 Description: A lightweight toolkit to validate new observations when computing
     their predictions with a machine learning model. The validation process 
-    consists of two steps: (1) record relevant statistics and metadata of the
-    variables from the original training data and (2) use these data to run 
-    basic validation tests on the new set of observations.
+    consists of two steps: (1) record relevant statistics and meta data of the
+    variables from the original training data for the machine learning model and
+    (2) use these data to run a set of basic validation tests on the new set of 
+    observations.
 URL: https://github.com/smaakage85/recordr
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE

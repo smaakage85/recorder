@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record.data.frame}
 \alias{record.data.frame}
-\title{Record Parameters and Meta Data from Data Frame}
+\title{Record Statistics and Meta Data of a Data Frame}
 \usage{
 \method{record}{data.frame}(x, verbose = TRUE, ...)
 }
@@ -14,10 +14,10 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded parameters and meta data.
+\code{list} recorded statistics and meta data.
 }
 \description{
-Records parameters and meta data from a data.frame.
+Records Statistics and meta data of a data.frame.
 }
 \examples{
 record(iris)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record.integer}
 \alias{record.integer}
-\title{Record Parameters and Meta Data from Integer}
+\title{Record Statistics and Meta Data of an Integer}
 \usage{
 \method{record}{integer}(x, ...)
 }
@@ -12,10 +12,10 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded parameters and meta data.
+\code{list} recorded statistics and meta data.
 }
 \description{
-Records parameters and meta data from \code{integer}.
+Records statistics and meta data of an \code{integer}.
 }
 \examples{
 record(c(1:10, NA_integer_))

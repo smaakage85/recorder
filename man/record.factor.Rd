@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record.factor}
 \alias{record.factor}
-\title{Record Parameters and Meta Data from Factor}
+\title{Record Statistics and Meta Data of a Factor}
 \usage{
 \method{record}{factor}(x, ...)
 }
@@ -12,10 +12,10 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded parameters and meta data.
+\code{list} recorded statistics and meta data.
 }
 \description{
-Records parameters and meta data from \code{factor}.
+Records statistics and meta data of a \code{factor}.
 }
 \examples{
 record(iris$Species)

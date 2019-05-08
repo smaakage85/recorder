@@ -2,25 +2,25 @@
 % Please edit documentation in R/record.R
 \name{record}
 \alias{record}
-\title{Record Parameters and Meta Data from Training Data}
+\title{Record Statistics and Meta Data of Variables from Training Data}
 \usage{
 record(x, ...)
 }
 \arguments{
-\item{x}{training data or just a single variable to record parameters and 
-other relevant metadata from.}
+\item{x}{training data (or just a single variable from the training data) to 
+record the statistics and other relevant meta data of.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-\code{list} recorded parameters and metadata. The list will inherit
+\code{list} recorded statistics and meta data. The list will inherit
 from the \code{data.tape} class when the function is invoked with a 
 \code{data.frame}.
 }
 \description{
-Records relevant meta data and parameters from training data for a machine 
-learning model. The recorded data can then be used to compute a set of 
-validation tests on new data with \code{\link{play}}.
+Records statistics and meta data of variables from the training data for a 
+machine learning model. The recorded data can then be used to compute a set 
+of validation tests on new data with \code{\link{play}}.
 }
 \examples{
 record(iris)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record.numeric}
 \alias{record.numeric}
-\title{Record Parameters and Meta Data from Numeric}
+\title{Record Statistics and Meta Data of a Numeric}
 \usage{
 \method{record}{numeric}(x, ...)
 }
@@ -12,10 +12,10 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded parameters and meta data.
+\code{list} recorded statistics and meta data.
 }
 \description{
-Records parameters and meta data from \code{numeric}.
+Records statistics and meta data of a \code{numeric}.
 }
 \examples{
 record(iris$Sepal.Length)
