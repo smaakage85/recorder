@@ -153,7 +153,7 @@ paste_all_cols_with_rows <- function(x, first = 10) {
 paste_col_with_rows <- function(name, x, first = 10) {
   x <- which(x)
   exceed_length <- max(length(x) - first)
-  paste0(name, "[rows: ", paste0(x[seq_len(min(first, length(x)))],
+  paste0(name, "[row(s): ", paste0(x[seq_len(min(first, length(x)))],
                                  collapse = ", "),
          if (exceed_length > 0) {
            paste0(" and ", exceed_length, " more rows")
