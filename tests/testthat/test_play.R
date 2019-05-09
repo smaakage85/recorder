@@ -9,7 +9,6 @@ playback <- play(tape, iris, verbose = FALSE)
 expect_is(playback, "data.playback")
 # all tests produced.
 tests_meta_data <- get("tests_meta_data")
-expect_true(all(names(tests_meta_data) %in% names(playback$tests)))
 expect_true(all(names(playback$tests) %in% names(tests_meta_data)))
 
 # expected results.
@@ -49,5 +48,5 @@ results <- play(tape, df, verbose = FALSE)
 expect_length(results$tests$new_level, 0)
 newdata <- data.frame(a = letters[2:11], stringsAsFactors = FALSE)
 results <- play(tape, newdata, verbose = FALSE)
-expect_true(all(c("levels","any_NA") %in% names(tape$parameters$a)))
-expect_true(any(results$tests$new_level$a))
+expect_true(all(c("unique_values","any_NA") %in% names(tape$parameters$a)))
+expect_true(any(results$tests$new_text$a))

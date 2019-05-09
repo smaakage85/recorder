@@ -69,7 +69,7 @@ run_validation_tests.character <- function(x, parameters, ...) {
   # run tests.
   list(
     new_NA = !parameters$any_NA & is.na(x),
-    new_level = !is.na(x) & (!x %in% parameters$levels)
+    new_text = !is.na(x) & (!x %in% parameters$unique_values)
   )
 
 }

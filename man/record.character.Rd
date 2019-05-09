@@ -12,8 +12,7 @@
 \item{...}{all further arguments.}
 }
 \value{
-\code{list} recorded statistics and meta data. The unique values
-of the vector are recorded as `levels`.
+\code{list} recorded statistics and meta data.
 }
 \description{
 Records statistics and meta data of a \code{character}.

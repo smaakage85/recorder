@@ -106,8 +106,7 @@ record.factor <- function(x, ...) {
 #'
 #' @method record character
 #' 
-#' @return \code{list} recorded statistics and meta data. The unique values
-#' of the vector are recorded as `levels`.
+#' @return \code{list} recorded statistics and meta data.
 #'
 #' @export
 #' 
@@ -117,7 +116,7 @@ record.character <- function(x, ...) {
 
   # record statistics and meta data.
   list(
-    levels = unique(x),
+    unique_values = unique(x),
     any_NA = any_NA(x)
   )
 

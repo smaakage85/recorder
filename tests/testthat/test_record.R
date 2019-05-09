@@ -37,6 +37,6 @@ expect_equal(tape$parameters$Sepal.Length$any_NA, TRUE)
 # test 'record.character'.
 df <- data.frame(a = letters[1:10], stringsAsFactors = FALSE)
 tape <- record(df, verbose = FALSE)
-expect_true(all(c("levels","any_NA") %in% names(tape$parameters$a)))
-expect_identical(tape$parameters$a$levels, unique(df$a))
+expect_true(all(c("unique_values","any_NA") %in% names(tape$parameters$a)))
+expect_identical(tape$parameters$a$unique_values, unique(df$a))
 

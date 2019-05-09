@@ -55,7 +55,7 @@ ignore_tests <- function(tests, test_names = NULL) {
   }
 
   # do test names exist?
-  data("tests_meta_data")
+  tests_meta_data <- get("tests_meta_data")
   if (!all(test_names %in% names(tests_meta_data))) {
     warning("The following tests do not exist: ",
          paste0(test_names[!test_names %in% names(tests_meta_data)], 
