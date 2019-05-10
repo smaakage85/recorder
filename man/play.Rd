@@ -11,7 +11,7 @@ play(tape, newdata, verbose = TRUE)
 training data.}
 
 \item{newdata}{\code{data.frame} new data to be predicted with an existing 
-machine learning model.}
+predictive model.}
 
 \item{verbose}{\code{logical} should messages be printed?}
 }
@@ -20,7 +20,7 @@ machine learning model.}
 }
 \description{
 Runs a set of validation tests on new data to be predicted with an existing 
-machine learning model. These tests are based on statistics and meta data of
+predictive model. These tests are based on statistics and meta data of
 the variables in the training data - recorded with \code{\link{record}}.
 }
 \details{

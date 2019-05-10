@@ -5,10 +5,26 @@ recordr <img src="man/figures/logo.png" align="right" height=140/>
 
 [![Travis-CI Build Status](https://travis-ci.org/smaakage85/customsteps.svg?branch=master)](https://travis-ci.org/smaakage85/recordr) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/modelgrid)](https://CRAN.R-project.org/package=recordr) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/modelgrid)](https://CRAN.R-project.org/package=recordr)
 
-`recordr` is a lightweight toolkit to validate new observations when computing their predictions with a machine learning model. The validation process consists of two steps:
+`recordr` is a lightweight toolkit to validate new observations when computing their corresponding predictions with a predictive model.
 
-1.  record relevant statistics and meta data of the variables from the original training data for the machine learning model
+With `recordr` the validation process consists of two steps:
+
+1.  record relevant statistics and meta data of the variables from the original training data for the predictive model
 2.  use these data to run a set of basic validation tests on the new set of observations.
+
+Motivation
+----------
+
+There can be many data specific reasons, why you might not be confident in the predictions of a predictive model on new data.
+
+Some of them are obvious, e.g.:
+
+-   One or more variables in training data are not found in new data
+-   The class of a given variable differs in training data and new data
+
+Others are more subtle, for instance if it is the case, that observations in new data are not in the "span" of the training data.
+
+If one or more of the `recordr` validation tests fail on new data, you might not be confident in the corresponding predictions.
 
 Installation
 ------------
@@ -19,16 +35,16 @@ Installation
 devtools::install_github("smaakage85/recordr")
 ```
 
-Basics
-------
+Workflow Example
+----------------
 
-Load package.
+Get ready and load package.
 
 ``` r
 library(recordr)
 ```
 
-Divide `iris` into training data and new data.
+The famous `iris` dataset will be used as an example. The data set is divided into training data, that can be used for model development, and new data to be predicted with the model at some point.
 
 ``` r
 set.seed(1)
@@ -37,7 +53,7 @@ data_training <- iris[trn_idx, ]
 data_new <- iris[-trn_idx, ]
 ```
 
-Record statistics and meta data of training data.
+Record statistics and meta data of the training data with `record()`.
 
 ``` r
 tape <- record(data_training)
@@ -49,7 +65,7 @@ tape <- record(data_training)
 #> [STOP]
 ```
 
-Run validation tests on new data with `play`.
+Run validation tests on new data with `play()`.
 
 ``` r
 playback <- play(tape, data_new)
@@ -61,7 +77,7 @@ playback <- play(tape, data_new)
 #> [STOP]
 ```
 
-Print test results.
+Print the over-all results of the validation tests.
 
 ``` r
 playback
@@ -77,7 +93,7 @@ playback
 #> > 'mismatch_class': no failures
 #> > 'mismatch_levels': no failures
 #> > 'new_variable': no failures
-#> > 'outside_range': Petal.Length[row(s): 11]
+#> > 'outside_range': Petal.Length[row(s): #11]
 #> > 'new_level': no failures
 #> > 'new_NA': no failures
 #> > 'new_text': no failures
@@ -87,7 +103,7 @@ playback
 #> 'mismatch_class': 'class' in new data does not match 'class' in training data
 #> 'mismatch_levels': 'levels' in new data and training data are not identical
 #> 'new_variable': variable observed in new data but not in training data
-#> 'outside_range': value in new data without recorded range in training data
+#> 'outside_range': value in new data outside recorded range in training data
 #> 'new_level': new 'level' in new data compared to training data
 #> 'new_NA': NA observed in new data but not in training data
 #> 'new_text': new text in new data compared to training data
@@ -95,12 +111,14 @@ playback
 #> [STOP]
 ```
 
-You can then extract the results of (any) failed tests for the rows of new data with `get_failed_tests()`:
+The test summary tells us, that one observation (row \#11) has a value of the variable "Petal.Length" outside the recorded range in training; hence we might not be confident in the prediction of this particular observation.
+
+After running the validation tests, you can extract the results of (any) failed tests for the rows/observations of new data with `get_failed_tests()`.
 
 ``` r
 failed_tests <- get_failed_tests(playback)
 # print.
-kable(head(failed_tests, 15))
+knitr::kable(head(failed_tests, 15))
 ```
 
 | outside\_range.Petal.Length |
@@ -121,6 +139,8 @@ kable(head(failed_tests, 15))
 | FALSE                       |
 | FALSE                       |
 
-If you to know more about all of the exciting features of `recordr`, take a look at the vignette.
+You might also find the functions `get_failed_tests_string()` and `get_clean_rows` to be useful.
+
+That is basically it. If you to know more about all of the exciting features of `recordr`, take a look at the vignette.
 
 Also, if you have any feedback on the package, please let me hear from you.

@@ -9,7 +9,7 @@ tests_meta_data <- list(
   new_variable = list(evaluate_level = "col",
                       description = "variable observed in new data but not in training data"),
   outside_range = list(evaluate_level = "row",
-                       description = "value in new data without recorded range in training data"),
+                       description = "value in new data outside recorded range in training data"),
   new_level = list(evaluate_level = "row",
                    description = "new 'level' in new data compared to training data"),
   new_NA = list(evaluate_level = "row",

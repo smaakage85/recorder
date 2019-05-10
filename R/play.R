@@ -158,7 +158,7 @@ run_validation_tests.default <- function(x, parameters, ...) {
 #' Validate New Data by Playing a Data Tape on It
 #' 
 #' Runs a set of validation tests on new data to be predicted with an existing 
-#' machine learning model. These tests are based on statistics and meta data of
+#' predictive model. These tests are based on statistics and meta data of
 #' the variables in the training data - recorded with \code{\link{record}}.
 #' 
 #' @details Look up the descriptions of the validation tests with 
@@ -168,7 +168,7 @@ run_validation_tests.default <- function(x, parameters, ...) {
 #' training data. 
 #' @param verbose \code{logical} should messages be printed?
 #' @param newdata \code{data.frame} new data to be predicted with an existing 
-#' machine learning model.
+#' predictive model.
 #'
 #' @export
 #' 
@@ -202,8 +202,8 @@ play <- function(tape, newdata, verbose = TRUE) {
 
   if (verbose) {
     cat(bgMagenta("\n[PLAY]\n\n"))
-    cat("... playing data.tape on new data with", ncol(newdata),
-      "columns and", nrow(newdata), "rows ...\n\n")
+    cat("... playing data.tape on new data with", nrow(newdata),
+      "rows and", ncol(newdata), "columns ...\n\n")
   }
 
   # test if there any new variables in new data set, that have not been

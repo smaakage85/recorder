@@ -146,15 +146,15 @@ paste_all_cols_with_rows <- function(x, first = 10) {
 
   single_cols <- mapply(paste_col_with_rows, names(x), x, first = first, SIMPLIFY = FALSE)
   # paste results for all columns to one string.
-  paste0(single_cols, collapse = ", ")
+  paste0(single_cols, collapse = ",\n")
 
 }
 
 paste_col_with_rows <- function(name, x, first = 10) {
   x <- which(x)
   exceed_length <- max(length(x) - first)
-  paste0(name, "[row(s): ", paste0(x[seq_len(min(first, length(x)))],
-                                 collapse = ", "),
+  paste0(name, "[row(s): ", paste0(paste("#", x[seq_len(min(first, length(x)))], sep = ""),
+                                   collapse = ", "),
          if (exceed_length > 0) {
            paste0(" and ", exceed_length, " more rows")
          } else {""},

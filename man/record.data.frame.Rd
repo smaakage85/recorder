@@ -7,7 +7,7 @@
 \method{record}{data.frame}(x, verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{\code{data.frame} training data for machine learning model.}
+\item{x}{\code{data.frame} training data for predictive model.}
 
 \item{verbose}{\code{logical} should messages be printed?}
 

@@ -1,7 +1,7 @@
 #' Record Statistics and Meta Data of Variables from Training Data
 #' 
 #' Records statistics and meta data of variables from the training data for a 
-#' machine learning model. The recorded data can then be used to compute a set 
+#' predictive model. The recorded data can then be used to compute a set 
 #' of validation tests on new data with \code{\link{play}}.
 #'
 #' @param x training data (or just a single variable from the training data) to 
@@ -152,7 +152,7 @@ record.default <- function(x, ...) {
 #'
 #' Records Statistics and meta data of a data.frame.
 #' 
-#' @param x \code{data.frame} training data for machine learning model.
+#' @param x \code{data.frame} training data for predictive model.
 #' @param verbose \code{logical} should messages be printed?
 #' @param ... all further arguments.
 #'
@@ -168,8 +168,8 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
 
   if (verbose) {
     cat(bgMagenta("\n[RECORD]\n\n"))
-    cat("... recording meta data and statistics of", ncol(x), 
-        "columns and", nrow(x), "rows... \n\n")
+    cat("... recording meta data and statistics of", nrow(x), 
+        "rows and", ncol(x), "columns... \n\n")
   }
   
   # validate input.

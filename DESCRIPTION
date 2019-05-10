@@ -1,5 +1,5 @@
 Package: recordr
-Title: Toolkit to Validate New Data for a Machine Learning Model
+Title: Toolkit to Validate New Data for a Predictive Model
 Version: 0.8.0
 Authors@R: 
     person(given = "Lars",
@@ -7,9 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "lars_kjeldgaard@hotmail.com")
 Description: A lightweight toolkit to validate new observations when computing
-    their predictions with a machine learning model. The validation process 
+    their predictions with a predictive model. The validation process 
     consists of two steps: (1) record relevant statistics and meta data of the
-    variables from the original training data for the machine learning model and
+    variables from the original training data for the predictive model and
     (2) use these data to run a set of basic validation tests on the new set of 
     observations.
 URL: https://github.com/smaakage85/recordr
