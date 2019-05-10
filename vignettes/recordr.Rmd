@@ -1,65 +1,54 @@
+    
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Introduction to recordr"
+author: "Lars Kjeldgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Introduction to recordr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+`recordr` 0.9.0 is now available on CRAN. `recordr` is a lightweight toolkit to 
+validate new observations when computing their corresponding predictions with a 
+predictive model. 
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+With `recordr` the validation process consists of two steps: 
 
-## Vignette Info
+1. record relevant statistics and meta data of the variables from the original
+training data for the predictive model 
+2. use these data to run a set of basic validation tests on the new set of 
+observations.
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+## Motivation
 
-## Styles
+There can be many data specific reasons, why you might not be confident in the
+predictions of a predictive model on new data. 
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+Some of them are obvious, e.g.:
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+* One or more variables in training data are not found in new data
+* The class of a given variable differs in training data and new data
 
-## Figures
+Others are more subtle, for instance when observations in 
+new data are not in the "span" of the training data. One example of this could 
+be, when a variable is "N/A" (missing) for a new observation to be predicted, 
+but no missing values appeared for the same variable in the training data.
+This implies, that the new observation is not within the "span" of the training 
+data. Another way of putting this: the model has never encountered an 
+observation like this before, therefore there is good reason to doubt the 
+quality of its prediction computed with the predictive model.
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+## recordr Workflow
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
-```
+In order to validate new data (before computing their predictions with a 
+preidictive model) relevant statistics and meta data of the variables must first 
+be learned from the training data of the model. 
 
-You can enable figure captions by `fig_caption: yes` in YAML:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))

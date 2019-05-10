@@ -4,8 +4,8 @@
 #' based on statistics and meta data of the same variable recorded 
 #' (with \code{\link{record}}) from the training data.
 #' 
-#' @details Look up the descriptions of the validation tests with 
-#' \code{\link{get_test_descriptions}}.
+#' @details Look up the descriptions and other meta data of the available 
+#' validation tests with \code{\link{get_tests_meta_data}}.
 #' 
 #' @param x variable in new data.
 #' @param ... further arguments passed to or from other methods. Not used at
@@ -161,8 +161,8 @@ run_validation_tests.default <- function(x, parameters, ...) {
 #' predictive model. These tests are based on statistics and meta data of
 #' the variables in the training data - recorded with \code{\link{record}}.
 #' 
-#' @details Look up the descriptions of the validation tests with 
-#' \code{\link{get_test_descriptions}}.
+#' @details Look up the descriptions and other meta data of the available 
+#' validation tests with \code{\link{get_tests_meta_data}}.
 #' 
 #' @param tape \code{data.tape} statistics and meta data recorded from 
 #' training data. 

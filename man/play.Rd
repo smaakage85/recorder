@@ -24,8 +24,8 @@ predictive model. These tests are based on statistics and meta data of
 the variables in the training data - recorded with \code{\link{record}}.
 }
 \details{
-Look up the descriptions of the validation tests with 
-\code{\link{get_test_descriptions}}.
+Look up the descriptions and other meta data of the available 
+validation tests with \code{\link{get_tests_meta_data}}.
 }
 \examples{
 # record tape from `iris`.

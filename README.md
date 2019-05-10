@@ -60,7 +60,7 @@ tape <- record(data_training)
 #> 
 #> [RECORD]
 #> 
-#> ... recording meta data and statistics of 5 columns and 100 rows... 
+#> ... recording meta data and statistics of 100 rows and 5 columns... 
 #> 
 #> [STOP]
 ```
@@ -72,7 +72,7 @@ playback <- play(tape, data_new)
 #> 
 #> [PLAY]
 #> 
-#> ... playing data.tape on new data with 5 columns and 50 rows ...
+#> ... playing data.tape on new data with 50 rows and 5 columns ...
 #> 
 #> [STOP]
 ```
@@ -118,7 +118,8 @@ After running the validation tests, you can extract the results of (any) failed 
 ``` r
 failed_tests <- get_failed_tests(playback)
 # print.
-knitr::kable(head(failed_tests, 15))
+library(knitr)
+kable(head(failed_tests, 15))
 ```
 
 | outside\_range.Petal.Length |

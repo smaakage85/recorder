@@ -73,8 +73,8 @@ get_failed_tests <- function(playback,
 #' entry concatenates information of the tests, that did NOT pass for the
 #' corresponding row in new data.
 #' 
-#' @details Look up the descriptions of the validation tests with 
-#' \code{\link{get_test_descriptions}}.
+#' @details Look up the descriptions and other meta data of the available 
+#' validation tests with \code{\link{get_tests_meta_data}}.
 #' 
 #' @export
 #' 
@@ -114,8 +114,8 @@ get_failed_tests_string <- function(playback,
 #'
 #' @inheritParams get_failed_tests
 #'
-#' @details Look up the descriptions of the validation tests with 
-#' \code{\link{get_test_descriptions}}.
+#' @details Look up the descriptions and other meta data of the available 
+#' validation tests with \code{\link{get_tests_meta_data}}.
 #' 
 #' @return \code{logical} with the same length as the number of rows in new 
 #' data. The value is TRUE, if the row passed all tests, otherwise FALSE.

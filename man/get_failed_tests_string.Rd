@@ -27,8 +27,8 @@ Concatenates information of the tests that failed into one single
 character vector.
 }
 \details{
-Look up the descriptions of the validation tests with 
-\code{\link{get_test_descriptions}}.
+Look up the descriptions and other meta data of the available 
+validation tests with \code{\link{get_tests_meta_data}}.
 }
 \examples{
 # record tape from `iris`.

@@ -12,10 +12,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, include = FALSE}
-library(knitr)
-```
-
 # recordr <img src="man/figures/logo.png" align="right" height=140/>
 
 [![Travis-CI Build Status](https://travis-ci.org/smaakage85/customsteps.svg?branch=master)](https://travis-ci.org/smaakage85/recordr)
@@ -103,7 +99,8 @@ tests for the rows/observations of new data with `get_failed_tests()`.
 ```{r}
 failed_tests <- get_failed_tests(playback)
 # print.
-knitr::kable(head(failed_tests, 15))
+library(knitr)
+kable(head(failed_tests, 15))
 ```
 
 You might also find the functions `get_failed_tests_string()` and 

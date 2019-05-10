@@ -9,8 +9,8 @@
 #' @param ignore_combinations \code{list} combinations of tests and
 #' columns to ignore.
 #' 
-#' @details Look up the descriptions of the validation tests with 
-#' \code{\link{get_test_descriptions}}.
+#' @details Look up the descriptions and other meta data of the available 
+#' validation tests with \code{\link{get_tests_meta_data}}.
 #'
 #' @return \code{list} only the relevant test results.
 ignore <- function(tests,
