@@ -26,6 +26,6 @@ columns to ignore.}
 Ignores and removes certain test results in accordance with user inputs.
 }
 \details{
-Look up the descriptions and other meta data of the available 
+Look up the descriptions and other meta data of the available
 validation tests with \code{\link{get_tests_meta_data}}.
 }

@@ -8,7 +8,7 @@ playback <- play(tape, iris, verbose = FALSE)
 # basic output tests.
 expect_is(playback, "data.playback")
 # all tests produced.
-tests_meta_data <- get("tests_meta_data")
+tests_meta_data <- create_tests_meta_data()
 expect_true(all(names(playback$tests) %in% names(tests_meta_data)))
 
 # expected results.

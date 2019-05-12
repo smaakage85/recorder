@@ -1,15 +1,15 @@
 #' Ignore and Remove Certain Test Results
-#' 
+#'
 #' Ignores and removes certain test results in accordance with user inputs.
 #'
 #' @param tests \code{list} test results.
 #' @param variables_newdata \code{character} names of variables in new data.
-#' @param ignore_tests \code{character} names of tests to ignore. 
+#' @param ignore_tests \code{character} names of tests to ignore.
 #' @param ignore_cols \code{character} names of columns/variables to ignore.
 #' @param ignore_combinations \code{list} combinations of tests and
 #' columns to ignore.
-#' 
-#' @details Look up the descriptions and other meta data of the available 
+#'
+#' @details Look up the descriptions and other meta data of the available
 #' validation tests with \code{\link{get_tests_meta_data}}.
 #'
 #' @return \code{list} only the relevant test results.
@@ -55,10 +55,10 @@ ignore_tests <- function(tests, test_names = NULL) {
   }
 
   # do test names exist?
-  tests_meta_data <- get("tests_meta_data")
+  tests_meta_data <- create_tests_meta_data()
   if (!all(test_names %in% names(tests_meta_data))) {
     warning("The following tests do not exist: ",
-         paste0(test_names[!test_names %in% names(tests_meta_data)], 
+         paste0(test_names[!test_names %in% names(tests_meta_data)],
                 collapse = ","), "\n")
   }
 
@@ -85,7 +85,7 @@ ignore_cols <- function(tests, col_names, variables_newdata) {
   if (!is.character(col_names) && length(col_names) == 0) {
     stop("'col_names' must be a character vector with positive length (or NULL).")
   }
-  
+
   # do the variables/columns exist in new data?
   if (!all(col_names %in% variables_newdata)) {
     warning("The following columns do not exist in new data: ",
@@ -118,27 +118,27 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
                                  is.null(names(combinations)))) {
     stop("'combinations' must be a named list with positive length.")
   }
-  
+
   if (length(names(combinations)) > length(unique(names(combinations)))) {
     stop("Names of 'combinations' list must be unique.")
   }
-  
+
   if (!all(vapply(combinations, is.character, FUN.VALUE = logical(1)) == TRUE)) {
     "Please supply column names must as characters."
   }
-  
+
   # do test names exist?
-  tests_meta_data <- get("tests_meta_data")
+  tests_meta_data <- create_tests_meta_data()
   if (!all(names(combinations) %in% names(tests_meta_data))) {
     warning("The following tests do not exist: ",
-            paste0(names(combinations)[!names(combinations) %in% names(tests_meta_data)], 
+            paste0(names(combinations)[!names(combinations) %in% names(tests_meta_data)],
                    collapse = ","),
             "\n")
   }
-  
+
   # are there any incomplete combinations, where no columns have been selected?
-  incomplete_combinations <- vapply(combinations, 
-                                    length, 
+  incomplete_combinations <- vapply(combinations,
+                                    length,
                                     FUN.VALUE = integer(1)) == 0
   if (any(incomplete_combinations)) {
     stop("The following combinations were not complete (no columns selected): ",
@@ -153,7 +153,7 @@ ignore_combinations <- function(tests, combinations, variables_newdata) {
             "\n")
   }
 
-  # subset only relevant combinations of tests and columns, that should not 
+  # subset only relevant combinations of tests and columns, that should not
   # be ignored.
   tests[names(combinations)] <-
     mapply(FUN = function(tests, col_names) {
