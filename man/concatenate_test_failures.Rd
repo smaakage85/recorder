@@ -14,6 +14,6 @@ concatenate_test_failures(test_failures)
 one string pr. row.
 }
 \description{
-Concatenates validation test failures descriptions to a single character 
+Concatenates validation test failures descriptions to a single character
 vector.
 }
