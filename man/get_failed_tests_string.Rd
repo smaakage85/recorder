@@ -10,12 +10,14 @@ get_failed_tests_string(playback, ignore_tests = NULL,
 \arguments{
 \item{playback}{\code{data.playback} to extract failed tests from.}
 
-\item{ignore_tests}{\code{character} names of tests to ignore.}
+\item{ignore_tests}{\code{character} ignore test results from tests with 
+these names.}
 
-\item{ignore_cols}{\code{character} names of columns/variables to ignore.}
+\item{ignore_cols}{\code{character} ignore test results from tests of 
+columns with these names.}
 
-\item{ignore_combinations}{\code{list} combinations of tests and
-columns to ignore.}
+\item{ignore_combinations}{\code{list} ignore test results from specific 
+tests of specific columns.}
 }
 \value{
 \code{character} with one entry for each row in new data. Each

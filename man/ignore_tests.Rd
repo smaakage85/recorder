@@ -9,7 +9,7 @@ ignore_tests(tests, test_names = NULL)
 \arguments{
 \item{tests}{\code{list} test results.}
 
-\item{test_names}{\code{character} names of tests to be ignored/removed.}
+\item{test_names}{\code{character} names of tests to be ignored.}
 }
 \value{
 \code{list} results after removing specific tests.

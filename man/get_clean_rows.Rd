@@ -10,12 +10,14 @@ get_clean_rows(playback, ignore_tests = NULL, ignore_cols = NULL,
 \arguments{
 \item{playback}{\code{data.playback} to extract failed tests from.}
 
-\item{ignore_tests}{\code{character} names of tests to ignore.}
+\item{ignore_tests}{\code{character} ignore test results from tests with 
+these names.}
 
-\item{ignore_cols}{\code{character} names of columns/variables to ignore.}
+\item{ignore_cols}{\code{character} ignore test results from tests of 
+columns with these names.}
 
-\item{ignore_combinations}{\code{list} combinations of tests and
-columns to ignore.}
+\item{ignore_combinations}{\code{list} ignore test results from specific 
+tests of specific columns.}
 }
 \value{
 \code{logical} with the same length as the number of rows in new 

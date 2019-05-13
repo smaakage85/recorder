@@ -46,9 +46,42 @@ quality of its prediction computed with the predictive model.
 
 ## recordr Workflow
 
-In order to validate new data (before computing their predictions with a 
-preidictive model) relevant statistics and meta data of the variables must first 
-be learned from the training data of the model. 
+We will need some data in order to demonstrate the `recordr` workflow. As so
+many times before the famous `iris` data set will be used as an example. The 
+data set is divided into training data, that can be used for model development,
+and new data to be predicted with the model at some point.
 
+```{r}
+set.seed(1)
+trn_idx <- sample(seq_len(nrow(iris)), 100)
+data_training <- iris[trn_idx, ]
+data_new <- iris[-trn_idx, ]
+```
+
+### Record Statistics and Meta Data of Variables from Training Data
+
+What we want to achieve is to validate the new observations (before computing 
+their predictions with a predictive model) based on relevant 
+statistics and meta data of the training data. Therefore relevant statistics and
+meta data of the variables must first be learned (recorded) from the training 
+data of the model. This is done with the `record()` function.
+
+```{r}
+library(recordr)
+tape <- record(data_training)
+```
+
+This provides us with an object belonging to the `data.tape` class. 
+The `data.tape` contains the statistics and meta data recorded from the training 
+data.
+
+```{r}
+str(tape)
+```
+
+As you see, which meta data and statistics are recorded for the individual 
+variables depend on the class of the given variable, e.g. for a numeric 
+variable `min` and `max` values are computed, whilst `levels` are computed for
+factor variables.
 
 

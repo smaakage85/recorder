@@ -2,7 +2,7 @@
 % Please edit documentation in R/ignore.R
 \name{ignore_combinations}
 \alias{ignore_combinations}
-\title{Ignore Test Results of Specific Combinations of Tests and Columns}
+\title{Ignore Test Results from Specific Tests of Specific Columns}
 \usage{
 ignore_combinations(tests, combinations, variables_newdata)
 }
@@ -18,5 +18,5 @@ test results should be ignored.}
 \code{list} test results after removals.
 }
 \description{
-Ignore Test Results of Specific Combinations of Tests and Columns
+Ignore Test Results from Specific Tests of Specific Columns
 }

@@ -1,13 +1,15 @@
-#' Ignore and Remove Certain Test Results
+#' Ignore Certain Test Results
 #'
-#' Ignores and removes certain test results in accordance with user inputs.
+#' Ignores certain test results in accordance with user inputs.
 #'
 #' @param tests \code{list} test results.
 #' @param variables_newdata \code{character} names of variables in new data.
-#' @param ignore_tests \code{character} names of tests to ignore.
-#' @param ignore_cols \code{character} names of columns/variables to ignore.
-#' @param ignore_combinations \code{list} combinations of tests and
-#' columns to ignore.
+#' @param ignore_tests \code{character} ignore test results from tests with 
+#' these names. 
+#' @param ignore_cols \code{character} ignore test results from tests of 
+#' columns with these names.
+#' @param ignore_combinations \code{list} ignore test results from specific 
+#' tests of specific columns.
 #'
 #' @details Look up the descriptions and other meta data of the available
 #' validation tests with \code{\link{get_tests_meta_data}}.
@@ -19,16 +21,16 @@ ignore <- function(tests,
                    ignore_cols = NULL,
                    ignore_combinations = NULL) {
 
-  # ignore/remove _certain tests_.
+  # ignore test results from _specific tests_.
   tests <- ignore_tests(tests = tests,
                         test_names = ignore_tests)
 
-  # ignore/remove tests of _certain columns_.
+  # ignore test results from tests of _specific columns_.
   tests <- ignore_cols(tests = tests,
                        col_names = ignore_cols,
                        variables_newdata = variables_newdata)
 
-  # ignore/remove _certain combinations of tests and columns_.
+  # ignore test results from _specific tests of specific columns_.
   tests <- ignore_combinations(tests = tests,
                                combinations = ignore_combinations,
                                variables_newdata = variables_newdata)
@@ -41,7 +43,7 @@ ignore <- function(tests,
 #' Ignore Results from Specific Tests
 #'
 #' @param tests \code{list} test results.
-#' @param test_names \code{character} names of tests to be ignored/removed.
+#' @param test_names \code{character} names of tests to be ignored.
 #'
 #' @return \code{list} results after removing specific tests.
 ignore_tests <- function(tests, test_names = NULL) {
@@ -68,7 +70,7 @@ ignore_tests <- function(tests, test_names = NULL) {
 
 }
 
-#' Ignore Test Results for Specific Columns
+#' Ignore Test Results from Tests of Specific Columns
 #'
 #' @param tests \code{list} test results.
 #' @param col_names \code{character} names of columns for which test results
@@ -100,7 +102,7 @@ ignore_cols <- function(tests, col_names, variables_newdata) {
 
 }
 
-#' Ignore Test Results of Specific Combinations of Tests and Columns
+#' Ignore Test Results from Specific Tests of Specific Columns
 #'
 #' @param tests \code{list} test results.
 #' @param combinations \code{list} combinations of tests and columns from which

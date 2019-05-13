@@ -140,7 +140,7 @@ kable(head(failed_tests, 15))
 | FALSE                       |
 | FALSE                       |
 
-You might also find the functions `get_failed_tests_string()` and `get_clean_rows` to be useful.
+You might also find the functions `get_failed_tests_string()` and `get_clean_rows()` to be useful.
 
 That is basically it. If you to know more about all of the exciting features of `recordr`, take a look at the vignette.
 

@@ -169,7 +169,7 @@ record.data.frame <- function(x, verbose = TRUE, ...) {
   if (verbose) {
     cat(bgMagenta("\n[RECORD]\n\n"))
     cat("... recording meta data and statistics of", nrow(x), 
-        "rows and", ncol(x), "columns... \n\n")
+        "rows with", ncol(x), "columns... \n\n")
   }
   
   # validate input.

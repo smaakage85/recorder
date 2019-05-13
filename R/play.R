@@ -203,7 +203,7 @@ play <- function(tape, newdata, verbose = TRUE) {
   if (verbose) {
     cat(bgMagenta("\n[PLAY]\n\n"))
     cat("... playing data.tape on new data with", nrow(newdata),
-      "rows and", ncol(newdata), "columns ...\n\n")
+      "rows with", ncol(newdata), "columns ...\n\n")
   }
 
   # test if there any new variables in new data set, that have not been

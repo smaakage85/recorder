@@ -2,7 +2,7 @@
 % Please edit documentation in R/ignore.R
 \name{ignore_cols}
 \alias{ignore_cols}
-\title{Ignore Test Results for Specific Columns}
+\title{Ignore Test Results from Tests of Specific Columns}
 \usage{
 ignore_cols(tests, col_names, variables_newdata)
 }
@@ -18,5 +18,5 @@ should be ignored.}
 \code{list} results after removing tests.
 }
 \description{
-Ignore Test Results for Specific Columns
+Ignore Test Results from Tests of Specific Columns
 }
