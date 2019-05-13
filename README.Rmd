@@ -54,15 +54,15 @@ devtools::install_github("smaakage85/recordr")
 
 ## Workflow Example
 
-Get ready and load package.
+Get ready by loading the package.
 
 ```{r}
 library(recordr)
 ```
 
 The famous `iris` dataset will be used as an example. The data set is divided
-into training data, that can be used for model development, and new data to be
-predicted with the model at some point.
+into training data, that can be used for model development, and new data for 
+predictions after modelling, which can be validated `recordr`.
 
 ```{r}
 set.seed(1)

@@ -15,7 +15,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 `recordr` 0.9.0 is now available on CRAN. `recordr` is a lightweight toolkit to 
-validate new observations when computing their corresponding predictions with a 
+validate new observations before computing their corresponding predictions with a 
 predictive model. 
 
 With `recordr` the validation process consists of two steps: 
@@ -36,20 +36,20 @@ Some of them are obvious, e.g.:
 * The class of a given variable differs in training data and new data
 
 Others are more subtle, for instance when observations in 
-new data are not in the "span" of the training data. One example of this could 
+new data are not within the "span" of the training data. One example of this could 
 be, when a variable is "N/A" (missing) for a new observation to be predicted, 
 but no missing values appeared for the same variable in the training data.
 This implies, that the new observation is not within the "span" of the training 
 data. Another way of putting this: the model has never encountered an 
 observation like this before, therefore there is good reason to doubt the 
-quality of its prediction computed with the predictive model.
+quality of the prediction.
 
 ## recordr workflow
 
 We will need some data in order to demonstrate the `recordr` workflow. As so
 many times before the famous `iris` data set will be used as an example. The 
 data set is divided into training data, that can be used for model development,
-and new data to be predicted with the model at some point.
+and new data for predictions after modelling, which we can validate with `recordr`.
 
 ```{r}
 set.seed(1)
@@ -143,7 +143,7 @@ As you can see, we are in a lot of trouble here. All rows failed, because
 a new variable (`junk`), that did not appear in the training data, was 
 suddenly observed in new data. By assumption this invalidates all rows. 
 
-Besides from that some rows failed, because values `Inf` and `-Inf` were outside
+Besides from that, some rows failed, because values `Inf` and `-Inf` were outside
 the recorded range from the training data for variables `Sepal.Width` and 
 `Petal.Width`. Also, a handful of `NA` values were encountered in new data 
 for `Petal.Length`. This is a new phenomenon compared to the training data, 
@@ -244,13 +244,5 @@ As you see - with this additional removal - the only test failures that remain
 are the ones from the `outside_range` test of the `Petal.Width` variable.
 
 That is it, I hope, that you will enjoy the `recordr` package :)
-
-
-
-
-
-
-
-
 
 
