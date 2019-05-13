@@ -60,7 +60,7 @@ tape <- record(data_training)
 #> 
 #> [RECORD]
 #> 
-#> ... recording meta data and statistics of 100 rows and 5 columns... 
+#> ... recording meta data and statistics of 100 rows with 5 columns... 
 #> 
 #> [STOP]
 ```
@@ -72,7 +72,7 @@ playback <- play(tape, data_new)
 #> 
 #> [PLAY]
 #> 
-#> ... playing data.tape on new data with 50 rows and 5 columns ...
+#> ... playing data.tape on new data with 50 rows with 5 columns ...
 #> 
 #> [STOP]
 ```

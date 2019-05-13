@@ -44,7 +44,7 @@ data. Another way of putting this: the model has never encountered an
 observation like this before, therefore there is good reason to doubt the 
 quality of its prediction computed with the predictive model.
 
-## recordr Workflow
+## recordr workflow
 
 We will need some data in order to demonstrate the `recordr` workflow. As so
 many times before the famous `iris` data set will be used as an example. The 
@@ -58,7 +58,7 @@ data_training <- iris[trn_idx, ]
 data_new <- iris[-trn_idx, ]
 ```
 
-### Record Statistics and Meta Data of Variables from Training Data
+### Record statistics and meta data of variables from training data
 
 What we want to achieve is to validate the new observations (before computing 
 their predictions with a predictive model) based on relevant 
@@ -80,8 +80,177 @@ str(tape)
 ```
 
 As you see, which meta data and statistics are recorded for the individual 
-variables depend on the class of the given variable, e.g. for a numeric 
-variable `min` and `max` values are computed, whilst `levels` are computed for
+variables depends on the class of the given variable, e.g. for a numeric 
+variable `min` and `max` values are computed, whilst `levels` is recorded for
 factor variables.
+
+### Validate new data
+
+First, to spice things up, I will give the new observations a twist by inserting 
+some extreme values and some missing values. On top of that I will create a new 
+column, that was not observed in training data.
+
+```{r}
+# create sample of row indices.
+samples <- lapply(1:3, function(x) {
+  set.seed(x) 
+  sample(nrow(data_new), 5, replace = FALSE)})
+
+# create numeric values without range, -Inf and Inf.
+data_new$Sepal.Width[samples[[1]]] <- -Inf
+data_new$Petal.Width[samples[[2]]] <- Inf
+
+# insert NA's in numeric vector.
+data_new$Petal.Length[samples[[3]]] <- NA_real_
+
+# insert new column.
+data_new$junk <- "junk"
+```
+
+Now, we will validate the new observations by running a number of basic 
+validation tests on each of the new observations. The tests are based on the
+`data.tape` with the recorded statistics and meta data from the training data.
+
+You can get an overview over the validation tests with `get_tests_meta_data()`.
+
+```{r}
+get_tests_meta_data()
+```
+
+
+To run the tests simply invoke the `play()` function with the recorded `data.tape`
+on the new data.
+
+```{r}
+playback <- play(tape, data_new)
+```
+
+What we actually have here is an object belonging to the new `data.playback` 
+class.
+
+```{r}
+class(playback)
+```
+
+Great, now let us have a detailed look at the test results with the `print()` 
+method.
+
+```{r}
+playback
+```
+
+As you can see, we are in a lot of trouble here. All rows failed, because
+a new variable (`junk`), that did not appear in the training data, was 
+suddenly observed in new data. By assumption this invalidates all rows. 
+
+Besides from that some rows failed, because values `Inf` and `-Inf` were outside
+the recorded range from the training data for variables `Sepal.Width` and 
+`Petal.Width`. Also, a handful of `NA` values were encountered in new data 
+for `Petal.Length`. This is a new phenomenon compared to the training data, 
+where no `NA` values were observed.
+
+### Extract test results
+
+`recordr` allows you extract the results of the validation tests in a number
+of ways.
+
+#### Get failed tests as data.frame
+You might want to extract the results as a data.frame with the results of the
+(failed) tests as columns. To do this, invoke `get_failed_tests()` on 
+`playback`:
+
+```{r}
+knitr::kable(head(get_failed_tests(playback), 15))
+```
+
+#### Get failed tests as character
+It can also be useful to get the results of the (failed) tests as a string with
+one entry per row in new data, where names of the failed tests for the given
+row are concatenated.
+
+```{r}
+head(get_failed_tests_string(playback))
+```
+
+#### Get clean rows
+As a third option you can extract a logical vector, that indicates which rows, 
+that passed the validation tests. 
+
+```{r}
+get_clean_rows(playback)
+```
+
+`TRUE` means, that a given row is clean and has passed all tests, `FALSE` 
+on the other hand implies that a given row failed one or more tests.
+
+In this case, all rows are invalid due to the strange column
+`junk`, that appears in the new data (you might think, this is a strict rule,
+but it is consistent nonetheless).
+
+### Ignore specific test results
+
+I might be, that the user - for various reasons - wants to ignore one or more
+of the failed tests. You can handle this easily with `recordr`, whenever you
+invoke one of the functions `get_clean_rows()`, `get_failed_tests()` or 
+`get_failed_tests_string()`.
+
+#### Ignore test results from specific tests
+
+Let us assume, that we do not care about, if there is a new column in 
+the new data, that was not observed in the training data. The results of a 
+specific test can be ignored with the `ignore_test` argument.
+
+Let us try it out and ignore the results of the `new_variable` validation test.
+
+```{r}
+get_clean_rows(playback, ignore_tests = "new_variable")
+```
+
+According to this - less restrictive - selection `r sum(get_clean_rows(playback, ignore_tests = "new_variable"))`
+of the new observations are now valid.
+
+#### Ignore test results from tests of specific columns
+
+Maybe you - for some reason - do not care about the tests results for a specific
+column. You can ignore results from tests of a specific variable with the
+`ignore_cols` argument. Let us go ahead and suppress the test results from
+tests of the `Petal.Length` variable.
+
+
+```{r}
+get_clean_rows(playback, 
+               ignore_tests = "new_variable",
+               ignore_cols = "Petal.Length")
+```
+
+Now, with this modification a total of `r sum(get_clean_rows(playback, ignore_tests = "new_variable", ignore_cols = "Petal.Length"))`
+of the new observations are now valid.
+
+#### Ignore test results from specific tests of specific columns
+
+It is also possible to ignore the test results of specific tests of specific
+columns with the `ignore_combinations` argument. Let us try to ignore the
+`outside_range` test, but only for the `Sepal.Width` variable.
+
+```{r}
+knitr::kable(head(get_failed_tests(playback, 
+                                   ignore_tests = "new_variable",
+                                   ignore_cols = "Petal.Length",
+                                   ignore_combinations = list(outside_range = "Sepal.Width")),
+                  15))
+```
+
+As you see - with this additional removal - the only test failures that remain 
+are the ones from the `outside_range` test of the `Petal.Width` variable.
+
+That is it, I hope, that you will enjoy the `recordr` package :)
+
+
+
+
+
+
+
+
 
 

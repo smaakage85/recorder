@@ -175,7 +175,7 @@ print_test_description <- function(pb, name) {
 
 }
 
-#### get_tests_meta_data_df ####
+#### get_tests_meta_data ####
 
 #' Get Meta Data of Validation Tests in a Data Frame
 #'
@@ -184,6 +184,7 @@ print_test_description <- function(pb, name) {
 #' @details The meta data of a validation test consists of:
 #'
 #' \describe{
+#'   \item{test_name}{name of the test}
 #'   \item{evaluate_level}{is the test evaluated on column level (`col`) or on
 #'   row level (`row`)?}
 #'   \item{evaluate_class}{what classes of variables are being tested with this
@@ -200,8 +201,10 @@ print_test_description <- function(pb, name) {
 get_tests_meta_data <- function() {
   # get meta data of tests in list form.
   tests_meta_data <- create_tests_meta_data()
-  # get (unique) names of entries.
-  rbindlist(tests_meta_data)
+  # get test names.
+  dt <- data.table(test_name = names(tests_meta_data))
+  # combine with meta data.
+  cbind(dt, rbindlist(tests_meta_data))
 }
 
 #' Create Meta Data of Validation Tests

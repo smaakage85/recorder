@@ -16,6 +16,7 @@ Gets meta data of available validation tests as a data.frame.
 The meta data of a validation test consists of:
 
 \describe{
+  \item{test_name}{name of the test}
   \item{evaluate_level}{is the test evaluated on column level (`col`) or on
   row level (`row`)?}
   \item{evaluate_class}{what classes of variables are being tested with this

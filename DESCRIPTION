@@ -1,6 +1,6 @@
 Package: recordr
 Title: Toolkit to Validate New Data for a Predictive Model
-Version: 0.8.0
+Version: 0.9.0
 Authors@R: 
     person(given = "Lars",
            family = "Kjeldgaard",
