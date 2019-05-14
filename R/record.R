@@ -1,6 +1,6 @@
-#' Record Statistics and Meta Data of Variables from Training Data
+#' Record Statistics and Meta Data of Variables in Training Data
 #' 
-#' Records statistics and meta data of variables from the training data for a 
+#' Records statistics and meta data of variables in the training data for a 
 #' predictive model. The recorded data can then be used to compute a set 
 #' of validation tests on new data with \code{\link{play}}.
 #'

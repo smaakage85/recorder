@@ -15,18 +15,17 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 `recorder` 0.8.0 is now available on CRAN. `recorder` is a lightweight toolkit to 
-validate new observations when computing their corresponding predictions with a 
-predictive model. 
+validate new observations before computing their corresponding predictions with
+a predictive model. 
 
 With `recorder` the validation process consists of two steps: 
 
-1. record relevant statistics and meta data of the variables from the original
+1. record relevant statistics and meta data of the variables in the original
 training data for the predictive model 
 2. use these data to run a set of basic validation tests on the new set of 
 observations.
 
 ## Motivation
-
 There can be many data specific reasons, why you might not be confident in the
 predictions of a predictive model on new data. 
 
@@ -36,20 +35,20 @@ Some of them are obvious, e.g.:
 * The class of a given variable differs in training data and new data
 
 Others are more subtle, for instance when observations in 
-new data are not in the "span" of the training data. One example of this could 
+new data are not within the "span" of the training data. One example of this could 
 be, when a variable is "N/A" (missing) for a new observation to be predicted, 
 but no missing values appeared for the same variable in the training data.
 This implies, that the new observation is not within the "span" of the training 
 data. Another way of putting this: the model has never encountered an 
 observation like this before, therefore there is good reason to doubt the 
-quality of its prediction computed with the predictive model.
+quality of the prediction.
 
 ## recorder workflow
-
 We will need some data in order to demonstrate the `recorder` workflow. As so
 many times before the famous `iris` data set will be used as an example. The 
 data set is divided into training data, that can be used for model development,
-and new data to be predicted with the model at some point.
+and new data for predictions after modelling, which we can validate with
+`recordr`.
 
 ```{r}
 set.seed(1)
@@ -58,13 +57,13 @@ data_training <- iris[trn_idx, ]
 data_new <- iris[-trn_idx, ]
 ```
 
-### Record statistics and meta data of variables from training data
-
+### Record statistics and meta data of variables in training data
 What we want to achieve is to validate the new observations (before computing 
 their predictions with a predictive model) based on relevant 
-statistics and meta data of the training data. Therefore relevant statistics and
-meta data of the variables must first be learned (recorded) from the training 
-data of the model. This is done with the `record()` function.
+statistics and meta data of the variables in the training data. Therefore 
+relevant statistics and meta data of the variables must first be learned 
+(recorded) from the trainingdata of the model. This is done with the `record()` 
+function.
 
 ```{r}
 library(recorder)
@@ -85,9 +84,8 @@ variable `min` and `max` values are computed, whilst `levels` is recorded for
 factor variables.
 
 ### Validate new data
-
-First, to spice things up, I will give the new observations a twist by inserting 
-some extreme values and some missing values. On top of that I will create a new 
+First, to spice things up, we will give the new observations a twist by inserting 
+some extreme values and some missing values. On top of that we will create a new 
 column, that was not observed in training data.
 
 ```{r}
@@ -109,7 +107,8 @@ data_new$junk <- "junk"
 
 Now, we will validate the new observations by running a number of basic 
 validation tests on each of the new observations. The tests are based on the
-`data.tape` with the recorded statistics and meta data from the training data.
+`data.tape` with the recorded statistics and meta data of variabels in the 
+training data.
 
 You can get an overview over the validation tests with `get_tests_meta_data()`.
 
@@ -143,14 +142,13 @@ As you can see, we are in a lot of trouble here. All rows failed, because
 a new variable (`junk`), that did not appear in the training data, was 
 suddenly observed in new data. By assumption this invalidates all rows. 
 
-Besides from that some rows failed, because values `Inf` and `-Inf` were outside
-the recorded range from the training data for variables `Sepal.Width` and 
+Besides from that, some rows failed, because values `Inf` and `-Inf` were outside
+the recorded range in the training data for variables `Sepal.Width` and 
 `Petal.Width`. Also, a handful of `NA` values were encountered in new data 
 for `Petal.Length`. This is a new phenomenon compared to the training data, 
 where no `NA` values were observed.
 
 ### Extract test results
-
 `recorder` allows you extract the results of the validation tests in a number
 of ways.
 
@@ -188,14 +186,12 @@ In this case, all rows are invalid due to the strange column
 but it is consistent nonetheless).
 
 ### Ignore specific test results
-
-I might be, that the user - for various reasons - wants to ignore one or more
+It might be, that the user - for various reasons - wants to ignore one or more
 of the failed tests. You can handle this easily with `recorder`, whenever you
 invoke one of the functions `get_clean_rows()`, `get_failed_tests()` or 
 `get_failed_tests_string()`.
 
 #### Ignore test results from specific tests
-
 Let us assume, that we do not care about, if there is a new column in 
 the new data, that was not observed in the training data. The results of a 
 specific test can be ignored with the `ignore_test` argument.
@@ -210,7 +206,6 @@ According to this - less restrictive - selection `r sum(get_clean_rows(playback,
 of the new observations are now valid.
 
 #### Ignore test results from tests of specific columns
-
 Maybe you - for some reason - do not care about the tests results for a specific
 column. You can ignore results from tests of a specific variable with the
 `ignore_cols` argument. Let us go ahead and suppress the test results from
@@ -227,7 +222,6 @@ Now, with this modification a total of `r sum(get_clean_rows(playback, ignore_te
 of the new observations are now valid.
 
 #### Ignore test results from specific tests of specific columns
-
 It is also possible to ignore the test results of specific tests of specific
 columns with the `ignore_combinations` argument. Let us try to ignore the
 `outside_range` test, but only for the `Sepal.Width` variable.
@@ -244,13 +238,3 @@ As you see - with this additional removal - the only test failures that remain
 are the ones from the `outside_range` test of the `Petal.Width` variable.
 
 That is it, I hope, that you will enjoy the `recorder` package :)
-
-
-
-
-
-
-
-
-
-

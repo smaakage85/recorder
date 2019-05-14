@@ -2,7 +2,7 @@
 % Please edit documentation in R/record.R
 \name{record}
 \alias{record}
-\title{Record Statistics and Meta Data of Variables from Training Data}
+\title{Record Statistics and Meta Data of Variables in Training Data}
 \usage{
 record(x, ...)
 }
@@ -18,7 +18,7 @@ from the \code{data.tape} class when the function is invoked with a
 \code{data.frame}.
 }
 \description{
-Records statistics and meta data of variables from the training data for a 
+Records statistics and meta data of variables in the training data for a 
 predictive model. The recorded data can then be used to compute a set 
 of validation tests on new data with \code{\link{play}}.
 }

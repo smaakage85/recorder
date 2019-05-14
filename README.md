@@ -9,7 +9,7 @@ recorder <img src="man/figures/logo.png" align="right" height=140/>
 
 With `recorder` the validation process consists of two steps:
 
-1.  record relevant statistics and meta data of the variables from the original training data for the predictive model
+1.  record relevant statistics and meta data of the variables in the original training data for the predictive model
 2.  use these data to run a set of basic validation tests on the new set of observations.
 
 Motivation
@@ -22,7 +22,7 @@ Some of them are obvious, e.g.:
 -   One or more variables in training data are not found in new data
 -   The class of a given variable differs in training data and new data
 
-Others are more subtle, for instance if it is the case, that observations in new data are not in the "span" of the training data.
+Others are more subtle, for instance if it is the case, that observations in new data are not within the "span" of the training data.
 
 If one or more of the `recorder` validation tests fail on new data, you might not be confident in the corresponding predictions.
 
@@ -38,13 +38,13 @@ devtools::install_github("smaakage85/recorder")
 Workflow Example
 ----------------
 
-Get ready and load package.
+Get ready by loading the package.
 
 ``` r
 library(recorder)
 ```
 
-The famous `iris` dataset will be used as an example. The data set is divided into training data, that can be used for model development, and new data to be predicted with the model at some point.
+The famous `iris` dataset will be used as an example. The data set is divided into training data, that can be used for model development, and new data for predictions after modelling, which can be validated with `recorder`.
 
 ``` r
 set.seed(1)
@@ -111,7 +111,7 @@ playback
 #> [STOP]
 ```
 
-The test summary tells us, that one observation (row \#11) has a value of the variable "Petal.Length" outside the recorded range in training; hence we might not be confident in the prediction of this particular observation.
+The test summary tells us, that one observation (row \#11) has a value of the variable "Petal.Length" outside the recorded range in the training data; hence we might not be confident in the prediction of this particular observation.
 
 After running the validation tests, you can extract the results of (any) failed tests for the rows/observations of new data with `get_failed_tests()`.
 
