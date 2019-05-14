@@ -1,11 +1,11 @@
     
 ---
-title: "Introduction to recordr"
+title: "Introduction to recorder"
 author: "Lars Kjeldgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to recordr}
+  %\VignetteIndexEntry{Introduction to recorder}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,11 +14,11 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-`recordr` 0.9.0 is now available on CRAN. `recordr` is a lightweight toolkit to 
+`recorder` 0.9.0 is now available on CRAN. `recorder` is a lightweight toolkit to 
 validate new observations when computing their corresponding predictions with a 
 predictive model. 
 
-With `recordr` the validation process consists of two steps: 
+With `recorder` the validation process consists of two steps: 
 
 1. record relevant statistics and meta data of the variables from the original
 training data for the predictive model 
@@ -44,9 +44,9 @@ data. Another way of putting this: the model has never encountered an
 observation like this before, therefore there is good reason to doubt the 
 quality of its prediction computed with the predictive model.
 
-## recordr workflow
+## recorder workflow
 
-We will need some data in order to demonstrate the `recordr` workflow. As so
+We will need some data in order to demonstrate the `recorder` workflow. As so
 many times before the famous `iris` data set will be used as an example. The 
 data set is divided into training data, that can be used for model development,
 and new data to be predicted with the model at some point.
@@ -67,7 +67,7 @@ meta data of the variables must first be learned (recorded) from the training
 data of the model. This is done with the `record()` function.
 
 ```{r}
-library(recordr)
+library(recorder)
 tape <- record(data_training)
 ```
 
@@ -151,7 +151,7 @@ where no `NA` values were observed.
 
 ### Extract test results
 
-`recordr` allows you extract the results of the validation tests in a number
+`recorder` allows you extract the results of the validation tests in a number
 of ways.
 
 #### Get failed tests as data.frame
@@ -190,7 +190,7 @@ but it is consistent nonetheless).
 ### Ignore specific test results
 
 I might be, that the user - for various reasons - wants to ignore one or more
-of the failed tests. You can handle this easily with `recordr`, whenever you
+of the failed tests. You can handle this easily with `recorder`, whenever you
 invoke one of the functions `get_clean_rows()`, `get_failed_tests()` or 
 `get_failed_tests_string()`.
 
@@ -243,7 +243,7 @@ knitr::kable(head(get_failed_tests(playback,
 As you see - with this additional removal - the only test failures that remain 
 are the ones from the `outside_range` test of the `Petal.Width` variable.
 
-That is it, I hope, that you will enjoy the `recordr` package :)
+That is it, I hope, that you will enjoy the `recorder` package :)
 
 
 

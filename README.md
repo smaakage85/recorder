@@ -1,13 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-recordr <img src="man/figures/logo.png" align="right" height=140/>
-==================================================================
+recorder <img src="man/figures/logo.png" align="right" height=140/>
+===================================================================
 
-[![Travis-CI Build Status](https://travis-ci.org/smaakage85/customsteps.svg?branch=master)](https://travis-ci.org/smaakage85/recordr) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/modelgrid)](https://CRAN.R-project.org/package=recordr) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/modelgrid)](https://CRAN.R-project.org/package=recordr)
+[![Travis-CI Build Status](https://travis-ci.org/smaakage85/recorder.svg?branch=master)](https://travis-ci.org/smaakage85/recorder) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/modelgrid)](https://CRAN.R-project.org/package=recorder) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/modelgrid)](https://CRAN.R-project.org/package=recorder)
 
-`recordr` is a lightweight toolkit to validate new observations when computing their corresponding predictions with a predictive model.
+`recorder` is a lightweight toolkit to validate new observations when computing their corresponding predictions with a predictive model.
 
-With `recordr` the validation process consists of two steps:
+With `recorder` the validation process consists of two steps:
 
 1.  record relevant statistics and meta data of the variables from the original training data for the predictive model
 2.  use these data to run a set of basic validation tests on the new set of observations.
@@ -24,15 +24,15 @@ Some of them are obvious, e.g.:
 
 Others are more subtle, for instance if it is the case, that observations in new data are not in the "span" of the training data.
 
-If one or more of the `recordr` validation tests fail on new data, you might not be confident in the corresponding predictions.
+If one or more of the `recorder` validation tests fail on new data, you might not be confident in the corresponding predictions.
 
 Installation
 ------------
 
-`recordr` can be installed from CRAN with `install.packages('recordr')`. If you want the development version then install directly from GitHub:
+`recorder` can be installed from CRAN with `install.packages('recorder')`. If you want the development version then install directly from GitHub:
 
 ``` r
-devtools::install_github("smaakage85/recordr")
+devtools::install_github("smaakage85/recorder")
 ```
 
 Workflow Example
@@ -41,7 +41,7 @@ Workflow Example
 Get ready and load package.
 
 ``` r
-library(recordr)
+library(recorder)
 ```
 
 The famous `iris` dataset will be used as an example. The data set is divided into training data, that can be used for model development, and new data to be predicted with the model at some point.
@@ -142,6 +142,6 @@ kable(head(failed_tests, 15))
 
 You might also find the functions `get_failed_tests_string()` and `get_clean_rows()` to be useful.
 
-That is basically it. If you to know more about all of the exciting features of `recordr`, take a look at the vignette.
+That is basically it. If you to know more about all of the exciting features of `recorder`, take a look at the vignette.
 
 Also, if you have any feedback on the package, please let me hear from you.

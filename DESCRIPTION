@@ -1,6 +1,6 @@
-Package: recordr
+Package: recorder
 Title: Toolkit to Validate New Data for a Predictive Model
-Version: 0.9.0
+Version: 0.8.0
 Authors@R: 
     person(given = "Lars",
            family = "Kjeldgaard",
@@ -12,7 +12,7 @@ Description: A lightweight toolkit to validate new observations when computing
     variables from the original training data for the predictive model and
     (2) use these data to run a set of basic validation tests on the new set of 
     observations.
-URL: https://github.com/smaakage85/recordr
+URL: https://github.com/smaakage85/recorder
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

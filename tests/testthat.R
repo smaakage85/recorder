@@ -1,4 +1,4 @@
 library(testthat)
-library(recordr)
+library(recorder)
 
-test_check(package = "recordr")
+test_check(package = "recorder")
