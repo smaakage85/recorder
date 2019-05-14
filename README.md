@@ -3,7 +3,7 @@
 recorder <img src="man/figures/logo.png" align="right" height=140/>
 ===================================================================
 
-[![Travis-CI Build Status](https://travis-ci.org/smaakage85/recorder.svg?branch=master)](https://travis-ci.org/smaakage85/recorder) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/modelgrid)](https://CRAN.R-project.org/package=recorder) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/modelgrid)](https://CRAN.R-project.org/package=recorder)
+[![Travis-CI Build Status](https://travis-ci.org/smaakage85/recorder.svg?branch=master)](https://travis-ci.org/smaakage85/recorder) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/recorder)](https://CRAN.R-project.org/package=recorder) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/recorder)](https://CRAN.R-project.org/package=recorder)
 
 `recorder` is a lightweight toolkit to validate new observations when computing their corresponding predictions with a predictive model.
 
