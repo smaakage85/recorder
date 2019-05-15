@@ -3,10 +3,9 @@
 ^data-raw$
 ^LICENSE\.md$
 ^.*Rproj$
-^.*Rmd$
+^README.*
 ^\.Rproj\.user$
 ^.*\.Rproj$
 ^.*\.Rhistory$
-man/figures/create_sticker.R
-man/figures/logo_recorder.R
-cran-comments.md
+man/figures
+^cran-comments\.md$

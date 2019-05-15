@@ -4,7 +4,7 @@ author: "Lars Kjeldgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to modelgrid}
+  %\VignetteIndexEntry{Introduction to recorder}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
