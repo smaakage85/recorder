@@ -4,7 +4,7 @@ author: "Lars Kjeldgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to recorder}
+  %\VignetteIndexEntry{Introduction to modelgrid}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-`recorder` 0.8.0 is now available on CRAN. `recorder` is a lightweight toolkit to 
+`recorder` 0.8.1 is now available on CRAN. `recorder` is a lightweight toolkit to 
 validate new observations before computing their corresponding predictions with
 a predictive model. 
 
