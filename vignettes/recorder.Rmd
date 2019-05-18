@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-`recorder` 0.8.1 is now available on CRAN. `recorder` is a lightweight toolkit to 
+`recorder` 0.8.2 is now available on CRAN. `recorder` is a lightweight toolkit to 
 validate new observations before computing their corresponding predictions with
 a predictive model. 
 

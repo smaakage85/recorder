@@ -1,6 +1,6 @@
 Package: recorder
 Title: Toolkit to Validate New Data for a Predictive Model
-Version: 0.8.1
+Version: 0.8.2
 Authors@R: 
     person(given = "Lars",
            family = "Kjeldgaard",
@@ -11,7 +11,10 @@ Description: A lightweight toolkit to validate new observations when computing
     consists of two steps: (1) record relevant statistics and meta data of the
     variables in the original training data for the predictive model and
     (2) use these data to run a set of basic validation tests on the new set of 
-    observations.
+    observations. As pointed out by Hooker (2004) 
+    <"Diagnostics and Extrapolation in Machine Learning"> extrapolation can be
+    problematic for the predictions of a machine learning model, hence this is
+    also tested for.
 URL: https://github.com/smaakage85/recorder
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
