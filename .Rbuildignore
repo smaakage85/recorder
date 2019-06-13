@@ -9,3 +9,4 @@
 ^.*\.Rhistory$
 man/figures
 ^cran-comments\.md$
+^NEWS\.md$
