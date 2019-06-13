@@ -50,6 +50,21 @@ expect_true(ncol(results) == 1)
 expect_true(nrow(results) == nrow(iris))
 expect_true(all(results[[1]]))
 
+# ignore results for single test, that triggers all failures.
+tape <- record(iris, verbose = FALSE)
+iris_copy <- iris
+iris_copy[1, "Sepal.Width"] <- Inf
+playback <- play(tape, iris_copy, verbose = FALSE)
+ft <- get_failed_tests(playback, ignore_tests = "outside_range")
+expect_is(ft, "data.frame")
+expect_equal(nrow(ft), nrow(iris_copy))
+expect_equal(ncol(ft), 1)
+expect_false(any(ft[[1]]))
+cr <- get_clean_rows(playback, ignore_tests = "outside_range")
+expect_is(cr, "logical")
+expect_length(cr, nrow(iris_copy))
+expect_true(all(cr))
+
 test_that("concatenate_test_failures", {
   df <- data.frame(a = c(FALSE, FALSE, TRUE, TRUE),
                    b = c(FALSE, TRUE, FALSE, TRUE))
@@ -57,6 +72,7 @@ test_that("concatenate_test_failures", {
   expect_is(results, "character")
   expect_equal(results, c("", "b;", "a;", "a;b;"))
 })
+
 
 
 

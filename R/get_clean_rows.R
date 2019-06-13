@@ -50,8 +50,9 @@ get_failed_tests <- function(playback,
   test_results_df <- create_test_results_df(tests)
   
   # handle special cases:
-  # => return any_failures = FALSE, if there are no test failures, nrow = 0.
-  if (nrow(test_results_df) == 0) {
+  # => return any_failures = FALSE, if there are no test failures, nrow = 0 or
+  # NULL return.
+  if (is.null(test_results_df) || nrow(test_results_df) == 0) {
     test_results_df <- data.table(any_failures = rep(FALSE, playback$nrow_newdata))
   } else if (nrow(test_results_df) == 1) {
     # => handle case, where _only_ tests on column level have failed, nrow = 1.
